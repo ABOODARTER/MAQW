@@ -4,6 +4,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maqw/main.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import'package:http/http.dart' as http;
+import'dart:convert' as convert;
+import 'package:location/location.dart';
+
 
 
 class Map extends StatefulWidget {
@@ -14,10 +18,11 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
-  late GoogleMapController googleMapController;
+  BitmapDescriptor? _markerIcon;
+ GoogleMapController? googleMapController;
 
   static late CameraPosition initialCameraPosition = CameraPosition(
-      target: LatLng(37.42796133580664, -122.085749655962), zoom: 14);
+      target: LatLng(37.42796133580664, -122.085749655962), zoom: 14,);
 
   // marker to add show client user
   Set <Marker>currentlocation={};
@@ -66,6 +71,7 @@ Widget _buildContainer(){
               googleMapController = controle;
             },
             markers: currentlocation,
+
           ),
 
           Padding(
@@ -82,59 +88,35 @@ Widget _buildContainer(){
               SizedBox(
                 height: 15,
               ),
-              // Text("Find the nearest.\n sales and maintenance\n center")
             ]),
           ),
-
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //
-          //     Container(
-          //       margin: EdgeInsets.only(
-          //         left: 120,
-          //         top: 340,
-          //       ),
-          //       child: ElevatedButton(
-          //           style: ElevatedButton.styleFrom(
-          //               onPrimary: Colors.white,
-          //               primary: bluee,
-          //               padding:
-          //               EdgeInsets.symmetric(vertical: 5, horizontal: 50),
-          //               textStyle: TextStyle(
-          //                 fontSize: 23,
-          //                 fontWeight: FontWeight.w600,
-          //               )),
-          //           onPressed: () {
-          //
-          //             Navigator.of(context).pushNamed('map2');
-          //           },
-          //           child: Text("Start")),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: bluee,
         onPressed: () async {
-          Position ?position = await _determineposition();
-          print('${position.latitude.toString()}');
-          print('${position.longitude.toString()}');
-          googleMapController.animateCamera(CameraUpdate.newCameraPosition(
-              CameraPosition(
+          Position position = await _determineposition();
+          setState(() {
+            print('${position.latitude.toString()}');
+            print('${position.longitude.toString()}');
+            googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
+                CameraPosition(
                   target: LatLng(position.latitude, position.longitude),
                   zoom: 14,
-              )));
+                )));
 
-         currentlocation.clear();
-          currentlocation.add(Marker(
+            currentlocation.clear();
+            currentlocation.add(Marker(
               markerId: MarkerId('Locationcurrent'),
               position: LatLng(position.latitude, position.longitude),
               infoWindow: InfoWindow(title:"My current location"),
-               icon: BitmapDescriptor.defaultMarker,
-          ),
-          );
+              icon: BitmapDescriptor.defaultMarker,
+            ),
+            );
+          });
+
+
+         //if(LocationService==null?null:_buildContainer());
        },
                     label: Text("location current",style: TextStyle(fontSize: 15),),
                     icon: Icon(Icons.location_history),
@@ -162,7 +144,31 @@ Widget _buildContainer(){
     if (permission == LocationPermission.deniedForever) {
       Fluttertoast.showToast(msg: "yoy denied the permission forever");
     }
-    Position? currentposition = await Geolocator.getCurrentPosition();
-    return currentposition;
+    Position currentposition = await GeolocatorPlatform.instance.getCurrentPosition();
+   return currentposition;
   }
-}
+  }
+  Future<void>LocationService() async{
+    final String key='"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';
+
+    Future<String>getPlaceId() async{
+      final String url='';
+      var response = await http.get(Uri.parse(url));
+      var json=convert.jsonDecode(response.body);
+      var plaseId=json['cnter'][0]['center_id'] as String;
+
+      return plaseId;
+    }
+    // Future<Map<String,dynamic>> getPlaceId() async{
+    //   final plaseId= await getPlaseId();
+    //   final String url='';
+    //   var response = await http.get(Uri.parse(url));
+    //   var json=convert.jsonDecode(response.body);
+    //   var results=json['result'] as Map<String,dynamic>;
+    //   print (results);
+    //   return results;
+    //
+    // }
+
+  }
+

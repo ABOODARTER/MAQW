@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:maqw/widget/navigationbottom.dart';
 import '../main.dart';
 import 'Compartion.dart';
 import 'Colors.dart';
@@ -239,6 +240,7 @@ class contactUsState extends State<contact_Us >{
             ],
           ) // contact_Us(),
       ),
+      bottomNavigationBar: NavigationB(),
     );
   }
 

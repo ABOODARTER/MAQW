@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:maqw/widget/navigationbottom.dart';
 import '../main.dart';
 import 'ContactUs.dart';
 import 'Colors.dart';
@@ -572,6 +573,7 @@ class compartionState extends State<compartion> {
         ],
       ) // contact_Us(),
           ),
+      bottomNavigationBar: NavigationB(),
     );
   }
 

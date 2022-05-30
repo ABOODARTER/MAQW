@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maqw/widget/navigationbottom.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'Colors.dart';
 import 'ContactUs.dart';
@@ -241,6 +242,9 @@ class _salecenter extends State<sale_center_personalty> {
             ],
           ) // contact_Us(),
               ),
-        ));
+          bottomNavigationBar: NavigationB(),
+        )
+        ,
+    );
   }
 }

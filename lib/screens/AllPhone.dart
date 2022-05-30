@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maqw/widget/navigationbottom.dart';
 import '../main.dart';
 import 'Colors.dart';
 import 'ContactUs.dart';
@@ -382,6 +383,7 @@ class allPhoneState extends State<allPhone> {
         ],
       ) // contact_Us(),
           ),
+      bottomNavigationBar: NavigationB(),
     );
   }
 }

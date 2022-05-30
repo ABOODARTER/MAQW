@@ -182,27 +182,27 @@ class allPhoneState extends State<allPhone> {
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   viewphones('samsung', 'Samsung Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('samsung', 'Samsung Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('samsung', 'Samsung Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('samsung', 'Samsung Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('samsung', 'Samsung Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                 ]),
               ),
               SizedBox(
@@ -222,27 +222,27 @@ class allPhoneState extends State<allPhone> {
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   viewphones('Redmi', 'Redmi Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Redmi', 'Redmi Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Redmi', 'Redmi Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Redmi', 'Redmi Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Redmi', 'Redmi Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                 ]),
               ),
               SizedBox(
@@ -262,27 +262,27 @@ class allPhoneState extends State<allPhone> {
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   viewphones('Huawei', 'Huawei Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Huawei', 'Huawei Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Huawei', 'Huawei Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Huawei', 'Huawei Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Huawei', 'Huawei Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                 ]),
               ),
               SizedBox(
@@ -302,27 +302,27 @@ class allPhoneState extends State<allPhone> {
                 scrollDirection: Axis.horizontal,
                 child: Row(children: [
                   viewphones('Apple', 'Apple Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Apple', 'Apple Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Apple', 'Apple Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Apple', 'Apple Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                   SizedBox(
                     width: 12,
                   ),
                   viewphones('Apple', 'Apple Note 1 pro',
-                      'assets/image/compartion/screen (1).png'),
+                      'assets/images/compartion/screen (1).png'),
                 ]),
               ),
             ]),

@@ -4,11 +4,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maqw/main.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import'package:http/http.dart' as http;
-import'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 import 'package:location/location.dart';
-
-
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -18,37 +16,43 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
-  BitmapDescriptor? _markerIcon;
- GoogleMapController? googleMapController;
+  late GoogleMapController googleMapController;
 
   static late CameraPosition initialCameraPosition = CameraPosition(
-      target: LatLng(37.42796133580664, -122.085749655962), zoom: 14,);
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14,
+  );
 
   // marker to add show client user
-  Set <Marker>currentlocation={};
+  Set<Marker> currentlocation = {};
 
-static final Markers = Marker(
+// marker to show centers
+  List<Marker> centers = [];
+  static final Markers = Marker(
     markerId: MarkerId('Locationcurrent1'),
-  position: LatLng(37.42796133580664, -122.085749655962),
-  infoWindow: InfoWindow(title:"Default Location"),
-  icon: BitmapDescriptor.defaultMarker,
-);
-Widget _buildContainer(){
-  return Align(
-    alignment: Alignment.bottomLeft,
-    child: Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      height: 150,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          SizedBox(width: 30,),
-          Padding(padding: EdgeInsets.all(8.0)),
-        ],
-      ),
-    ),
+    position: LatLng(37.42796133580664, -122.085749655962),
+    infoWindow: InfoWindow(title: "Default Location"),
+    icon: BitmapDescriptor.defaultMarker,
   );
-}
+
+  Widget _buildContainer() {
+    return Align(
+      alignment: Alignment.bottomLeft,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 20),
+        height: 150,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            SizedBox(
+              width: 30,
+            ),
+            Padding(padding: EdgeInsets.all(8.0)),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +75,7 @@ Widget _buildContainer(){
               googleMapController = controle;
             },
             markers: currentlocation,
-
           ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Column(children: [
@@ -99,28 +101,31 @@ Widget _buildContainer(){
           setState(() {
             print('${position.latitude.toString()}');
             print('${position.longitude.toString()}');
-            googleMapController!.animateCamera(CameraUpdate.newCameraPosition(
-                CameraPosition(
-                  target: LatLng(position.latitude, position.longitude),
-                  zoom: 14,
-                )));
+            googleMapController!
+                .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+              target: LatLng(position.latitude, position.longitude),
+              zoom: 14,
+            )));
 
             currentlocation.clear();
-            currentlocation.add(Marker(
-              markerId: MarkerId('Locationcurrent'),
-              position: LatLng(position.latitude, position.longitude),
-              infoWindow: InfoWindow(title:"My current location"),
-              icon: BitmapDescriptor.defaultMarker,
-            ),
+            currentlocation.add(
+              Marker(
+                markerId: MarkerId('Locationcurrent'),
+                position: LatLng(position.latitude, position.longitude),
+                infoWindow: InfoWindow(title: "My current location"),
+                icon: BitmapDescriptor.defaultMarker,
+              ),
             );
           });
 
-
-         //if(LocationService==null?null:_buildContainer());
-       },
-                    label: Text("location current",style: TextStyle(fontSize: 15),),
-                    icon: Icon(Icons.location_history),
-       ),
+          //if(LocationService==null?null:_buildContainer());
+        },
+        label: Text(
+          "location current",
+          style: TextStyle(fontSize: 15),
+        ),
+        icon: Icon(Icons.location_history),
+      ),
     );
   }
 
@@ -144,31 +149,30 @@ Widget _buildContainer(){
     if (permission == LocationPermission.deniedForever) {
       Fluttertoast.showToast(msg: "yoy denied the permission forever");
     }
-    Position currentposition = await GeolocatorPlatform.instance.getCurrentPosition();
-   return currentposition;
+    Position currentposition = await Geolocator.getCurrentPosition();
+    return currentposition;
   }
+}
+
+Future<void> LocationService() async {
+  final String key = '"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';
+
+  Future<String> getPlaceId() async {
+    final String url = '';
+    var response = await http.get(Uri.parse(url));
+    var json = convert.jsonDecode(response.body);
+    var plaseId = json['cnter'][0]['center_id'] as String;
+
+    return plaseId;
   }
-  Future<void>LocationService() async{
-    final String key='"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';
-
-    Future<String>getPlaceId() async{
-      final String url='';
-      var response = await http.get(Uri.parse(url));
-      var json=convert.jsonDecode(response.body);
-      var plaseId=json['cnter'][0]['center_id'] as String;
-
-      return plaseId;
-    }
-    // Future<Map<String,dynamic>> getPlaceId() async{
-    //   final plaseId= await getPlaseId();
-    //   final String url='';
-    //   var response = await http.get(Uri.parse(url));
-    //   var json=convert.jsonDecode(response.body);
-    //   var results=json['result'] as Map<String,dynamic>;
-    //   print (results);
-    //   return results;
-    //
-    // }
-
-  }
-
+  // Future<Map<String,dynamic>> getPlaceId() async{
+  //   final plaseId= await getPlaseId();
+  //   final String url='';
+  //   var response = await http.get(Uri.parse(url));
+  //   var json=convert.jsonDecode(response.body);
+  //   var results=json['result'] as Map<String,dynamic>;
+  //   print (results);
+  //   return results;
+  //
+  // }
+}

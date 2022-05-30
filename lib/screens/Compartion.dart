@@ -61,7 +61,7 @@ class compartionState extends State<compartion> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/image/compartion/add (1).png'),
+                Image.asset('assets/images/compartion/add (1).png'),
                 SizedBox(
                   height: 20,
                 ),
@@ -127,7 +127,7 @@ class compartionState extends State<compartion> {
                     height: 10,
                   ),
                   Image.asset(
-                    'assets/image/compartion/screen (1).png',
+                    'assets/images/compartion/screen (1).png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -135,7 +135,7 @@ class compartionState extends State<compartion> {
                     height: 60,
                   ),
                   Image.asset(
-                    'assets/image/compartion/cpu (1).png',
+                    'assets/images/compartion/cpu (1).png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -143,7 +143,7 @@ class compartionState extends State<compartion> {
                     height: 50,
                   ),
                   Image.asset(
-                    'assets/image/compartion/ram.png',
+                    'assets/images/compartion/ram.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -151,7 +151,7 @@ class compartionState extends State<compartion> {
                     height: 50,
                   ),
                   Image.asset(
-                    'assets/image/compartion/gpu.png',
+                    'assets/images/compartion/gpu.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -159,7 +159,7 @@ class compartionState extends State<compartion> {
                     height: 60,
                   ),
                   Image.asset(
-                    'assets/image/compartion/selfie-stick (2).png',
+                    'assets/images/compartion/selfie-stick (2).png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -167,7 +167,7 @@ class compartionState extends State<compartion> {
                     height: 55,
                   ),
                   Image.asset(
-                    'assets/image/compartion/selfie-stick (1).png',
+                    'assets/images/compartion/selfie-stick (1).png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -175,7 +175,7 @@ class compartionState extends State<compartion> {
                     height: 50,
                   ),
                   Image.asset(
-                    'assets/image/compartion/battery (1).png',
+                    'assets/images/compartion/battery (1).png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -183,7 +183,7 @@ class compartionState extends State<compartion> {
                     height: 60,
                   ),
                   Image.asset(
-                    'assets/image/compartion/lighting.png',
+                    'assets/images/compartion/lighting.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -191,7 +191,7 @@ class compartionState extends State<compartion> {
                     height: 50,
                   ),
                   Image.asset(
-                    'assets/image/compartion/memory-card.png',
+                    'assets/images/compartion/memory-card.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -199,7 +199,7 @@ class compartionState extends State<compartion> {
                     height: 60,
                   ),
                   Image.asset(
-                    'assets/image/compartion/plus-button.png',
+                    'assets/images/compartion/plus-button.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -207,7 +207,7 @@ class compartionState extends State<compartion> {
                     height: 60,
                   ),
                   Image.asset(
-                    'assets/image/compartion/color-palette.png',
+                    'assets/images/compartion/color-palette.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),
@@ -215,7 +215,7 @@ class compartionState extends State<compartion> {
                     height: 60,
                   ),
                   Image.asset(
-                    'assets/image/compartion/price-tag.png',
+                    'assets/images/compartion/price-tag.png',
                     height: 70,
                     fit: BoxFit.cover,
                   ),

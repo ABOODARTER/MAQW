@@ -20,45 +20,9 @@ class _CenterDataState extends State<CenterData> {
   final TextEditingController timeOpenController = TextEditingController();
   final TextEditingController timeCloseController = TextEditingController();
 
- TimeOfDay timeo=TimeOfDay.now();
-
- Future<Null>selectTimeo(BuildContext ctx)async{
-   TimeOfDay ?newTimeo=await showTimePicker(
-     context: ctx,
-     initialTime:timeo ,
-   );
-   // if CANCEL => null
-   if(newTimeo==null)return;
-   // else OK
-   setState(() {
-     timeo=newTimeo;
-   });
-
- }
- TimeOfDay timec=TimeOfDay.now();
-
- Future<Null>selectTimec(BuildContext ctx1)async{
-   TimeOfDay?newTimec=await showTimePicker(
-     context: ctx1,
-     initialTime:timec ,
-   );
-   // if CANCEL => null
-   if(newTimec==null)return;
-   // else OK
-   setState(() {
-     timec=newTimec;
-   });
-
- }
 
   @override
   Widget build(BuildContext context) {
-   // style time open
-    final hourso=timeo.hour.toString().padLeft(2,'0');
-    final minuteso=timeo.minute.toString().padLeft(2,'0');
-    // style time close
-    final hoursc=timeo.hour.toString().padLeft(2,'0');
-    final minutesc=timeo.minute.toString().padLeft(2,'0');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -94,6 +58,7 @@ class _CenterDataState extends State<CenterData> {
                           ),
                         ),
                         TextFormField(
+                          controller: nameController,
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
@@ -119,17 +84,11 @@ class _CenterDataState extends State<CenterData> {
                           ),
                         ),
                         TextFormField(
+                          controller:timeOpenController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                          //  readOnly: true,
-                            // onTap: ()async{
-                            //   setState(() {
-                            //     selectTimeo(context);
-                            //     print("we");
-                            //   });
-                            // },
+                            keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
-                           hintText: '$hourso:$minuteso',
+                           hintText: 'Enter your time open',
                                 hintStyle: Theme.of(context).textTheme.headline1,
                               prefixIcon: Icon(Icons.access_time),
                             ),
@@ -150,27 +109,16 @@ class _CenterDataState extends State<CenterData> {
                             ),
                           ),
                         ),
-                        Builder(
-                          builder: ( ctx1){
-                            return TextFormField(
+
+                            TextFormField(
+                              controller: timeCloseController,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.number,
-                               // readOnly: true,
-                                // onTap: ()async{
-                                //   setState(() {
-                                //     selectTimec(ctx1);
-                                //     print("wed");
-                                //   });
-                                // },
                                 decoration: InputDecoration(
-                                  hintText: '$hoursc:$minutesc',
+                                  hintText: 'Enter your time close',
                                   hintStyle: Theme.of(context).textTheme.headline1,
                                   prefixIcon: Icon(Icons.access_time),
-                                ));
-
-                          },
-
-                        ),
+                                )),
                         SizedBox(height: 50,),
                         Container(
                             decoration: ShapeDecoration(

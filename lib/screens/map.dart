@@ -1,3 +1,7 @@
+
+
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -6,7 +10,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -34,6 +37,8 @@ class _MapState extends State<Map> {
     infoWindow: InfoWindow(title: "Default Location"),
     icon: BitmapDescriptor.defaultMarker,
   );
+
+  String Currentlocationapi="";
 
   Widget _buildContainer() {
     return Align(
@@ -101,7 +106,10 @@ class _MapState extends State<Map> {
           setState(() {
             print('${position.latitude.toString()}');
             print('${position.longitude.toString()}');
-            googleMapController!
+            Currentlocationapi=('${position.latitude}'+'${position.longitude}').toString();
+            print('$Currentlocationapi');
+            getlocationuser();
+            googleMapController
                 .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
               target: LatLng(position.latitude, position.longitude),
               zoom: 14,
@@ -153,6 +161,19 @@ class _MapState extends State<Map> {
     return currentposition;
   }
 }
+
+
+// api to store location user
+Future <void>getlocationuser()async{
+  String Url="";
+ // var Location={
+ //   'locationuser':Currentlocationapi,
+ // };
+  //http.Response response= await http.post(Uri.parse(Url),body: Location);
+ // var data = jsonEncode(response.body);
+
+}
+
 
 Future<void> LocationService() async {
   final String key = '"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';

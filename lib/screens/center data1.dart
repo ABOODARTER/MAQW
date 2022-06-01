@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +20,7 @@ class _CenterDataState1 extends State<CenterData1> {
     if(image==null)return;
     final imageTemporary=File(image.path);
     setState((){
-      this._image=imageTemporary;
+      _image=imageTemporary;
     }
     );
   }
@@ -30,11 +29,9 @@ class _CenterDataState1 extends State<CenterData1> {
 
   //editing controller
   final TextEditingController locationController = TextEditingController();
-  final TextEditingController imageController = TextEditingController();
-  final TextEditingController typeController = TextEditingController();
 
   // variable to radio
-  int _radio = 1;
+  int _radio = 0;
 
 
   @override
@@ -44,22 +41,22 @@ class _CenterDataState1 extends State<CenterData1> {
         child: SingleChildScrollView(
           child: Center(
               child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
                 Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: ImageProfile()),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     right: 260,
                     bottom: 5,
                   ),
                   child: Text(
-                    "Addres",
+                    "Adders",
                     style: TextStyle(
                       fontSize: 17,
                       color: bluee,
@@ -69,19 +66,20 @@ class _CenterDataState1 extends State<CenterData1> {
                 Form(
                   key: forKeyCenter1,
                child: TextFormField(
+                 controller: locationController,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
-                    hintText: "Enter your addres",
+                    hintText: "Enter your adders",
                     hintStyle: Theme.of(context).textTheme.headline1,
-                    prefixIcon: Icon(Icons.place),
+                    prefixIcon: const Icon(Icons.place),
                   ),
                 ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     right: 260,
                     bottom: 5,
                   ),
@@ -90,24 +88,47 @@ class _CenterDataState1 extends State<CenterData1> {
                     style: Theme.of(context).textTheme.headline3,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
+                ),
+                SingleChildScrollView(
+                  child: Row(
+                    children: [
+                      Radio(
+                        toggleable:true ,
+                        activeColor: bluee,
+                        value: 0,
+                        groupValue: _radio,
+                        onChanged: ( value) {
+                          setState(() {
+                            _radio = value as int;
+                              print("$value");
+
+                          });
+                        },
+                      ),
+                      Text(
+                        "sales and maintenance center",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
                     Radio(
-                     // key: forKeyCenter1,
                       activeColor: bluee,
-                      value: 1,
+                      value:1,
                       groupValue: _radio,
                       onChanged: (value) {
                         setState(() {
                           _radio = value as int;
+                          print("$value");
                         });
                       },
                     ),
                     Text(
-                      "sales and maintenance center",
+                      "maintenance center",
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ],
@@ -115,30 +136,14 @@ class _CenterDataState1 extends State<CenterData1> {
                 Row(
                   children: [
                     Radio(
+                      toggleable: true,
                       activeColor: bluee,
                       value: 2,
                       groupValue: _radio,
                       onChanged: (value) {
                         setState(() {
                           _radio = value as int;
-                        });
-                      },
-                    ),
-                    Text(
-                      "maintenance center ",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      activeColor: bluee,
-                      value: 3,
-                      groupValue: _radio,
-                      onChanged: (value) {
-                        setState(() {
-                          _radio = value as int;
+                          print("$value");
                         });
                       },
                     ),
@@ -149,7 +154,7 @@ class _CenterDataState1 extends State<CenterData1> {
                   ],
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 70,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -179,15 +184,16 @@ class _CenterDataState1 extends State<CenterData1> {
                             if (forKeyCenter1.currentState!.validate()) {
                               BottomSheet();
                               centerData();
+                              imagestore();
                               // sale center=>enter phone || maintenance center=> main screen
                               if(_radio==1){
-                                //  Navigator.of(context).pushReplacementNamed('enter phone');
+                                  Navigator.of(context).pushReplacementNamed('enterphone');
                               }
                               else if(_radio==2){
                                 //  Navigator.of(context).pushReplacementNamed('screen maintenance');
                               }
                               else if(_radio==3){
-                                //  Navigator.of(context).pushReplacementNamed('enter phone');
+                                  Navigator.of(context).pushReplacementNamed('enterphone');
                               }
 
                             }
@@ -230,7 +236,7 @@ class _CenterDataState1 extends State<CenterData1> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     getImage(ImageSource.camera);
                   },
@@ -245,7 +251,7 @@ class _CenterDataState1 extends State<CenterData1> {
                         color: Colors.black54, fontSize: 17, letterSpacing: 1),
                   )),
               // SizedBox(width: 120,),
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     getImage(ImageSource.gallery);
                   },
@@ -272,7 +278,7 @@ class _CenterDataState1 extends State<CenterData1> {
       children: [
         CircleAvatar(
           radius: 80.0,
-          backgroundImage: (_image!=null)?FileImage(_image!)as ImageProvider:AssetImage("assets/images/camera.png")
+          backgroundImage: (_image!=null)?FileImage(_image!)as ImageProvider:const AssetImage("assets/images/camera.png")
         ),
         Positioned(
           bottom: 15.0,
@@ -293,15 +299,29 @@ class _CenterDataState1 extends State<CenterData1> {
       ],
     );
   }
+
+  // Api to store location and type
   Future<void>centerData() async{
     String Url="";
     Map MyData={
       'location':locationController.text,
-      'image':imageController.text,
-      'type':typeController.text,
+      'type':_radio,
     };
     http.Response response= await http.post(Uri.parse(Url),body: MyData);
     var data = jsonEncode(response.body);
 
+  }
+  // Api to store image
+  Future <void>imagestore()async{
+    if(_image==null)return;
+    String imagebase64=base64Encode(_image!.readAsBytesSync());
+    String imagename=_image!.path.split("/").last;
+    print(imagename);
+    var Url="";
+    var data={
+      "imagename":imagename,
+      "imagebase64":imagebase64,
+    };
+    var response= await http.post(Uri.parse(Url),body: data);
   }
 }

@@ -82,7 +82,7 @@ class compartionState extends State<compartion> {
       InkWell(
         onTap: () {},
         child:
-            Ink.image(image: AssetImage('assets/image/compartion/close.png')),
+            Ink.image(image: AssetImage('assets/images/compartion/close.png')),
       ),
     ]);
   }

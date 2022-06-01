@@ -169,13 +169,16 @@ class allPhoneState extends State<allPhone> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                'Samsung',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                  InkWell(
+                    onTap: (){},
+                    child: Text(
+                      'Sumsang',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
               SizedBox(
                 height: 20,
               ),
@@ -209,13 +212,16 @@ class allPhoneState extends State<allPhone> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                'Redmi',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                  InkWell(
+                    onTap: (){},
+                    child: Text(
+                      'Redmi',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
               SizedBox(
                 height: 20,
               ),
@@ -249,11 +255,14 @@ class allPhoneState extends State<allPhone> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                'Huawei',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              InkWell(
+                onTap: (){},
+                child: Text(
+                  'Huawei',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               SizedBox(
@@ -289,13 +298,16 @@ class allPhoneState extends State<allPhone> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                'Apple',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                  InkWell(
+                    onTap: (){},
+                    child: Text(
+                      'Apple',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
               SizedBox(
                 height: 20,
               ),
@@ -371,14 +383,6 @@ class allPhoneState extends State<allPhone> {
             ),
             trailing: Icon(Icons.email_outlined),
             onTap: () => selectScreen(context, "ContatUs"),
-          ),
-          ListTile(
-            title: Text(
-              "test",
-              style: TextStyle(fontSize: 25, color: Bluecolor),
-            ),
-            trailing: Icon(Icons.home),
-            onTap: () => selectScreen(context, "pagephone"),
           ),
         ],
       ) // contact_Us(),

@@ -175,7 +175,7 @@ class _pagephone extends State<pagephone> {
                               CarouselSlider.builder(
                                 options: CarouselOptions(
                                   height: 200,
-                                  onPageChanged: (index, reason) =>
+                                  onPageChanged: (index, rfeason) =>
                                       setState(() => activeIndex = index),
                                   enlargeCenterPage: true,
                                  enableInfiniteScroll: false,

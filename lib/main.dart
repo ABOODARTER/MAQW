@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:maqw/screens/AllPhone.dart';
 import 'package:maqw/screens/Compartion.dart';
 import 'package:maqw/screens/ContactUs.dart';
-import 'package:maqw/screens/Sale_Center_personalty.dart';
 import 'package:maqw/screens/empty.dart';
 import 'package:maqw/screens/enter%20phone.dart';
 import 'package:maqw/screens/mainscreen.dart';
@@ -14,14 +13,14 @@ import 'package:maqw/screens/check_email.dart';
 import 'package:maqw/screens/center data.dart';
 import 'package:maqw/screens/center data1.dart';
 import 'package:maqw/screens/verification.dart';
-import 'package:maqw/widget/scrollContinerIcon.dart';
+
 
 void main() {
   runApp(const MyApp());
 }
 
-final Color bluee = Color(0xff007AFF);
-final Color orangee = Color(0xffF87700);
+ Color bluee = const Color(0xff007AFF);
+ Color orangee = const Color(0xffF87700);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             ),
             // style hinttext
-            headline1: const TextStyle(
+            headline1: TextStyle(
               fontSize: 20,
               color: Colors.black45,
               fontWeight: FontWeight.w400,
@@ -60,7 +59,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
-      home:CenterData(),
+      home: Map(),
       routes: {
         'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),
@@ -71,18 +70,18 @@ class MyApp extends StatelessWidget {
         'centerdata1': (context) => const CenterData1(),
         'allphone':(context)=> allPhone(),
          'compartion':(context)=>compartion(),
-        'empty':(context)=>Empty(),
-        'map':(context)=>Map(),
+        'empty':(context)=>const Empty(),
+        'map':(context)=>const Map(),
         'contact_us':(context)=>contact_Us(),
-        'mainscreen':(context)=>MainScreen(),
-        'enterphone':(context)=>EnterPhone(),
+        'mainscreen':(context)=>const MainScreen(),
+        'enterphone':(context)=>const EnterPhone(),
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage();
+ const MyHomePage();
 
 
 

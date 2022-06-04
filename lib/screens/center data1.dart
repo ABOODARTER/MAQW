@@ -31,7 +31,8 @@ class _CenterDataState1 extends State<CenterData1> {
   final TextEditingController locationController = TextEditingController();
 
   // variable to radio
-  int _radio = 0;
+  int _Selectedradio = 0;
+
 
 
   @override
@@ -97,11 +98,11 @@ class _CenterDataState1 extends State<CenterData1> {
                       Radio(
                         toggleable:true ,
                         activeColor: bluee,
-                        value: 0,
-                        groupValue: _radio,
+                        value: 1,
+                        groupValue: _Selectedradio,
                         onChanged: ( value) {
                           setState(() {
-                            _radio = value as int;
+                            _Selectedradio = value as int;
                               print("$value");
 
                           });
@@ -118,11 +119,11 @@ class _CenterDataState1 extends State<CenterData1> {
                   children: [
                     Radio(
                       activeColor: bluee,
-                      value:1,
-                      groupValue: _radio,
+                      value:2,
+                      groupValue: _Selectedradio,
                       onChanged: (value) {
                         setState(() {
-                          _radio = value as int;
+                          _Selectedradio = value as int;
                           print("$value");
                         });
                       },
@@ -138,11 +139,11 @@ class _CenterDataState1 extends State<CenterData1> {
                     Radio(
                       toggleable: true,
                       activeColor: bluee,
-                      value: 2,
-                      groupValue: _radio,
+                      value: 3,
+                      groupValue: _Selectedradio,
                       onChanged: (value) {
                         setState(() {
-                          _radio = value as int;
+                          _Selectedradio = value as int;
                           print("$value");
                         });
                       },
@@ -182,17 +183,16 @@ class _CenterDataState1 extends State<CenterData1> {
                       child: IconButton(
                           onPressed: () {
                             if (forKeyCenter1.currentState!.validate()) {
-                              BottomSheet();
                               centerData();
                               imagestore();
                               // sale center=>enter phone || maintenance center=> main screen
-                              if(_radio==1){
+                              if(_Selectedradio==1){
                                   Navigator.of(context).pushReplacementNamed('enterphone');
                               }
-                              else if(_radio==2){
+                              else if(_Selectedradio==2){
                                 //  Navigator.of(context).pushReplacementNamed('screen maintenance');
                               }
-                              else if(_radio==3){
+                              else if(_Selectedradio==3){
                                   Navigator.of(context).pushReplacementNamed('enterphone');
                               }
 
@@ -305,7 +305,7 @@ class _CenterDataState1 extends State<CenterData1> {
     String Url="";
     Map MyData={
       'location':locationController.text,
-      'type':_radio,
+      'type':_Selectedradio,
     };
     http.Response response= await http.post(Uri.parse(Url),body: MyData);
     var data = jsonEncode(response.body);

@@ -27,14 +27,14 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-#  shared_preferences:
+  #shared_preferences:
   email_validator: ^2.0.1
   image_picker: ^0.8.5+3
   path_provider: ^2.0.10
   google_maps_flutter:
   geolocator:
   fluttertoast:
-  google_nav_bar:
+  google_nav_bar: ^5.0.6
   http:
   carousel_slider:
   flutter:
@@ -105,6 +105,7 @@ flutter:
     - assets/images/co.png
     - assets/images/m.png
     - assets/images/img_1.png
+    - assets/images/images.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -35,17 +35,17 @@ class _CenterDataState extends State<CenterData> {
                   'Please Enter\nThe Center Data',
                   style: Theme.of(context).textTheme.headline3,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Form(
                   key: forKeyCenter,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 230,
                             bottom: 5,
                           ),
@@ -62,16 +62,16 @@ class _CenterDataState extends State<CenterData> {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
+                              border: const UnderlineInputBorder(),
                               hintText:"Enter your name",
                               hintStyle: Theme.of(context).textTheme.headline1,
-                              prefixIcon: Icon(Icons.edit),
+                              prefixIcon: const Icon(Icons.edit),
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 230,
                             bottom: 5,
                           ),
@@ -90,14 +90,14 @@ class _CenterDataState extends State<CenterData> {
                             decoration: InputDecoration(
                            hintText: 'Enter your time open',
                                 hintStyle: Theme.of(context).textTheme.headline1,
-                              prefixIcon: Icon(Icons.access_time),
+                              prefixIcon: const Icon(Icons.access_time),
                             ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 230,
                             bottom: 5,
                           ),
@@ -117,13 +117,13 @@ class _CenterDataState extends State<CenterData> {
                                 decoration: InputDecoration(
                                   hintText: 'Enter your time close',
                                   hintStyle: Theme.of(context).textTheme.headline1,
-                                  prefixIcon: Icon(Icons.access_time),
+                                  prefixIcon: const Icon(Icons.access_time),
                                 )),
-                        SizedBox(height: 50,),
+                        const SizedBox(height: 50,),
                         Container(
                             decoration: ShapeDecoration(
                               color: orangee,
-                              shape: CircleBorder(),
+                              shape: const CircleBorder(),
                             ),
                             child: IconButton(
                                 onPressed: () {

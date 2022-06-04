@@ -1,8 +1,4 @@
-
-
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maqw/main.dart';
@@ -10,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:maqw/widget/containermap.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -21,7 +18,7 @@ class Map extends StatefulWidget {
 class _MapState extends State<Map> {
   late GoogleMapController googleMapController;
 
-  static late CameraPosition initialCameraPosition = CameraPosition(
+  static late CameraPosition initialCameraPosition = const CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14,
   );
@@ -30,120 +27,197 @@ class _MapState extends State<Map> {
   Set<Marker> currentlocation = {};
 
 // marker to show centers
-  List<Marker> centers = [];
-  static final Markers = Marker(
-    markerId: MarkerId('Locationcurrent1'),
-    position: LatLng(37.42796133580664, -122.085749655962),
-    infoWindow: InfoWindow(title: "Default Location"),
-    icon: BitmapDescriptor.defaultMarker,
-  );
+  Set<Marker> centers = {};
 
-  String Currentlocationapi="";
+  // api to store location user
+  Future<void> getlocationuser() async {
+    String url = "";
+    var location = {
+      'currentlatitude': currentlatitude,
+      'currentlongitude': currentlongitude,
+    };
+    http.Response response = await http.post(Uri.parse(url), body: location);
+    var data = jsonEncode(response.body);
+  }
 
+// variables to store current location
+  String currentlatitude = "";
+  String currentlongitude = "";
+
+// variables to api _buildContainer
+  late Map mpaCenter;
+  late Map dataCenter;
+
+  // api to _buildContainer
+  Future apiContainer() async {
+    String urlC = "";
+    http.Response response = await http.get(Uri.parse(urlC));
+    if (response.statusCode == 200) {
+      setState(() {
+        mpaCenter = jsonDecode(response.body);
+        // على حسب الاسم الي مسميه بملف json
+       // dataCenter = mpaCenter['center'];
+      });
+    }
+  }
+
+// container to show details center
   Widget _buildContainer() {
     return Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        height: 150,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            SizedBox(
-              width: 30,
-            ),
-            Padding(padding: EdgeInsets.all(8.0)),
-          ],
-        ),
-      ),
-    );
+        alignment: Alignment.bottomLeft,
+        child: Stack(children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+            height: 200,
+            child: ListView(scrollDirection: Axis.horizontal, children: [
+              ContainerMap(
+                  image: 'assets/images/images.jpg',
+                  namecenter: "ccssp center",
+                  timeopen: '12:00 open',
+                  timeclose: '9:00 close',
+                  onpress: () {}),
+              const SizedBox(
+                width: 15,
+              ),
+              ContainerMap(
+                  image: 'assets/images/images.jpg',
+                  namecenter: "ccssp center",
+                  timeopen: '12:00 open',
+                  timeclose: '9:00 close',
+                  onpress: () {}),
+              const SizedBox(
+                width: 15,
+              ),
+              ContainerMap(
+                  image: 'assets/images/images.jpg',
+                  namecenter: "ccssp center",
+                  timeopen: '12:00 open',
+                  timeclose: '9:00 close',
+                  onpress: () {}),
+              // to get api
+              // ContainerMap(image: dataCenter==null?Text("load"):Text(dataCenter['image_center'] as Image,
+              //     namecenter: dataCenter==null?Text("load"):Text(dataCenter['name_center'].toString()),
+              //     timeopen: dataCenter==null?Text("load"):Text(dataCenter['open_center'].toString()),
+              //     timeclose:dataCenter==null?Text("load"):Text(dataCenter['close_center'].toString()) ,
+              //     onpress: () {}),
+            ]),
+          )
+        ]));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Map",
         ),
         centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            initialCameraPosition: initialCameraPosition,
-            mapType: MapType.normal,
-            onMapCreated: (GoogleMapController controle) {
-              googleMapController = controle;
-            },
-            markers: currentlocation,
+      body: Stack(children: [
+        GoogleMap(
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          initialCameraPosition: initialCameraPosition,
+          mapType: MapType.normal,
+          onMapCreated: (GoogleMapController controle) {
+            googleMapController = controle;
+          },
+          markers: currentlocation,
+        ),
+        Column(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              "Center near\nthe city of Damascus",
+              style: TextStyle(
+                fontSize: 30,
+                color: bluee,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          Container(
+            margin: const EdgeInsets.only(
+              left: 320,
+            ),
+            decoration: ShapeDecoration(
+              color: orangee,
+              shape: const CircleBorder(),
+            ),
+            child: IconButton(
+              icon: const Icon(
+                Icons.location_history,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () async {
+                Position position = await _determineposition();
+                setState(() {
+                  print('${position.latitude.toString()}');
+                  print('${position.longitude.toString()}');
+                  currentlatitude = position.latitude.toString();
+                  currentlongitude = position.longitude.toString();
+                  getlocationuser();
+                  googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                    target: LatLng(position.latitude, position.longitude),
+                    zoom: 14,
+                  )));
+
+                  currentlocation.clear();
+                  currentlocation.add(
+                    Marker(
+                      markerId: const MarkerId('Location current'),
+                      position: LatLng(position.latitude, position.longitude),
+                      infoWindow:
+                          const InfoWindow(title: "My current location"),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
+                });
+
+                //if(LocationService==null?null:_buildContainer());
+              },
+            ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(children: [
-              Text(
-                "Center near\nthe city of Damascus",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: bluee,
-                  fontWeight: FontWeight.w400,
+            padding: const EdgeInsets.only(left: 320, top: 30),
+            child: Container(
+              decoration: ShapeDecoration(
+                color: orangee,
+                shape: const CircleBorder(),
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.location_pin,
+                  color: Colors.white,
+                  size: 30,
                 ),
+                onPressed: () async {
+                  await _buildContainer();
+                },
               ),
-              SizedBox(
-                height: 15,
-              ),
-            ]),
+            ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: bluee,
-        onPressed: () async {
-          Position position = await _determineposition();
-          setState(() {
-            print('${position.latitude.toString()}');
-            print('${position.longitude.toString()}');
-            Currentlocationapi=('${position.latitude}'+'${position.longitude}').toString();
-            print('$Currentlocationapi');
-            getlocationuser();
-            googleMapController
-                .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-              target: LatLng(position.latitude, position.longitude),
-              zoom: 14,
-            )));
-
-            currentlocation.clear();
-            currentlocation.add(
-              Marker(
-                markerId: MarkerId('Locationcurrent'),
-                position: LatLng(position.latitude, position.longitude),
-                infoWindow: InfoWindow(title: "My current location"),
-                icon: BitmapDescriptor.defaultMarker,
-              ),
-            );
-          });
-
-          //if(LocationService==null?null:_buildContainer());
-        },
-        label: Text(
-          "location current",
-          style: TextStyle(fontSize: 15),
-        ),
-        icon: Icon(Icons.location_history),
-      ),
+        ]),
+        _buildContainer(),
+      ]),
     );
   }
 
+  // to determine current location
   Future<Position> _determineposition() async {
     // variable to have client Gps
-    bool ServiceEnabled;
+    bool serviceEnabled;
     // variable to allow application to Access to place client
     LocationPermission permission;
-    ServiceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!ServiceEnabled) {
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
       Fluttertoast.showToast(msg: "Location Services are disabled");
       //  return Future.error("Location Services are disabled");
     }
@@ -160,40 +234,28 @@ class _MapState extends State<Map> {
     Position currentposition = await Geolocator.getCurrentPosition();
     return currentposition;
   }
-}
 
+// api to places
+  Future<void> LocationService() async {
+    String key = '"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';
 
-// api to store location user
-Future <void>getlocationuser()async{
-  String Url="";
- // var Location={
- //   'locationuser':Currentlocationapi,
- // };
-  //http.Response response= await http.post(Uri.parse(Url),body: Location);
- // var data = jsonEncode(response.body);
+    Future<String> getPlaceId() async {
+      String url = '';
+      var response = await http.get(Uri.parse(url));
+      var json = convert.jsonDecode(response.body);
+      var plaseId = json['cnter'][0]['center_id'] as String;
 
-}
-
-
-Future<void> LocationService() async {
-  final String key = '"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';
-
-  Future<String> getPlaceId() async {
-    final String url = '';
-    var response = await http.get(Uri.parse(url));
-    var json = convert.jsonDecode(response.body);
-    var plaseId = json['cnter'][0]['center_id'] as String;
-
-    return plaseId;
+      return plaseId;
+    }
+    // Future<Map<String,dynamic>> getPlaceId() async{
+    //   final plaseId= await getPlaseId();
+    //   final String url='';
+    //   var response = await http.get(Uri.parse(url));
+    //   var json=convert.jsonDecode(response.body);
+    //   var results=json['result'] as Map<String,dynamic>;
+    //   print (results);
+    //   return results;
+    //
+    // }
   }
-  // Future<Map<String,dynamic>> getPlaceId() async{
-  //   final plaseId= await getPlaseId();
-  //   final String url='';
-  //   var response = await http.get(Uri.parse(url));
-  //   var json=convert.jsonDecode(response.body);
-  //   var results=json['result'] as Map<String,dynamic>;
-  //   print (results);
-  //   return results;
-  //
-  // }
 }

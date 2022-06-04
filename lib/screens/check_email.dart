@@ -11,20 +11,19 @@ class CheckEmail extends StatefulWidget {
 }
 
 class _CheckEmailState extends State<CheckEmail> {
-  final emailcontroller = TextEditingController();
+  final codecontroller = TextEditingController();
   final forkeycheck = GlobalKey<FormState>();
 
   @override
   void dispose() {
     // TODO: implement dispose
-    emailcontroller.dispose();
+   codecontroller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //  backgroundColor: Colors.white,
         body: Center(
             child: SingleChildScrollView(
                 padding: const EdgeInsets.all(30),
@@ -53,7 +52,7 @@ class _CheckEmailState extends State<CheckEmail> {
                         "please enter the 4 digit",
                         style: TextStyle(
                           color: Colors.grey,
-                          fontSize: 25,
+                          fontSize: 20,
                         ),
                       ),
                     const  SizedBox(
@@ -65,7 +64,7 @@ class _CheckEmailState extends State<CheckEmail> {
                         child: Form(
                           key: forkeycheck,
                           child: TextFormField(
-                            controller: emailcontroller,
+                            controller: codecontroller,
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.text,
                             validator: (value) {
@@ -88,14 +87,18 @@ class _CheckEmailState extends State<CheckEmail> {
                     const  SizedBox(
                         height: 20,
                       ),
-                      FlatButton(
-                          color: bluee,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(bluee),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            )
                           ),
-                          onPressed: () async{
+                        ),
+                          onPressed: () {
                             if (forkeycheck.currentState!.validate()) {
-                           await checkemail();
+                          checkemail();
                               Navigator.of(context).pushNamed('verification');
                             }
                           },
@@ -103,20 +106,21 @@ class _CheckEmailState extends State<CheckEmail> {
                             "send Verificaiton code",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold),
                           )),
                     ]))));
   }
 
   Future<void> checkemail() async {
-    http.Response response = await http.post(Uri.parse(""),
+    String Url="";
+    http.Response response = await http.post(Uri.parse(Url),
 
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({
-        'email':emailcontroller,
+       'code':codecontroller.text,
       }),
     );
 

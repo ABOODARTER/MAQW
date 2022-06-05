@@ -4,6 +4,7 @@ import 'package:maqw/screens/Compartion.dart';
 import 'package:maqw/screens/ContactUs.dart';
 import 'package:maqw/screens/empty.dart';
 import 'package:maqw/screens/enter%20phone.dart';
+import 'package:maqw/screens/enterphone1.dart';
 import 'package:maqw/screens/mainscreen.dart';
 import 'package:maqw/screens/map.dart';
 import 'package:maqw/screens/sign%20in.dart';
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
-      home: Map(),
+      home: MainScreen(),
       routes: {
         'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),

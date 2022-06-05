@@ -13,10 +13,6 @@ class NavigationB extends StatefulWidget {
 class _NavigationBState extends State<NavigationB> {
   int _index = 0;
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,41 +28,38 @@ class _NavigationBState extends State<NavigationB> {
         curve: Curves.easeOutExpo,
         haptic: true,
         tabBorderRadius: 25,
-
         onTabChange: (index) {
-         if(mounted) {
-           setState(() {
-             _index = index;
-             print("${_index}");
-
-           });
-         }
-         },
-
-
+          if (mounted) {
+            setState(() {
+              _index = index;
+              print("${_index}");
+            });
+          }
+        },
         tabs: [
           GButton(
             icon: Icons.home,
             text: "Home",
-            onPressed: ()  =>
-             Navigator.of(context).pushNamed('mainscreen'),
+            onPressed: () async =>
+                await Navigator.of(context).pushNamed('mainscreen'),
           ),
           GButton(
             icon: Icons.phone_android,
             text: "All phone",
-            onPressed: () => Navigator.of(context).pushNamed('allphone'),
+            onPressed: () async =>
+                await Navigator.of(context).pushNamed('allphone'),
           ),
           GButton(
             icon: Icons.compare,
             text: "Comparison",
-            onPressed: () =>
-             Navigator.of(context).pushNamed('compartion'),
+            onPressed: () async =>
+                await Navigator.of(context).pushNamed('compartion'),
           ),
           GButton(
               icon: Icons.settings,
               text: "Settings",
-              onPressed: ()  =>
-               Navigator.of(context).pushNamed('contact_us')),
+              onPressed: () async =>
+                  await Navigator.of(context).pushNamed('contact_us')),
         ],
       ),
     );

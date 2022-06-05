@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maqw/main.dart';
@@ -7,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:maqw/widget/containermap.dart';
+
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);
@@ -45,8 +47,10 @@ class _MapState extends State<Map> {
   String currentlongitude = "";
 
 // variables to api _buildContainer
-  late Map mpaCenter;
-  late Map dataCenter;
+ List allCenters =[];
+// Map oneCenter={}as Map;
+ String dataCenter="";
+
 
   // api to _buildContainer
   Future apiContainer() async {
@@ -54,9 +58,11 @@ class _MapState extends State<Map> {
     http.Response response = await http.get(Uri.parse(urlC));
     if (response.statusCode == 200) {
       setState(() {
-        mpaCenter = jsonDecode(response.body);
+       allCenters = jsonDecode(response.body);
         // على حسب الاسم الي مسميه بملف json
-       // dataCenter = mpaCenter['center'];
+    //    oneCenter = allCenters['center'];
+        // خزنت التايب تبعو بمتحول مشان اعرف شو نوع المركز واعرض معلوماتو بناءا على نوعو
+     //   dataCenter=oneCenter['type'];
       });
     }
   }
@@ -94,12 +100,12 @@ class _MapState extends State<Map> {
                   timeopen: '12:00 open',
                   timeclose: '9:00 close',
                   onpress: () {}),
-              // to get api
-              // ContainerMap(image: dataCenter==null?Text("load"):Text(dataCenter['image_center'] as Image,
-              //     namecenter: dataCenter==null?Text("load"):Text(dataCenter['name_center'].toString()),
-              //     timeopen: dataCenter==null?Text("load"):Text(dataCenter['open_center'].toString()),
-              //     timeclose:dataCenter==null?Text("load"):Text(dataCenter['close_center'].toString()) ,
-              //     onpress: () {}),
+           //   to get api
+           //    ContainerMap(image: oneCenter==null?Text("load"):Image.asset(oneCenter['image']) as Image,
+           //        namecenter: oneCenter==null?Text("load"):Text(oneCenter['name'].toString()),
+           //        timeopen: oneCenter==null?Text("load"):Text(oneCenter['time_open'].toString()),
+           //        timeclose:oneCenter==null?Text("load"):Text(oneCenter['time_close'].toString()) ,
+           //        onpress: () {}),
             ]),
           )
         ]));
@@ -180,8 +186,6 @@ class _MapState extends State<Map> {
                     ),
                   );
                 });
-
-                //if(LocationService==null?null:_buildContainer());
               },
             ),
           ),
@@ -194,12 +198,31 @@ class _MapState extends State<Map> {
               ),
               child: IconButton(
                 icon: const Icon(
-                  Icons.location_pin,
+                CupertinoIcons.wrench_fill,
                   color: Colors.white,
                   size: 30,
                 ),
                 onPressed: () async {
-                  await _buildContainer();
+                  await dataCenter=='maintenance center'?_buildContainer():null;
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 320, top: 30),
+            child: Container(
+              decoration: ShapeDecoration(
+                color: orangee,
+                shape: const CircleBorder(),
+              ),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.business_center,
+                  color: Colors.white,
+                  size: 30,
+                ),
+                onPressed: ()async{
+                await dataCenter=='sale center'||dataCenter=='maintenance center'?_buildContainer():null;
                 },
               ),
             ),

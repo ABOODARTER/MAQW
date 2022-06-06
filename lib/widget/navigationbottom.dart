@@ -11,51 +11,56 @@ class NavigationB extends StatefulWidget {
 }
 
 class _NavigationBState extends State<NavigationB> {
-  int _index=0;
+  int _index = 0;
 
   @override
   Widget build(BuildContext context) {
-    List tabs= [
-      GButton(
-        icon: Icons.home,
-        text: "Home",
-        onPressed: () =>
-            Navigator.of(context).pushReplacementNamed('mainscreen'),
-      ),
-      GButton(
-        icon: Icons.phone_android,
-        text: "All phone",
-        onPressed: ()=>Navigator.of(context).pushReplacementNamed('allphone'),
-      ),
-      GButton(
-        icon: Icons.compare,
-        text: "Comparison",
-        onPressed: ()=>Navigator.of(context).pushReplacementNamed('compartion'),
-      ),
-      GButton(
-          icon: Icons.settings,
-          text: "Settings",
-          onPressed: ()=>Navigator.of(context).pushReplacementNamed('contact_us')
-      ),
-    ];
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: GNav(
+        selectedIndex: _index,
         gap: 8,
         color: Colors.grey,
         activeColor: Colors.white,
         tabBackgroundColor: bluee,
-
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
+        duration: Duration(milliseconds: 400),
+        curve: Curves.easeOutExpo,
+        haptic: true,
+        tabBorderRadius: 25,
         onTabChange: (index) {
-setState(() {
-  _index=index;
-});
-
+          if (mounted) {
+            setState(() {
+              _index = index;
+              print("${_index}");
+            });
+          }
         },
-        selectedIndex: _index,
-        tabs: [tabs[0],tabs[1],tabs[2],tabs[3],],
-
+        tabs: [
+          GButton(
+            icon: Icons.home,
+            text: "Home",
+            onPressed: () async =>
+                await Navigator.of(context).pushNamed('mainscreen'),
+          ),
+          GButton(
+            icon: Icons.phone_android,
+            text: "All phone",
+            onPressed: () async =>
+                await Navigator.of(context).pushNamed('allphone'),
+          ),
+          GButton(
+            icon: Icons.compare,
+            text: "Comparison",
+            onPressed: () async =>
+                await Navigator.of(context).pushNamed('compartion'),
+          ),
+          GButton(
+              icon: Icons.settings,
+              text: "Settings",
+              onPressed: () async =>
+                  await Navigator.of(context).pushNamed('contact_us')),
+        ],
       ),
     );
   }

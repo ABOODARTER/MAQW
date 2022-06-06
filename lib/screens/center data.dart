@@ -20,45 +20,9 @@ class _CenterDataState extends State<CenterData> {
   final TextEditingController timeOpenController = TextEditingController();
   final TextEditingController timeCloseController = TextEditingController();
 
- TimeOfDay timeo=TimeOfDay.now();
-
- Future<Null>selectTimeo(BuildContext ctx)async{
-   TimeOfDay ?newTimeo=await showTimePicker(
-     context: ctx,
-     initialTime:timeo ,
-   );
-   // if CANCEL => null
-   if(newTimeo==null)return;
-   // else OK
-   setState(() {
-     timeo=newTimeo;
-   });
-
- }
- TimeOfDay timec=TimeOfDay.now();
-
- Future<Null>selectTimec(BuildContext ctx1)async{
-   TimeOfDay?newTimec=await showTimePicker(
-     context: ctx1,
-     initialTime:timec ,
-   );
-   // if CANCEL => null
-   if(newTimec==null)return;
-   // else OK
-   setState(() {
-     timec=newTimec;
-   });
-
- }
 
   @override
   Widget build(BuildContext context) {
-   // style time open
-    final hourso=timeo.hour.toString().padLeft(2,'0');
-    final minuteso=timeo.minute.toString().padLeft(2,'0');
-    // style time close
-    final hoursc=timeo.hour.toString().padLeft(2,'0');
-    final minutesc=timeo.minute.toString().padLeft(2,'0');
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -71,17 +35,17 @@ class _CenterDataState extends State<CenterData> {
                   'Please Enter\nThe Center Data',
                   style: Theme.of(context).textTheme.headline3,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Form(
                   key: forKeyCenter,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 230,
                             bottom: 5,
                           ),
@@ -94,19 +58,20 @@ class _CenterDataState extends State<CenterData> {
                           ),
                         ),
                         TextFormField(
+                          controller: nameController,
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
+                              border: const UnderlineInputBorder(),
                               hintText:"Enter your name",
                               hintStyle: Theme.of(context).textTheme.headline1,
-                              prefixIcon: Icon(Icons.edit),
+                              prefixIcon: const Icon(Icons.edit),
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 230,
                             bottom: 5,
                           ),
@@ -119,26 +84,20 @@ class _CenterDataState extends State<CenterData> {
                           ),
                         ),
                         TextFormField(
+                          controller:timeOpenController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                          //  readOnly: true,
-                            // onTap: ()async{
-                            //   setState(() {
-                            //     selectTimeo(context);
-                            //     print("we");
-                            //   });
-                            // },
+                            keyboardType: TextInputType.phone,
                             decoration: InputDecoration(
-                           hintText: '$hourso:$minuteso',
+                           hintText: 'Enter your time open',
                                 hintStyle: Theme.of(context).textTheme.headline1,
-                              prefixIcon: Icon(Icons.access_time),
+                              prefixIcon: const Icon(Icons.access_time),
                             ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             right: 230,
                             bottom: 5,
                           ),
@@ -150,32 +109,21 @@ class _CenterDataState extends State<CenterData> {
                             ),
                           ),
                         ),
-                        Builder(
-                          builder: ( ctx1){
-                            return TextFormField(
+
+                            TextFormField(
+                              controller: timeCloseController,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.number,
-                               // readOnly: true,
-                                // onTap: ()async{
-                                //   setState(() {
-                                //     selectTimec(ctx1);
-                                //     print("wed");
-                                //   });
-                                // },
                                 decoration: InputDecoration(
-                                  hintText: '$hoursc:$minutesc',
+                                  hintText: 'Enter your time close',
                                   hintStyle: Theme.of(context).textTheme.headline1,
-                                  prefixIcon: Icon(Icons.access_time),
-                                ));
-
-                          },
-
-                        ),
-                        SizedBox(height: 50,),
+                                  prefixIcon: const Icon(Icons.access_time),
+                                )),
+                        const SizedBox(height: 50,),
                         Container(
                             decoration: ShapeDecoration(
                               color: orangee,
-                              shape: CircleBorder(),
+                              shape: const CircleBorder(),
                             ),
                             child: IconButton(
                                 onPressed: () {

@@ -15,17 +15,17 @@ class EnterPhone extends StatefulWidget {
 }
 
 class _EnterPhoneState extends State<EnterPhone> {
-  //form key
+  // key
   final forKeyenterphone = GlobalKey<FormState>();
 
   //editing controller
-  final TextEditingController namephoneController = new TextEditingController();
+  final TextEditingController namephoneController =  TextEditingController();
   final TextEditingController brandphoneController =
-      new TextEditingController();
+       TextEditingController();
   final TextEditingController colorphoneController =
-      new TextEditingController();
+       TextEditingController();
   final TextEditingController pricephoneController =
-      new TextEditingController();
+      TextEditingController();
 
   File? _image;
 
@@ -34,7 +34,7 @@ class _EnterPhoneState extends State<EnterPhone> {
     if (image == null) return;
     final imageTemporary = File(image.path);
     setState(() {
-      this._image = imageTemporary;
+      _image = imageTemporary;
     });
   }
 
@@ -46,15 +46,15 @@ class _EnterPhoneState extends State<EnterPhone> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
+          padding:const EdgeInsets.symmetric(horizontal: 30),
           child: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding:const EdgeInsets.symmetric(vertical: 20),
                 child: ImageProfile(),
               ),
-              SizedBox(
+            const  SizedBox(
                 height: 30,
               ),
               Form(
@@ -71,7 +71,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                       }
                     },
                   ),
-                  SizedBox(
+                 const SizedBox(
                     height: 30,
                   ),
                   TextFormC(
@@ -85,7 +85,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                       }
                     },
                   ),
-                  SizedBox(
+                 const SizedBox(
                     height: 30,
                   ),
                   TextFormC(
@@ -99,7 +99,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                       }
                     },
                   ),
-                  SizedBox(
+                const  SizedBox(
                     height: 30,
                   ),
                   TextFormC(
@@ -113,11 +113,11 @@ class _EnterPhoneState extends State<EnterPhone> {
                       }
                     },
                   ),
-                  SizedBox(
+                const  SizedBox(
                     height: 30,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding:const EdgeInsets.only(
                       right: 260,
                       bottom: 5,
                     ),
@@ -168,9 +168,9 @@ class _EnterPhoneState extends State<EnterPhone> {
                   if (forKeyenterphone.currentState!.validate()) {
                     enterphone();
                     if (_radio == 1) {
-                      //  Navigator.of(context).pushReplacementNamed('enterphone1');
+                       Navigator.of(context).pushReplacementNamed('enterphone1');
                     } else if (_radio == 2) {
-                      //  Navigator.of(context).pushReplacementNamed('screencenter');
+                     // Navigator.of(context).pushReplacementNamed('screencenter');
                     }
                   }
                 },
@@ -182,7 +182,7 @@ class _EnterPhoneState extends State<EnterPhone> {
     );
   }
 
-  Widget BottomSheet() {
+ Widget BottomSheet() {
     return Container(
       height: 150,
       width: MediaQuery.of(context).size.width,
@@ -207,7 +207,7 @@ class _EnterPhoneState extends State<EnterPhone> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FlatButton.icon(
+              TextButton.icon(
                   onPressed: () {
                     getImage(ImageSource.camera);
                   },
@@ -222,7 +222,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                         color: Colors.black54, fontSize: 17, letterSpacing: 1),
                   )),
               // SizedBox(width: 120,),
-              FlatButton.icon(
+            TextButton.icon(
                   onPressed: () {
                     getImage(ImageSource.gallery);
                   },
@@ -251,7 +251,7 @@ class _EnterPhoneState extends State<EnterPhone> {
             radius: 80.0,
             backgroundImage: (_image != null)
                 ? FileImage(_image!) as ImageProvider
-                : AssetImage("assets/images/camera.png")),
+                : const AssetImage("assets/images/camera.png")),
         Positioned(
           bottom: 15.0,
           right: 20.0,
@@ -279,6 +279,7 @@ class _EnterPhoneState extends State<EnterPhone> {
       'brandphone': brandphoneController.text,
       'colorphone': colorphoneController.text,
       'pricephone': pricephoneController.text,
+      'type':_radio
     };
     http.Response response = await http.post(Uri.parse(Url), body: MyData);
     var data = jsonEncode(response.body);

@@ -6,7 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
-import 'package:location/location.dart';
+//import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
   const Map({Key? key}) : super(key: key);

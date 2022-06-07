@@ -6,6 +6,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+
+import 'AllPhone.dart';
+import 'Colors.dart';
+import 'Compartion.dart';
+import 'ContactUs.dart';
+import 'mainscreen.dart';
 //import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
@@ -17,7 +23,18 @@ class Map extends StatefulWidget {
 
 class _MapState extends State<Map> {
   late GoogleMapController googleMapController;
-
+  void selectScreen(BuildContext ctx, String s ) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      if (s == "ContatUs")
+        return contact_Us();
+      else if (s == 'Compartion')
+        return compartion();
+      else if (s == "allphone")
+        return allPhone();
+      else
+        return MainScreen ();
+    }));
+  }
   static late CameraPosition initialCameraPosition = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14,
@@ -125,6 +142,51 @@ class _MapState extends State<Map> {
           style: TextStyle(fontSize: 15),
         ),
         icon: Icon(Icons.location_history),
+      ),
+      drawerScrimColor: Colors.black.withOpacity(0.4),
+      drawer: Drawer(
+          child: ListView(
+            children: [
+              ListTile(
+                title: Text(
+                  'MAQW MOBIL ^_^',
+                  style: TextStyle(fontSize: 40, color: Bluecolor),
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  "Home",
+                  style: TextStyle(fontSize: 25, color: Bluecolor),
+                ),
+                trailing: Icon(Icons.home),
+                onTap: () => selectScreen(context, "home"),
+              ),
+              ListTile(
+                title: Text(
+                  "All Phone",
+                  style: TextStyle(fontSize: 25, color: Bluecolor),
+                ),
+                trailing: Icon(Icons.phone_android_rounded),
+                onTap: () => selectScreen(context, "allphone"),
+              ),
+              ListTile(
+                title: Text(
+                  "Compartion",
+                  style: TextStyle(fontSize: 25, color: Bluecolor),
+                ),
+                trailing: Icon(Icons.phonelink_setup),
+                onTap: () => selectScreen(context, "Compartion"),
+              ),
+              ListTile(
+                title: Text(
+                  "Contact Us",
+                  style: TextStyle(fontSize: 25, color: Bluecolor),
+                ),
+                trailing: Icon(Icons.email_outlined),
+                onTap: () => selectScreen(context, "ContatUs"),
+              ),
+            ],
+          ) // contact_Us(),
       ),
     );
   }

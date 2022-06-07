@@ -9,6 +9,8 @@ import 'Compartion.dart';
 import '../main.dart';
 import 'AllPhone.dart';
 import 'Sale_Center_personalty.dart';
+import 'mainscreen.dart';
+import 'salecenter.dart';
 import 'package:http/http.dart' as http;
 class pagephone extends StatefulWidget {
   final CardItem item;
@@ -58,6 +60,7 @@ class pagephone_ extends State<pagephone> {
     'assets/images/compartion/screen (1).png',
     'assets/images/compartion/battery (1).png',
   ];
+
   //Images from data phone
   // final Images=[
   //   listResponse[0]['picture'].toString(),
@@ -71,18 +74,16 @@ class pagephone_ extends State<pagephone> {
 
   void next() => controller.nextPage(duration: Duration(milliseconds: 500));
 
-  void selectScreen(BuildContext ctx, String s) {
-    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+  void selectScreen(BuildContext ctx, String s ) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       if (s == "ContatUs")
         return contact_Us();
       else if (s == 'Compartion')
         return compartion();
       else if (s == "allphone")
         return allPhone();
-      else if (s == "test")
-        return sale_center_personalty();
       else
-        return MyHomePage();
+        return MainScreen ();
     }));
   }
 

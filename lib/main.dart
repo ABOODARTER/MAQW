@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:maqw/screens/Compartion.dart';
 import 'package:maqw/screens/Sale_Center_personalty.dart';
+import 'package:maqw/screens/enter%20phone.dart';
+import 'package:maqw/screens/enterphone1.dart';
+import 'package:maqw/screens/mainscreen.dart';
 import 'package:maqw/screens/map.dart';
+import 'package:maqw/screens/salecenter.dart';
 import 'package:maqw/screens/sign%20in.dart';
 import 'package:maqw/screens/sign%20up.dart';
 import 'package:maqw/screens/sign%20up1.dart';
@@ -30,7 +35,6 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: bluee,
         textTheme: const TextTheme(
-
             // style sign
             headline2: TextStyle(
               color: Colors.white,
@@ -53,7 +57,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
-      home: sale_center_personalty(),
+      home:sale_center_personalty(),
       routes: {
         'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),
@@ -63,6 +67,7 @@ class MyApp extends StatelessWidget {
         "centerdata": (context) => const CenterData(),
         'centerdata1': (context) => const CenterData1(),
        // 'map2': (context) => const Map2(),
+        'map':(context)=>const Map(),
       },
     );
   }

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:maqw/screens/Compartion.dart';
+import 'package:maqw/widget/searchwidget.dart';
 import '../main.dart';
 
 class MainComparison extends StatefulWidget {
@@ -49,7 +51,10 @@ class _MainComparisonState extends State<MainComparison> {
                       child: Center(
                         child: InkWell(
                           onTap: () {
-                            Navigator.of(context).pushNamed('compartion');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => compartion()));
                           },
                           child: const Text(
                             "vs",
@@ -72,7 +77,8 @@ class _MainComparisonState extends State<MainComparison> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: InkWell(
-                      onTap: () => Navigator.of(context).pushNamed('allphone'),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => search())),
                       child: const Text(
                         "Add a phone",
                         style: TextStyle(color: Colors.grey, fontSize: 17),
@@ -82,7 +88,8 @@ class _MainComparisonState extends State<MainComparison> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: InkWell(
-                      onTap: () => Navigator.of(context).pushNamed('allphone'),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => search())),
                       child: const Text(
                         "Add a phone",
                         style: TextStyle(color: Colors.grey, fontSize: 17),
@@ -107,7 +114,7 @@ class _MainComparisonState extends State<MainComparison> {
     if (response.statusCode == 200) {
       setState(() {
         devices = jsonDecode(response.body);
-        dataDevice=devices['id_device'];
+        dataDevice = devices['id_device'];
       });
     }
   }

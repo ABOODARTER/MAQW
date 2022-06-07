@@ -1,8 +1,13 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:maqw/screens/AllPhone.dart';
 import 'package:maqw/screens/sign%20up1.dart';
 import 'package:maqw/widget/iconStyle.dart';
+
+import '../screens/Compartion.dart';
+import '../screens/empty.dart';
+import '../screens/map.dart';
 
 
 class ScrollContinerIcon extends StatefulWidget {
@@ -28,19 +33,31 @@ class _ScrollContinerIconState extends State<ScrollContinerIcon> {
         child: Row(
           children: [
             IconStyle(
-                onpress: ()=>Navigator.of(context).pushNamed('allphone'),
+                onpress: ()=> Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => allPhone())),
                 image: ImageIcon[0],
                 textbottn: "All Phone"),
             IconStyle(
-                onpress: ()=>Navigator.of(context).pushNamed('compartion'),
+                onpress: ()=> Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => compartion())),
                 image: ImageIcon[1],
                 textbottn: "comparison"),
             IconStyle(
-                onpress: ()=>Navigator.of(context).pushNamed('empty'),
+                onpress: ()=> Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Empty())),
                 image: ImageIcon[2],
                 textbottn: "conversation"),
             IconStyle(
-                onpress: ()=>Navigator.of(context).pushNamed('map'),
+                onpress: ()=> Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Map())),
                 image: ImageIcon[3],
                 textbottn: "maintenance"),
 

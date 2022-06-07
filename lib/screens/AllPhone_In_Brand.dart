@@ -5,7 +5,8 @@ import 'Colors.dart';
 import 'ContactUs.dart';
 import 'Compartion.dart';
 import 'PagePhone.dart';
-
+import 'mainscreen.dart';
+import 'salecenter.dart';
 class allPhone_in_brand extends StatefulWidget {
   final CardItem item;
   allPhone_in_brand ({
@@ -24,7 +25,18 @@ class allPhone_in_brandState extends State<allPhone_in_brand> {
     Key? key,
     required this.item,
   }) : super();
-
+  void selectScreen(BuildContext ctx, String s ) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      if (s == "ContatUs")
+        return contact_Us();
+      else if (s == 'Compartion')
+        return compartion();
+      else if (s == "allphone")
+        return allPhone();
+      else
+        return MainScreen ();
+    }));
+  }
   Widget SelectBrand({required String item_subtitle}){
     item_subtitle=item.subtitle;
     if(item_subtitle =='Samsung'){

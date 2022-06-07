@@ -14,7 +14,7 @@ import 'PagePhone.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'Sale_Center_personalty.dart';
-
+import 'salecenter.dart';
 class allPhone extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -566,17 +566,17 @@ class ShoePage extends StatelessWidget {
   );
 }
 
-class CardItem {
-  final String assetImage;
-  final String title;
-  final String subtitle;
-
-  const CardItem({
-    required this.assetImage,
-    required this.title,
-    required this.subtitle,
-  });
-}
+// class CardItem {
+//   final String assetImage;
+//   final String title;
+//   final String subtitle;
+//
+//   const CardItem({
+//     required this.assetImage,
+//     required this.title,
+//     required this.subtitle,
+//   });
+// }
 //allphone
 //itemCount:listResponse==null?0:listResponse.length
 //phonepage&allphone

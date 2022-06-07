@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import '../screens/salecenter.dart';
 class searchWidget extends StatefulWidget {
   final String text;
   final ValueChanged<String>onChanged;
@@ -12,11 +12,24 @@ class searchWidget extends StatefulWidget {
   required this.onChanged,
   required this.hintText, required String hitText,}) : super(key: key);
   @override
-  State<searchWidget> createState() => _searchwidgetState();
+  State<searchWidget> createState() => searchwidgetState();
 }
 
-class _searchwidgetState extends State<searchWidget> {
+class searchwidgetState extends State<searchWidget> {
   final controller =TextEditingController();
+  late TextEditingController controller1;
+
+  @override
+  void dispose(){
+    controller1.dispose();
+    super.dispose();
+  }
+  @override
+  void initState() {
+    super.initState();
+    controller1=TextEditingController();
+  }
+
   @override
   Widget build(BuildContext context) {
     final styleActive=TextStyle(color: Colors.black);
@@ -33,6 +46,7 @@ class _searchwidgetState extends State<searchWidget> {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
+        autofocus: true,
         controller: controller,
         decoration: InputDecoration(
           icon:Icon(Icons.search,color:style.color),
@@ -54,5 +68,6 @@ class _searchwidgetState extends State<searchWidget> {
       ),
     );
   }
+
 
 }

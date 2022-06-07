@@ -12,10 +12,10 @@ class search extends StatefulWidget {
   const search({Key? key}) : super(key: key);
 
   @override
-  State<search> createState() => _searchState();
+  State<search> createState() => searchState();
 }
 
-class _searchState extends State<search> {
+class searchState extends State<search> {
   late List<Phone> phones;
   String query = '';
   Timer? debouncer;

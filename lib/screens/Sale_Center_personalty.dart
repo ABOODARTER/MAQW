@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maqw/widget/navigationbottom.dart';
@@ -9,6 +11,10 @@ import 'Compartion.dart';
 import 'AllPhone.dart';
 import'../main.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
+
+import 'enter phone.dart';
+import 'enterphone1.dart';
 
 class sale_center_personalty extends StatefulWidget {
   @override
@@ -18,6 +24,16 @@ class sale_center_personalty extends StatefulWidget {
 }
 
 class _salecenter extends State<sale_center_personalty> {
+  final forkeyup = GlobalKey<FormState>();
+
+  //editing controller
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController TimeOpenController = TextEditingController();
+  final TextEditingController TimeCloseController = TextEditingController();
+  final TextEditingController LandLineController = TextEditingController();
+  bool isValid = false;
+
   void selectScreen(BuildContext ctx, String s) {
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       if (s == "ContatUs")
@@ -251,7 +267,13 @@ class _salecenter extends State<sale_center_personalty> {
                               borderRadius: BorderRadius.all(Radius.circular(10))
                             ),
                             child:Text('Edit Phone',style: TextStyle(color:b,fontSize: 20,fontWeight: FontWeight.w300),),
-                              onPressed: (){}),
+                              onPressed: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          EnterPhone1()),);
+                              }),
                         ],
                       ),
                     ),
@@ -261,7 +283,11 @@ class _salecenter extends State<sale_center_personalty> {
             ),
           floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
           floatingActionButton: FloatingActionButton.extended(
-            onPressed: () {  },
+            onPressed: () {  Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      EnterPhone()),); },
             icon:Icon(Icons.add_rounded,size: 35,),
             label: Text('Add Phone'),
             backgroundColor: Bluecolor,
@@ -319,5 +345,16 @@ class _salecenter extends State<sale_center_personalty> {
         )
         ,
     );
+  }
+  Future<void> signup() async {
+    String Url = "";
+    Map MyData = {
+      'name':  nameController .text,
+      'timeopen': TimeOpenController.text,
+    'timeclose': TimeCloseController.text,
+    'landline': LandLineController.text,
+    };
+    http.Response response = await http.post(Uri.parse(Url), body: MyData);
+    var data = jsonEncode(response.body);
   }
 }

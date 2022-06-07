@@ -10,14 +10,14 @@ import 'dart:convert' as convert;
 import 'package:maqw/widget/containermap.dart';
 
 
-class Map extends StatefulWidget {
-  const Map({Key? key}) : super(key: key);
+class MainMap extends StatefulWidget {
+  const MainMap({Key? key}) : super(key: key);
 
   @override
-  State<Map> createState() => _MapState();
+  State<MainMap> createState() => _MainMapState();
 }
 
-class _MapState extends State<Map> {
+class _MainMapState extends State<MainMap> {
   late GoogleMapController googleMapController;
 
   static late CameraPosition initialCameraPosition = const CameraPosition(
@@ -39,7 +39,7 @@ class _MapState extends State<Map> {
       'currentlongitude': currentlongitude,
     };
     http.Response response = await http.post(Uri.parse(url), body: location);
-    var data = jsonEncode(response.body);
+    var currentLocationUser = jsonEncode(response.body);
   }
 
 // variables to store current location
@@ -48,8 +48,10 @@ class _MapState extends State<Map> {
 
 // variables to api _buildContainer
  List allCenters =[];
-// Map oneCenter={}as Map;
+ Map center={};
  String dataCenter="";
+  Map requiredCenterS={};
+  Map requiredCenterM={};
 
 
   // api to _buildContainer
@@ -59,13 +61,37 @@ class _MapState extends State<Map> {
     if (response.statusCode == 200) {
       setState(() {
        allCenters = jsonDecode(response.body);
-        // على حسب الاسم الي مسميه بملف json
-    //    oneCenter = allCenters['center'];
-        // خزنت التايب تبعو بمتحول مشان اعرف شو نوع المركز واعرض معلوماتو بناءا على نوعو
-     //   dataCenter=oneCenter['type'];
+       for (int i = 0; i < allCenters.length; i++) {
+         center=allCenters[i];
+         dataCenter=center['type'];
+         if(dataCenter=="Sale Center"){
+           requiredCenterS=allCenters[i];
+         }
+         else if(dataCenter=="maintenance center"){
+           requiredCenterM=allCenters[i];
+         }
+       }
       });
     }
   }
+  // Api places
+String urlPlaces ="";
+List places3 =[];
+Map place1={};
+Map place2={};
+Map place3={};
+Future getPlaces()async{
+  http.Response responseP =await http.get(Uri.parse(urlPlaces));
+  if(responseP.statusCode==200){
+    setState(() {
+      places3=jsonDecode(responseP.body);
+      place1=places3[0];
+      place2=places3[1];
+      place3=places3[2];
+    });
+
+  }
+}
 
 // container to show details center
   Widget _buildContainer() {
@@ -77,35 +103,29 @@ class _MapState extends State<Map> {
             height: 200,
             child: ListView(scrollDirection: Axis.horizontal, children: [
               ContainerMap(
-                  image: 'assets/images/images.jpg',
-                  namecenter: "ccssp center",
-                  timeopen: '12:00 open',
-                  timeclose: '9:00 close',
+                  image:place1==null?Text("load"): place1['image'],
+                  namecenter:place1==null?Text("load") :place1['name'],
+                  timeopen:place1==null?Text("load"): place1['time_open'],
+                  timeclose:place1==null?Text("load"): place1['time_close'],
                   onpress: () {}),
               const SizedBox(
                 width: 15,
               ),
               ContainerMap(
-                  image: 'assets/images/images.jpg',
-                  namecenter: "ccssp center",
-                  timeopen: '12:00 open',
-                  timeclose: '9:00 close',
+                  image:place2==null?Text("load"): place2['image'],
+                  namecenter:place2==null?Text("load"): place2['name'] ,
+                  timeopen:place2==null?Text("load"): place2['time_open'],
+                  timeclose: place2==null?Text("load"): place2['time_close'],
                   onpress: () {}),
               const SizedBox(
                 width: 15,
               ),
               ContainerMap(
-                  image: 'assets/images/images.jpg',
-                  namecenter: "ccssp center",
-                  timeopen: '12:00 open',
-                  timeclose: '9:00 close',
+                  image:place3==null?Text("load"): place3['image'],
+                  namecenter:place3==null?Text("load"): place3['name'] ,
+                  timeopen:place3==null?Text("load"): place3['time_open'],
+                  timeclose: place3==null?Text("load"): place3['time_close'],
                   onpress: () {}),
-           //   to get api
-           //    ContainerMap(image: oneCenter==null?Text("load"):Image.asset(oneCenter['image']) as Image,
-           //        namecenter: oneCenter==null?Text("load"):Text(oneCenter['name'].toString()),
-           //        timeopen: oneCenter==null?Text("load"):Text(oneCenter['time_open'].toString()),
-           //        timeclose:oneCenter==null?Text("load"):Text(oneCenter['time_close'].toString()) ,
-           //        onpress: () {}),
             ]),
           )
         ]));
@@ -258,27 +278,4 @@ class _MapState extends State<Map> {
     return currentposition;
   }
 
-// api to places
-  Future<void> LocationService() async {
-    String key = '"AIzaSyD0Iveuotn1GTDmBCC6OojqfKlNVqLaUt0"';
-
-    Future<String> getPlaceId() async {
-      String url = '';
-      var response = await http.get(Uri.parse(url));
-      var json = convert.jsonDecode(response.body);
-      var plaseId = json['cnter'][0]['center_id'] as String;
-
-      return plaseId;
-    }
-    // Future<Map<String,dynamic>> getPlaceId() async{
-    //   final plaseId= await getPlaseId();
-    //   final String url='';
-    //   var response = await http.get(Uri.parse(url));
-    //   var json=convert.jsonDecode(response.body);
-    //   var results=json['result'] as Map<String,dynamic>;
-    //   print (results);
-    //   return results;
-    //
-    // }
-  }
 }

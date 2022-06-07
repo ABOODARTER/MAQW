@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
@@ -36,9 +38,6 @@ class _FormSingInState extends State<FormSingIn> {
       color: bluee,
     );
   }
-
-  // type to api
-  String type = "";
 
   @override
   Widget build(BuildContext context) {
@@ -145,15 +144,25 @@ class _FormSingInState extends State<FormSingIn> {
     );
   }
 
+  Map user={};
+  String type="";
+  String urlu="";
   // Create function Api
   Future<void> singin() async {
     if (usernameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
-      var response = await http.post(Uri.parse(""),
+      http.Response response = await http.post(Uri.parse(""),
           body: ({
             'username': usernameController.text,
             'password': passwordController.text,
           }));
+      http.Response responseu=await http.get(Uri.parse(urlu));
+      if(responseu.statusCode==200){
+        setState(() {
+          user=jsonDecode(responseu.body);
+          type=user['type'];
+        });
+      }
       if (response.statusCode == 200 && type == "client") {
         Navigator.of(context).pushReplacementNamed('mainscreen');
       } else if (response.statusCode == 200 && type == "sale center") {

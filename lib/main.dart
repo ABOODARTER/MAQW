@@ -72,10 +72,11 @@ class MyApp extends StatelessWidget {
         'allphone':(context)=> allPhone(),
          'compartion':(context)=>compartion(),
         'empty':(context)=>const Empty(),
-        'map':(context)=>const Map(),
+        'map':(context)=>const MainMap(),
         'contact_us':(context)=>contact_Us(),
         'mainscreen':(context)=>const MainScreen(),
         'enterphone':(context)=>const EnterPhone(),
+        'enterphone1':(context)=> const EnterPhone1(),
       },
     );
   }

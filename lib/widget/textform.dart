@@ -30,7 +30,7 @@ class _TextFormCState extends State<TextFormC> {
   Widget build(BuildContext context) {
     return Column(children: [
       Padding(
-        padding: EdgeInsets.only(
+        padding:const EdgeInsets.only(
           right: 230,
           bottom: 5,
         ),
@@ -43,9 +43,38 @@ class _TextFormCState extends State<TextFormC> {
         ),
       ),
       TextFormField(
+        style: TextStyle(
+          color: bluee,
+          fontSize: 16,
+
+        ),
+
         validator: widget.validator,
         textInputAction: widget.TextInputAction1,
         decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
+    enabledBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+    color: Colors.grey,
+      width: 1.5,
+    ),
+    borderRadius: BorderRadius.circular(40),
+    ),
+    disabledBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+    color: Colors.grey,
+      width: 1.5,
+    ),
+    borderRadius: BorderRadius.circular(40),
+    ),
+    focusedBorder: OutlineInputBorder(
+    borderSide: const BorderSide(
+    color: Colors.grey,
+      width: 1.5
+    ),
+    borderRadius: BorderRadius.circular(40),
+    ),
           hintText: widget.TextHint,
           hintStyle: Theme.of(context).textTheme.headline1,
         ),

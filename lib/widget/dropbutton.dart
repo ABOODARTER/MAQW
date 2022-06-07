@@ -24,13 +24,18 @@ class _DropButtonState extends State<DropButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 380,
+        height: 60,
         padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(35),
-          border: Border.all(
-            color: bluee,
-            width: 2.5,
-          ),
+          borderRadius: BorderRadius.circular(40),border: Border.all(
+          color: Colors.grey,
+          width: 1.5
+        ),
+
+
+
+          color: Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,11 +58,9 @@ class _DropButtonState extends State<DropButton> {
                           ),
                           hint: Text(
                             widget.hint,
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 23,
-                            ),
+                            style: Theme.of(context).textTheme.headline1,
                           ),
+
                           onChanged: widget.onchange,
                           items: widget.items,
 

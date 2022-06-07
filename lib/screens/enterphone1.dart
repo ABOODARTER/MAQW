@@ -32,22 +32,22 @@ class _EnterPhone1State extends State<EnterPhone1> {
                   height: 60,
                 ),
                 DropButton(
-                  value: size,
+                  value: "0",
                   hint: "Select size phone",
                   onchange: (newvalue) {
                     setState(() {
                       size = newvalue;
-                      getSizeList();
+                      getList();
                       print("${size}");
                     });
                   },
                   items: sizeList?.map((item) {
                         return DropdownMenuItem(
                           child: Text(
-                            item['disply_size'],
+                            item[0],
                             style: TextStyle(color: bluee),
                           ),
-                          value: item['id'].toString(),
+                          value: item[0].toString(),
                         );
                       })?.toList() ??
                       [],
@@ -58,20 +58,20 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value: body,
                   hint: "Select body phone",
-                  items: sizeList?.map((item) {
+                  items: bodyList?.map((item) {
                         return DropdownMenuItem(
                           child: Text(
-                            item['body'],
+                            item[0],
                             style: TextStyle(color: bluee),
                           ),
-                          value: item['id'].toString(),
+                          value: item[0].toString(),
                         );
                       })?.toList() ??
                       [],
                   onchange: (newvalue) {
                     setState(() {
                       body = newvalue;
-                      getBodyList();
+                      getList();
                       print("${body}");
                     });
                   },
@@ -85,17 +85,17 @@ class _EnterPhone1State extends State<EnterPhone1> {
                   items: resolutionList?.map((item) {
                     return DropdownMenuItem(
                       child: Text(
-                        item['resolution'],
+                        item[0],
                         style: TextStyle(color: bluee),
                       ),
-                      value: item['id'].toString(),
+                      value: item[0].toString(),
                     );
                   })?.toList() ??
                       [],
                   onchange: (newvalue) {
                     setState(() {
                       resolution = newvalue;
-                      getResolutionList();
+                      getList();
                       print("${resolution}");
                     });
                   },
@@ -109,17 +109,17 @@ class _EnterPhone1State extends State<EnterPhone1> {
                   items: cameraList?.map((item) {
                     return DropdownMenuItem(
                       child: Text(
-                        item['camera'],
+                        item[0],
                         style: TextStyle(color: bluee),
                       ),
-                      value: item['id'].toString(),
+                      value: item[0].toString(),
                     );
                   })?.toList() ??
                       [],
                   onchange: (newvalue) {
                     setState(() {
                       resolution = newvalue;
-                      getCameraList();
+                      getList();
                       print("${camera}");
                     });
                   },
@@ -133,17 +133,17 @@ class _EnterPhone1State extends State<EnterPhone1> {
                   items: ramList?.map((item) {
                     return DropdownMenuItem(
                       child: Text(
-                        item['ram'],
+                        item[0],
                         style: TextStyle(color: bluee),
                       ),
-                      value: item['id'].toString(),
+                      value: item[0].toString(),
                     );
                   })?.toList() ??
                       [],
                   onchange: (newvalue) {
                     setState(() {
                       ram = newvalue;
-                      getRamList();
+                      getList();
                       print("${ram}");
                     });
                   },
@@ -154,20 +154,20 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value:os,
                   hint: "Select os phone",
-                  items: ramList?.map((item) {
+                  items: osList?.map((item) {
                     return DropdownMenuItem(
                       child: Text(
-                        item['os'],
+                        item[0],
                         style: TextStyle(color: bluee),
                       ),
-                      value: item['id'].toString(),
+                      value: item[0].toString(),
                     );
                   })?.toList() ??
                       [],
                   onchange: (newvalue) {
                     setState(() {
                       os = newvalue;
-                      getOsList();
+                      getList();
                       print("${os}");
                     });
                   },
@@ -178,21 +178,21 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value:os,
                   hint: "Select video phone",
-                  items: videoList?.map((item) {
+                  items: vidioList?.map((item) {
                     return DropdownMenuItem(
                       child: Text(
-                        item['video'],
+                        item[0],
                         style: TextStyle(color: bluee),
                       ),
-                      value: item['id'].toString(),
+                      value: item[0].toString(),
                     );
                   })?.toList() ??
                       [],
                   onchange: (newvalue) {
                     setState(() {
-                      video = newvalue;
-                      getVideoList();
-                      print("${video}");
+                      vidio = newvalue;
+                      getList();
+                      print("${vidio}");
                     });
                   },
                 ),
@@ -209,130 +209,166 @@ class _EnterPhone1State extends State<EnterPhone1> {
       ),
     ));
   }
+  // variables to drop value
+  String size="";
+  String body="";
+  String os="";
+  String resolution ="";
+  String camera ="";
+  String vidio ="";
+  String ram="";
 
   // api to size phone
+  List devices=[];
+  Map device={};
   List sizeList = [];
-  String size = "";
+  List bodyList=[];
+  List osList=[];
+  List resolutionList=[];
+  List cameraList=[];
+  List vidioList=[];
+  List ramList=[];
 
-  Future getSizeList() async {
+  Future getList() async {
     String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        sizeList = data['sizes'];
-      });
-    });
+   http.Response responseDevices= await http.get(Uri.parse(url));
+   if(responseDevices.statusCode==200){
+     setState(() {
+       devices=convert.jsonDecode(responseDevices.body);
+       for(int i=0;i<=devices.length;i++){
+         device=devices[i];
+         if(device==device['disply_size']){
+           sizeList=device['disply_size'];
+         }
+         else if(device==device['body']){
+           bodyList=device['body'];
+         }
+         else if(device=device['os']){
+           osList=device['os'];
+         }
+         else if(device==device['disply_resolution']){
+           resolutionList=device['disply_reolution'];
+         }
+         else if(device==device['camera_pixsels']){
+          cameraList=device['camera_pixsels'] ;
+         }
+         else if(device=device['vidio_pixsels']){
+           vidioList=device['vidio_pixsels'];
+         }
+         else if(device==device['ram']){
+           ramList=device['ram'];
+         }
+       }
+     });
+
+   }
   }
 
-  // api to body phone
-  List bodyList = [];
-  String body = "";
-
-  Future getBodyList() async {
-    String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        sizeList = data['bodies'];
-      });
-    });
-  }
-
-  // api to resolutionlist phone
-  List resolutionList = [];
-  String resolution = "";
-
-  Future getResolutionList() async {
-    String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        sizeList = data['resolutions'];
-      });
-    });
-  }
-
-  // api to camera pickles phone
-  List cameraList = [];
-  String camera = "";
-
-  Future getCameraList() async {
-    String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        cameraList = data['cameres'];
-      });
-    });
-  }
-
-  // api to ram phone
-  List ramList = [];
-  String ram = "";
-
-  Future getRamList() async {
-    String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        cameraList = data['rams'];
-      });
-    });
-  }
-
-  // api to os phone
-  List osList = [];
-  String os = "";
-
-  Future getOsList() async {
-    String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        cameraList = data['Os'];
-      });
-    });
-  }
-
-  // api to video pickles phone
-  List videoList = [];
-  String video = "";
-
-  Future getVideoList() async {
-    String url = "";
-    await http.post(Uri.parse(url), headers: {
-      'Content_Type': 'application/x-www-form-urlencoded'
-    }, body: {
-      "api_key": '25d55ad283aa400af464c76d713c07ad',
-    }).then((response) {
-      var data = convert.jsonDecode(response.body);
-      setState(() {
-        cameraList = data['videos'];
-      });
-    });
-  }
+  // // api to body phone
+  // List bodyList = [];
+  // String body = "";
+  //
+  // Future getBodyList() async {
+  //   String url = "";
+  //   await http.post(Uri.parse(url), headers: {
+  //     'Content_Type': 'application/x-www-form-urlencoded'
+  //   }, body: {
+  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
+  //   }).then((response) {
+  //     var data = convert.jsonDecode(response.body);
+  //     setState(() {
+  //       sizeList = data['bodies'];
+  //     });
+  //   });
+  // }
+  //
+  // // api to resolutionlist phone
+  // List resolutionList = [];
+  // String resolution = "";
+  //
+  // Future getResolutionList() async {
+  //   String url = "";
+  //   await http.post(Uri.parse(url), headers: {
+  //     'Content_Type': 'application/x-www-form-urlencoded'
+  //   }, body: {
+  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
+  //   }).then((response) {
+  //     var data = convert.jsonDecode(response.body);
+  //     setState(() {
+  //       sizeList = data['resolutions'];
+  //     });
+  //   });
+  // }
+  //
+  // // api to camera pickles phone
+  // List cameraList = [];
+  // String camera = "";
+  //
+  // Future getCameraList() async {
+  //   String url = "";
+  //   await http.post(Uri.parse(url), headers: {
+  //     'Content_Type': 'application/x-www-form-urlencoded'
+  //   }, body: {
+  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
+  //   }).then((response) {
+  //     var data = convert.jsonDecode(response.body);
+  //     setState(() {
+  //       cameraList = data['cameres'];
+  //     });
+  //   });
+  // }
+  //
+  // // api to ram phone
+  // List ramList = [];
+  // String ram = "";
+  //
+  // Future getRamList() async {
+  //   String url = "";
+  //   await http.post(Uri.parse(url), headers: {
+  //     'Content_Type': 'application/x-www-form-urlencoded'
+  //   }, body: {
+  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
+  //   }).then((response) {
+  //     var data = convert.jsonDecode(response.body);
+  //     setState(() {
+  //       cameraList = data['rams'];
+  //     });
+  //   });
+  // }
+  //
+  // // api to os phone
+  // List osList = [];
+  // String os = "";
+  //
+  // Future getOsList() async {
+  //   String url = "";
+  //   await http.post(Uri.parse(url), headers: {
+  //     'Content_Type': 'application/x-www-form-urlencoded'
+  //   }, body: {
+  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
+  //   }).then((response) {
+  //     var data = convert.jsonDecode(response.body);
+  //     setState(() {
+  //       cameraList = data['Os'];
+  //     });
+  //   });
+  // }
+  //
+  // // api to video pickles phone
+  // List videoList = [];
+  // String video = "";
+  //
+  // Future getVideoList() async {
+  //   String url = "";
+  //   await http.post(Uri.parse(url), headers: {
+  //     'Content_Type': 'application/x-www-form-urlencoded'
+  //   }, body: {
+  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
+  //   }).then((response) {
+  //     var data = convert.jsonDecode(response.body);
+  //     setState(() {
+  //       cameraList = data['videos'];
+  //     });
+  //   });
+  // }
 }

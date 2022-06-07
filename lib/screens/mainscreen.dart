@@ -18,26 +18,28 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("main screen"),
+        title:const Text("main screen"),
         centerTitle: true,
       ),
-        body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              ScrollContinerIcon(),
-              SizedBox(height: 30,),
-              MainComparison(),
-              SizedBox(height: 30,),
-              MainMap()
-            ],
+        body: SafeArea(
+          child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children:const[
+                ScrollContinerIcon(),
+                SizedBox(height: 30,),
+                MainComparison(),
+                SizedBox(height: 30,),
+                MainMap()
+              ],
+            ),
+
           ),
-
-        ),
       ),
+        ),
 
-    bottomNavigationBar: NavigationB(),
+    bottomNavigationBar:const NavigationB(),
     );
   }
 

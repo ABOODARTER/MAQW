@@ -15,8 +15,8 @@ class _MainMapState extends State<MainMap> {
     return InkWell(
       onTap: () => Navigator.of(context).pushNamed('map'),
       child: Container(
-        width: 391.81,
-        height: 200,
+        width:MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: Colors.white,
@@ -30,20 +30,31 @@ class _MainMapState extends State<MainMap> {
         ),
         child: Stack(
           children: [
-            Row(
+            ListView(
+              scrollDirection:Axis.horizontal ,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10,horizontal: 10),
-                  child: Center(
-                    child: Text(
-                        "You Can Search For The Nearest\nSales Centers Or The Nearest\nSales And Maintenance\nCenters Or\nMaintenance Centers, Then You\nCan Access The Details Of Each\nSelected Center\n",
-                      style: TextStyle(color: bluee,fontSize: 16),
+                Row(
+                  children: [
+                    Padding(
+                      padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      child: Center(
+                        child: Text(
+                          "You Can Search For The Nearest\nSales Centers Or The Nearest\nSales And Maintenance\nCenters Or\nMaintenance Centers, Then You\nCan Access The Details Of Each\nSelected Center\n",
+                          style: TextStyle(color: bluee, fontSize: 18),
+                        ),
+                      ),
                     ),
-                  ),
+                   const SizedBox(width: 5,),
+                    Image.asset(
+                      'assets/images/map.jpg',
+                      width: MediaQuery.of(context).size.height * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
+                  ],
                 ),
-               // SizedBox(width: ,),
-                Image.asset('assets/images/map.jpg',width: 120,height: 136,),
               ],
+
             )
           ],
         ),

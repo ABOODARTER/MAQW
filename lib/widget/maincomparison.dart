@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../main.dart';
@@ -13,11 +11,25 @@ class MainComparison extends StatefulWidget {
 }
 
 class _MainComparisonState extends State<MainComparison> {
+  // api to show details the phone
+  String urlAll="";
+  List devices=[];
+  Map device={};
+  Future getPhone()async{
+    http.Response responseAll=await http.get(Uri.parse(urlAll));
+    if(responseAll.statusCode==200){
+      setState(() {
+        devices=jsonDecode(responseAll.body);
+
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 391.81,
-      height: 160.91,
+      width:  MediaQuery.of(context).size.height * 0.6,
+      height:MediaQuery.of(context).size.height * 0.2,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         color: Colors.white,
@@ -66,39 +78,40 @@ class _MainComparisonState extends State<MainComparison> {
                   Image.asset('assets/images/phonec.png'),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).pushNamed('allphone'),
-                      child: const Text(
-                        "Add a phone",
-                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pushNamed('allphone'),
+                        child: const Text(
+                          "Add a phone",
+                          style: TextStyle(color: Colors.grey, fontSize: 17),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: InkWell(
-                      onTap: () => Navigator.of(context).pushNamed('allphone'),
-                      child: const Text(
-                        "Add a phone",
-                        style: TextStyle(color: Colors.grey, fontSize: 17),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pushNamed('allphone'),
+                        child: const Text(
+                          "Add a phone",
+                          style: TextStyle(color: Colors.grey, fontSize: 17),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
+                  ],
+                ),
+
             ],
-          )
+    ),
         ],
       ),
     );
   }
 
-  Map devices = {};
+  List devices1 = [];
   Map dataDevice = {};
 
   Future getPhoneInformation() async {
@@ -107,7 +120,7 @@ class _MainComparisonState extends State<MainComparison> {
     if (response.statusCode == 200) {
       setState(() {
         devices = jsonDecode(response.body);
-        dataDevice=devices['id_device'];
+       // dataDevice=devices[''];
       });
     }
   }

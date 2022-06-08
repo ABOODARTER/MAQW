@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'Sale_Center_personalty.dart';
 import 'salecenter.dart';
+
 class allPhone extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -22,30 +23,164 @@ class allPhone extends StatefulWidget {
   }
 }
 
-
-
 class allPhoneState extends State<allPhone> {
-  String? stringResponse;
-  List listResponse = [];
-  Map mapResponse={};
+  List<CardItem> listphonessamsungResponse = [];
+  List<CardItem> listphonesredmiResponse= [];
+  List<CardItem> listphoneshuaweiResponse= [];
+  List<CardItem> listphonesiphoneResponse= [];
+  Map bodyResponse = {};
+  Map dataphoneResponse = {};
+  final controller = TextEditingController();
 
-  Future apicall() async{
+  Future apicall() async {
     http.Response response;
     //here i put request url
-    response=await http.get(Uri.parse(" "));
-    if(response.statusCode==200){
-      setState((){
-        mapResponse=json.decode(response.body);
-        listResponse=  mapResponse['devicedata'];
-
+    response = await http
+        .get(Uri.parse("http://mobile.test:400/api/search_on_material_device"));
+    if (response.statusCode == 200) {
+      setState(() {
+        bodyResponse = json.decode(response.body);
+        dataphoneResponse = bodyResponse['body'];
       });
     }
   }
+
   @override
-  void initState(){
+  void initState() {
     apicall();
     super.initState();
+    dataphoneResponse['picture'].toString();
+    dataphoneResponse['name'].toString();
+    listphonessamsungResponse = [
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+    ];
+    listphonesredmiResponse=[
+    CardItem(
+      assetImage: dataphoneResponse['picture'].toString(),
+      title: dataphoneResponse['name'].toString(),
+      subtitle: 'Redmi',
+    ),
+    CardItem(
+    assetImage: dataphoneResponse['picture'].toString(),
+    title: dataphoneResponse['name'].toString(),
+    subtitle: 'Redmi',
+    ),
+    CardItem(
+    assetImage: dataphoneResponse['picture'].toString(),
+    title: dataphoneResponse['name'].toString(),
+    subtitle: 'Redmi',
+    ),
+    CardItem(
+    assetImage: dataphoneResponse['picture'].toString(),
+    title: dataphoneResponse['name'].toString(),
+    subtitle: 'Redmi',
+    ),
+    CardItem(
+    assetImage: dataphoneResponse['picture'].toString(),
+    title: dataphoneResponse['name'].toString(),
+    subtitle: 'Redmi',
+    ),
+    CardItem(
+    assetImage: dataphoneResponse['picture'].toString(),
+    title: dataphoneResponse['name'].toString(),
+    subtitle: 'Redmi',
+    ),
+    ];
+    listphoneshuaweiResponse=[
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+    ];
+    listphonesiphoneResponse= [
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+    ];
   }
+
   Widget Viewphone({
     required CardItem item,
   }) =>
@@ -54,16 +189,16 @@ class allPhoneState extends State<allPhone> {
         height: 100,
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          border: Border.all(color: Bluecolor),
-          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(color:Bluecolor),
+          borderRadius: BorderRadius.circular(20.0),
           boxShadow: [
             BoxShadow(color: Greycolor, blurRadius: 4.0, offset: Offset(0, 3)),
-            BoxShadow(color: Bluecolor, offset: Offset(-2, 0)),
-            BoxShadow(color: Bluecolor, offset: Offset(1, 0)),
-            BoxShadow(color: Bluecolor, offset: Offset(0, -0.5)),
+            BoxShadow(color: w, offset: Offset(-2, 0)),
+            BoxShadow(color: w, offset: Offset(1, 0)),
+            BoxShadow(color: w, offset: Offset(0, -0.5)),
           ],
           gradient: LinearGradient(
-            colors: [Bluecolor, Bluecolor.withOpacity(0.5)],
+            colors: [w, w.withOpacity(0.5)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -83,8 +218,7 @@ class allPhoneState extends State<allPhone> {
                         onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    pagephone(item: item))),
+                                builder: (context) => pagephone(item: item))),
                       ),
                     ),
                   ),
@@ -96,130 +230,32 @@ class allPhoneState extends State<allPhone> {
             ),
             Text(
               item.title,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.bold, color: Bluecolor),
             ),
-            Text(
-              item.subtitle,
-              style: TextStyle(fontSize: 15, color: Colors.black54),
+            RaisedButton(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              color: Bluecolor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => allPhone_in_brand(item: item,))),
+              child: Text(
+                item.subtitle,
+                style: TextStyle(
+                    fontSize: 10, color: w, fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),
       );
 
   //list for cards view phone
-  List<CardItem> itemSumsang = [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-  ];
-  List<CardItem> itemRedmi = [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-  ];
 
-  List<CardItem> itemApple= [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-  ];
-
-  List<CardItem> itemHuawei= [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-  ];
 
   //to move between screen
-  void selectScreen(BuildContext ctx, String s ) {
+  void selectScreen(BuildContext ctx, String s) {
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       if (s == "ContatUs")
         return contact_Us();
@@ -288,39 +324,34 @@ class allPhoneState extends State<allPhone> {
                     BoxShadow(color: Greycolor, offset: Offset(0, -0.5)),
                   ],
                 ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        search()));
-                          },
-                          icon: Icon(Icons.search),
-                          highlightColor: Colors.white60,
-                        ),
-                        SizedBox(
-                          width: 220,
-                        ),
-                        IconButton(onPressed: () {}, icon: Icon(Icons.close)),
-                      ],
-                    ),
-                    TextFormField(
+
+                   child: TextFormField(
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
+                        prefixIcon: GestureDetector(
+                            child: Icon(Icons.search,),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          search()));
+                            }
+                        ),
+                        suffixIcon:
+                        GestureDetector(
+                          child: Icon(Icons.close,),
+                          onTap: (){
+                            controller.clear();
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                        ),
                         enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Greycolor),
                             borderRadius: BorderRadius.circular(15.0)),
                       ),
                       keyboardType: TextInputType.text,
                     ),
-                  ],
-                ),
               ),
               SizedBox(
                 height: 30,
@@ -330,10 +361,12 @@ class allPhoneState extends State<allPhone> {
               InkWell(
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              allPhone_in_brand(item: itemSumsang[0],)),);
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => allPhone_in_brand(
+                              item: listphonessamsungResponse[0],
+                            )),
+                  );
                 },
                 child: Text(
                   'Sumsang',
@@ -358,21 +391,23 @@ class allPhoneState extends State<allPhone> {
                     width: 12,
                   ),
                   itemBuilder: (context, index) =>
-                      Viewphone(item: itemSumsang[index]),
+                      Viewphone(item: listphonessamsungResponse[index]),
                 ),
               ),
               SizedBox(
                 height: 30,
               ),
 
-                  // for head brand & i click in this to push to another screen has all phone in the same brand
+              // for head brand & i click in this to push to another screen has all phone in the same brand
               InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            allPhone_in_brand(item: itemRedmi[2],)),);
+                        builder: (context) => allPhone_in_brand(
+                              item: listphonesredmiResponse[2],
+                            )),
+                  );
                 },
                 child: Text(
                   'Redmi',
@@ -386,7 +421,7 @@ class allPhoneState extends State<allPhone> {
                 height: 20,
               ),
 
-                  //scrolling between cards for view phone
+              //scrolling between cards for view phone
               Container(
                 height: 250,
                 child: ListView.separated(
@@ -397,21 +432,23 @@ class allPhoneState extends State<allPhone> {
                     width: 12,
                   ),
                   itemBuilder: (context, index) =>
-                      Viewphone(item: itemRedmi[index]),
+                      Viewphone(item:listphonesredmiResponse[index]),
                 ),
               ),
               SizedBox(
                 height: 30,
               ),
 
-                  // for head brand & i click in this to push to another screen has all phone in the same brand
+              // for head brand & i click in this to push to another screen has all phone in the same brand
               InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            allPhone_in_brand(item: itemHuawei[0],)),);
+                        builder: (context) => allPhone_in_brand(
+                              item: listphoneshuaweiResponse[0],
+                            )),
+                  );
                 },
                 child: Text(
                   'Huawei',
@@ -425,7 +462,7 @@ class allPhoneState extends State<allPhone> {
                 height: 20,
               ),
 
-                  //scrolling between cards for view phone
+              //scrolling between cards for view phone
               Container(
                 height: 250,
                 child: ListView.separated(
@@ -436,21 +473,23 @@ class allPhoneState extends State<allPhone> {
                     width: 12,
                   ),
                   itemBuilder: (context, index) =>
-                      Viewphone(item: itemHuawei[index]),
+                      Viewphone(item: listphoneshuaweiResponse[index]),
                 ),
               ),
               SizedBox(
                 height: 30,
               ),
 
-                  // for head brand & i click in this to push to another screen has all phone in the same brand
+              // for head brand & i click in this to push to another screen has all phone in the same brand
               InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            allPhone_in_brand(item: itemApple[0],)),);
+                        builder: (context) => allPhone_in_brand(
+                              item: listphonesiphoneResponse[0],
+                            )),
+                  );
                 },
                 child: Text(
                   'Apple',
@@ -464,7 +503,7 @@ class allPhoneState extends State<allPhone> {
                 height: 20,
               ),
 
-                  //scrolling between cards for view phone
+              //scrolling between cards for view phone
               Container(
                 height: 250,
                 child: ListView.separated(
@@ -475,7 +514,7 @@ class allPhoneState extends State<allPhone> {
                     width: 12,
                   ),
                   itemBuilder: (context, index) =>
-                      Viewphone(item: itemApple[index]),
+                      Viewphone(item: listphoneshuaweiResponse[index]),
                 ),
               ),
             ]),
@@ -534,7 +573,6 @@ class allPhoneState extends State<allPhone> {
   }
 }
 
-
 class ShoePage extends StatelessWidget {
   final CardItem item;
 
@@ -545,25 +583,25 @@ class ShoePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(
-      title: Text(item.title),
-    ),
-    body: Column(
-      children: [
-        AspectRatio(
-          aspectRatio: 3 / 3,
-          child: Image.asset(item.assetImage, fit: BoxFit.cover),
+        appBar: AppBar(
+          title: Text(item.title),
         ),
-        const SizedBox(
-          height: 8,
+        body: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 3 / 3,
+              child: Image.asset(item.assetImage, fit: BoxFit.cover),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              item.title,
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+            )
+          ],
         ),
-        Text(
-          item.title,
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-        )
-      ],
-    ),
-  );
+      );
 }
 
 // class CardItem {

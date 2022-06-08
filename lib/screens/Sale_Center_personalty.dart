@@ -24,16 +24,50 @@ class sale_center_personalty extends StatefulWidget {
 }
 
 class _salecenter extends State<sale_center_personalty> {
+  String? stringResponse;
+  List  listsal_centerResponse = [];
+  Map  bodyResponse={};
+  Map centersResponse={};
+  Map sale_centerdataResponse={};
+  Map datacenterResponse={};
+  Map modecenterResponse={};
+  Future apicall() async{
+    http.Response response;
+    //here i put request url
+    response=await http.get(Uri.parse("http://mobile.test:400/api/centers"));
+    if(response.statusCode==200){
+      setState((){
+        bodyResponse=json.decode(response.body);
+        centersResponse= bodyResponse['body'];
+        datacenterResponse=centersResponse['formdata'];
+        modecenterResponse=centersResponse['mode'];
+        listsal_centerResponse=datacenterResponse[''];
+
+      });
+    }
+  }
+  @override
+  void initState(){
+    apicall();
+    super.initState();
+   NameAfterController.text=datacenterResponse['value'].toString();
+    AdressAfterController.text= datacenterResponse['value'].toString();
+    TimeOpenAfterController.text= datacenterResponse['value'].toString();
+    TimeCloseAfterController.text=datacenterResponse['value'].toString();
+    LandLineAfterController.text= datacenterResponse['value'].toString();
+    _image=datacenterResponse['value'];
+  }
+
   final forkeyup = GlobalKey<FormState>();
 
   //editing controller
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController TimeOpenController = TextEditingController();
-  final TextEditingController TimeCloseController = TextEditingController();
-  final TextEditingController LandLineController = TextEditingController();
+  TextEditingController NameAfterController = TextEditingController();
+  TextEditingController AdressAfterController = TextEditingController();
+  TextEditingController TimeOpenAfterController = TextEditingController();
+  TextEditingController TimeCloseAfterController = TextEditingController();
+  TextEditingController LandLineAfterController = TextEditingController();
   bool isValid = false;
-
   void selectScreen(BuildContext ctx, String s) {
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       if (s == "ContatUs")
@@ -211,52 +245,62 @@ class _salecenter extends State<sale_center_personalty> {
                               child: ImageProfile()),
                           Container(
                             child: TextField(
+                              controller: NameAfterController,
                               decoration: InputDecoration(
                               label: Text('Name:',style:TextStyle(color: w)),
                                   suffixIcon: Icon(Icons.edit,color: Colors.white,),
+                                // NameAfterController.text=sale_centerdataResponse['name'].toString();
                               ),
                               keyboardType: TextInputType.text,
-                              style: TextStyle(color: w),
+                              style: TextStyle(color: b),
                             ),
                           ),
                           Container(
                             child: TextField(
+                              controller: TimeOpenAfterController,
                               decoration: InputDecoration(
                                 label: Text('Time Open:',style:TextStyle(color: w)),
                                   suffixIcon: Icon(Icons.edit,color: Colors.white,),
+                                // TimeOpenAfterController.text=sale_centerdataResponse['time_open'].toString();
                               ),
                               keyboardType: TextInputType.datetime,
-                              style: TextStyle(color: w),
+                              style: TextStyle(color: b),
                             ),
                           ),
                           Container(
                             child: TextField(
+                              controller: TimeCloseAfterController,
                               decoration: InputDecoration(
                                 label: Text('Time Close:',style:TextStyle(color: w)),
                                   suffixIcon: Icon(Icons.edit,color: Colors.white,),
+                                // TimeCloseAfterController.text=sale_centerdataResponse['time_colse'].toString();
                               ),
                               keyboardType: TextInputType.datetime,
-                              style: TextStyle(color: w),
+                              style: TextStyle(color: b),
                             ),
                           ),
                           Container(
                             child: TextField(
+                              controller: AdressAfterController,
                               decoration: InputDecoration(
                                 label: Text('Address:',style:TextStyle(color: w)),
                                   suffixIcon: Icon(Icons.edit,color: Colors.white,),
+                                // AdressAfterController.text=sale_centerdataResponse['address'].toString();
                               ),
                               keyboardType: TextInputType.url,
-                              style: TextStyle(color: w),
+                              style: TextStyle(color: b),
                             ),
                           ),
                           Container(
                             child: TextField(
+                              controller: LandLineAfterController,
                               decoration: InputDecoration(
                                 label: Text('Land Line:',style:TextStyle(color: w)),
-                                suffixIcon: Icon(Icons.phone,color: Colors.white,)
+                                suffixIcon: Icon(Icons.phone,color: Colors.white,),
+                                 // LandLineAfterController.text=sale_centerdataResponse['land_line'].toString();
                               ),
                               keyboardType: TextInputType.number,
-                              style: TextStyle(color: w),
+                              style: TextStyle(color: b),
                             ),
                           ),
                           SizedBox(height: 30,),
@@ -265,7 +309,7 @@ class _salecenter extends State<sale_center_personalty> {
                             padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.all(Radius.circular(10))
-                            ),
+                            )    ,
                             child:Text('Edit Phone',style: TextStyle(color:b,fontSize: 20,fontWeight: FontWeight.w300),),
                               onPressed: (){
                                 Navigator.push(
@@ -347,12 +391,13 @@ class _salecenter extends State<sale_center_personalty> {
     );
   }
   Future<void> signup() async {
-    String Url = "";
+    String Url = "http://mobile.test:400/api/centers";
     Map MyData = {
-      'name':  nameController .text,
-      'timeopen': TimeOpenController.text,
-    'timeclose': TimeCloseController.text,
-    'landline': LandLineController.text,
+      'name':  NameAfterController .text,
+      'time_open': TimeOpenAfterController.text,
+      'time_close': TimeCloseAfterController.text,
+      'land_line': LandLineAfterController.text,
+      'image':_image,
     };
     http.Response response = await http.post(Uri.parse(Url), body: MyData);
     var data = jsonEncode(response.body);

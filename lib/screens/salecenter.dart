@@ -25,20 +25,27 @@ class sale_center extends StatefulWidget {
 }
 
 class allPhoneState extends State<sale_center> {
+  List<CardItem> listphonessamsungResponse = [];
+  List<CardItem> listphonesredmiResponse= [];
+  List<CardItem> listphoneshuaweiResponse= [];
+  List<CardItem> listphonesiphoneResponse= [];
+  Map centersResponse={};
+  Map sale_centerdataResponse={};
+  Map datacenterResponse={};
   final controller = TextEditingController();
   String? stringResponse;
-  List listResponse = [];
-  Map mapResponse = {};
+  Map bodyResponse = {};
   String searchdata = '';
-
+  Map dataphoneResponse={};
   Future apicall() async {
     http.Response response;
     //here i put request url
-    response = await http.get(Uri.parse(" "));
+    response = await http.get(Uri.parse(" http://mobile.test:400/api/search_on_material_device"));
     if (response.statusCode == 200) {
       setState(() {
-        mapResponse = json.decode(response.body);
-        listResponse = mapResponse['devicedata'];
+        bodyResponse=json.decode(response.body);
+        dataphoneResponse=  bodyResponse['body'];
+        datacenterResponse=centersResponse['formdata'];
       });
     }
   }
@@ -47,6 +54,136 @@ class allPhoneState extends State<sale_center> {
   void initState() {
     apicall();
     super.initState();
+    dataphoneResponse['picture'].toString();
+    dataphoneResponse['name'].toString();
+    listphonessamsungResponse = [
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Sumsang',
+      ),
+    ];
+    listphonesredmiResponse=[
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Redmi',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Redmi',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Redmi',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Redmi',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Redmi',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Redmi',
+      ),
+    ];
+    listphoneshuaweiResponse=[
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Huawei',
+      ),
+    ];
+    listphonesiphoneResponse= [
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+      CardItem(
+        assetImage: dataphoneResponse['picture'].toString(),
+        title: dataphoneResponse['name'].toString(),
+        subtitle: 'Iphone',
+      ),
+    ];
   }
 
   void selectScreen(BuildContext ctx, String s ) {
@@ -69,16 +206,16 @@ class allPhoneState extends State<sale_center> {
         height: 100,
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          border: Border.all(color: Bluecolor),
-          borderRadius: BorderRadius.circular(15.0),
+          border: Border.all(color:Bluecolor),
+          borderRadius: BorderRadius.circular(20.0),
           boxShadow: [
             BoxShadow(color: Greycolor, blurRadius: 4.0, offset: Offset(0, 3)),
-            BoxShadow(color: Bluecolor, offset: Offset(-2, 0)),
-            BoxShadow(color: Bluecolor, offset: Offset(1, 0)),
-            BoxShadow(color: Bluecolor, offset: Offset(0, -0.5)),
+            BoxShadow(color: w, offset: Offset(-2, 0)),
+            BoxShadow(color: w, offset: Offset(1, 0)),
+            BoxShadow(color: w, offset: Offset(0, -0.5)),
           ],
           gradient: LinearGradient(
-            colors: [Bluecolor, Bluecolor.withOpacity(0.5)],
+            colors: [w, w.withOpacity(0.5)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -112,125 +249,26 @@ class allPhoneState extends State<sale_center> {
             ),
             Text(
               item.title,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 13, fontWeight: FontWeight.bold, color: Bluecolor),
             ),
-            Text(
-              item.subtitle,
-              style: TextStyle(fontSize: 15, color: Colors.black54),
+            RaisedButton(
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              color: Bluecolor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => allPhone_in_brand(item: item,))),
+              child: Text(
+                item.subtitle,
+                style: TextStyle(
+                    fontSize: 10, color: w, fontWeight: FontWeight.bold),
+              ),
             )
           ],
         ),
       );
-  List<CardItem> itemSumsang = [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Samsung Not 9 pro',
-        subtitle: 'Samsung'),
-  ];
-  List<CardItem> itemRedmi = [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Redmi Not 9 pro',
-        subtitle: 'Redmi'),
-  ];
-
-  List<CardItem> itemApple = [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Apple Not 9 pro',
-        subtitle: 'Apple'),
-  ];
-
-  List<CardItem> itemHuawei = [
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-    CardItem(
-        assetImage: 'assets/images/compartion/screen (1).png',
-        title: 'Huawi Not 9 pro',
-        subtitle: 'Huawi'),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +276,7 @@ class allPhoneState extends State<sale_center> {
         appBar: AppBar(
           backgroundColor: Bluecolor,
           title: Text(
-            'sale name',
+              datacenterResponse['value'].toString(),
             style: TextStyle(color: w),
           ),
           centerTitle: true,
@@ -334,7 +372,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemSumsang[0],
+                                    item: listphonessamsungResponse[0],
                                   )),
                         );
                       },
@@ -362,7 +400,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemSumsang[index]),
+                            Viewphone(item: listphonessamsungResponse[index]),
                       ),
                     ),
                     SizedBox(
@@ -377,7 +415,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemRedmi[2],
+                                    item: listphonesredmiResponse[2],
                                   )),
                         );
                       },
@@ -405,7 +443,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemRedmi[index]),
+                            Viewphone(item:listphonesredmiResponse[index]),
                       ),
                     ),
                     SizedBox(
@@ -420,7 +458,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemHuawei[0],
+                                    item: listphoneshuaweiResponse[0],
                                   )),
                         );
                       },
@@ -448,7 +486,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemHuawei[index]),
+                            Viewphone(item: listphoneshuaweiResponse[index]),
                       ),
                     ),
                     SizedBox(
@@ -463,7 +501,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemApple[0],
+                                    item: listphonesiphoneResponse[0],
                                   )),
                         );
                       },
@@ -491,7 +529,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemApple[index]),
+                            Viewphone(item: listphonesiphoneResponse[index]),
                       ),
                     ),
                     SizedBox(height: 50,),
@@ -525,7 +563,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemSumsang[0],
+                                    item: listphonessamsungResponse[0],
                                   )),
                         );
                       },
@@ -552,7 +590,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemSumsang[index]),
+                            Viewphone(item: listphonessamsungResponse[index]),
                       ),
                     ),
                     SizedBox(
@@ -567,7 +605,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemRedmi[2],
+                                    item: listphonesredmiResponse[2],
                                   )),
                         );
                       },
@@ -595,7 +633,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemRedmi[index]),
+                            Viewphone(item: listphonesredmiResponse[index]),
                       ),
                     ),
                     SizedBox(
@@ -610,7 +648,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemHuawei[0],
+                                    item: listphoneshuaweiResponse[0],
                                   )),
                         );
                       },
@@ -638,7 +676,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemHuawei[index]),
+                            Viewphone(item: listphoneshuaweiResponse[index]),
                       ),
                     ),
                     SizedBox(
@@ -652,7 +690,7 @@ class allPhoneState extends State<sale_center> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   allPhone_in_brand(
-                                    item: itemApple[0],
+                                    item: listphonesiphoneResponse[0],
                                   )),
                         );
                       },
@@ -680,7 +718,7 @@ class allPhoneState extends State<sale_center> {
                               width: 12,
                             ),
                         itemBuilder: (context, index) =>
-                            Viewphone(item: itemApple[index]),
+                            Viewphone(item: listphonesiphoneResponse[index]),
                       ),
                     ),
                     SizedBox(height: 10,),

@@ -159,14 +159,25 @@ class _FormSingInState extends State<FormSingIn> {
         Navigator.of(context).pushReplacementNamed('mainscreen');
       } else if (responseCheck.statusCode == 200 &&
           type == "sale center" &&
+          disabled == false) {
+        Navigator.of(context).pushReplacementNamed("centerdata");
+      }
+      else if (responseCheck.statusCode == 200 &&
+          type == "sale center" &&
           disabled == true) {
         Navigator.of(context).pushReplacementNamed('salcenter');
       } else if (responseCheck.statusCode == 200 &&
           type == "maintenance center" &&
           disabled == true) {
         // Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
-      } else if (responseCheck.statusCode == 200 && type == "s_and_m_center") {
+      }else if (responseCheck.statusCode == 200 &&
+          type == "maintenance center" &&
+          disabled == false) {
+         Navigator.of(context).pushReplacementNamed("centerdata");
+      } else if (responseCheck.statusCode == 200 && type == "s_and_m_center"&&disabled==true) {
         // Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
+      }else if (responseCheck.statusCode == 200 && type == "s_and_m_center"&&disabled==false) {
+        Navigator.of(context).pushReplacementNamed("centerdata");
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Not Allow")));

@@ -274,7 +274,6 @@ Future getPlaces()async{
             ),
           ),
         ]),
-
       ]),
     );
   }
@@ -288,7 +287,6 @@ Future getPlaces()async{
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       Fluttertoast.showToast(msg: "Location Services are disabled");
-      //  return Future.error("Location Services are disabled");
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {

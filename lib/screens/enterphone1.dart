@@ -207,7 +207,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                   height: 40,
                 ),
                 ContainerIconright(onpress: (){
-                  Navigator.of(context).pushReplacementNamed('screensalecenter');
+                  Navigator.of(context).pushReplacementNamed('salcenter');
                 }),
               ],
             ),

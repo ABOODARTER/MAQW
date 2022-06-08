@@ -65,7 +65,7 @@ class _EnterPhoneState extends State<EnterPhone> {
   String valueName = "";
 
   Future selectName() async {
-    http.Response responseN = await http.get(Uri.parse(urlN));
+    http.Response responseN = await http.get(Uri.parse("http://mobile.test:400/api/search_on_material_device"));
     if (responseN.statusCode == 200) {
       setState(() {
         devices = jsonDecode(responseN.body);
@@ -149,10 +149,10 @@ class _EnterPhoneState extends State<EnterPhone> {
                   items: listNamePhone?.map((item) {
                         return DropdownMenuItem(
                           child: Text(
-                            item['name'],
+                            item[0],
                             style: TextStyle(color: bluee),
                           ),
-                          value: item['id_device'].toString(),
+                          value: item[0].toString(),
                         );
                       })?.toList() ??
                       [],
@@ -369,7 +369,7 @@ class _EnterPhoneState extends State<EnterPhone> {
       'pricephone': pricePhoneController.text,
       'type': _radio
     };
-    http.Response response = await http.post(Uri.parse(url), body: myData);
+    http.Response response = await http.post(Uri.parse( "http://mobile.test:400/api/Info"), body: myData);
     var data = jsonEncode(response.body);
   }
 }

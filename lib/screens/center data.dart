@@ -156,8 +156,6 @@ String Url="";
      'timeOpen':timeOpenController.text,
      'timeClose':timeCloseController.text,
    };
-   http.Response response= await http.post(Uri.parse(Url),body: MyData);
-   var data = jsonEncode(response.body);
-
+   http.Response response= await http.post(Uri.parse("http://mobile.test:400/api/centers"),body: MyData);
  }
 }

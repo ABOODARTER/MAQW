@@ -31,7 +31,7 @@ class _CenterDataState1 extends State<CenterData1> {
   final TextEditingController locationController = TextEditingController();
 
   // variable to radio
-  int _Selectedradio = 0;
+  int _SelectedRadio = 0;
 
 
 
@@ -99,10 +99,10 @@ class _CenterDataState1 extends State<CenterData1> {
                         toggleable:true ,
                         activeColor: bluee,
                         value: 1,
-                        groupValue: _Selectedradio,
+                        groupValue: _SelectedRadio,
                         onChanged: ( value) {
                           setState(() {
-                            _Selectedradio = value as int;
+                            _SelectedRadio = value as int;
                               print("$value");
 
                           });
@@ -120,10 +120,10 @@ class _CenterDataState1 extends State<CenterData1> {
                     Radio(
                       activeColor: bluee,
                       value:2,
-                      groupValue: _Selectedradio,
+                      groupValue: _SelectedRadio,
                       onChanged: (value) {
                         setState(() {
-                          _Selectedradio = value as int;
+                          _SelectedRadio = value as int;
                           print("$value");
                         });
                       },
@@ -140,10 +140,10 @@ class _CenterDataState1 extends State<CenterData1> {
                       toggleable: true,
                       activeColor: bluee,
                       value: 3,
-                      groupValue: _Selectedradio,
+                      groupValue: _SelectedRadio,
                       onChanged: (value) {
                         setState(() {
-                          _Selectedradio = value as int;
+                          _SelectedRadio = value as int;
                           print("$value");
                         });
                       },
@@ -184,15 +184,14 @@ class _CenterDataState1 extends State<CenterData1> {
                           onPressed: () {
                             if (forKeyCenter1.currentState!.validate()) {
                               centerData();
-                              imagestore();
                               // sale center=>enter phone || maintenance center=> main screen
-                              if(_Selectedradio==1){
+                              if(_SelectedRadio==1){
                                   Navigator.of(context).pushReplacementNamed('enterphone');
                               }
-                              else if(_Selectedradio==2){
+                              else if(_SelectedRadio==2){
                                 //  Navigator.of(context).pushReplacementNamed('screen maintenance');
                               }
-                              else if(_Selectedradio==3){
+                              else if(_SelectedRadio==3){
                                   Navigator.of(context).pushReplacementNamed('enterphone');
                               }
 
@@ -303,25 +302,15 @@ class _CenterDataState1 extends State<CenterData1> {
   // Api to store location and type
   Future<void>centerData() async{
     String Url="";
-    Map MyData={
-      'location':locationController.text,
-      'type':_Selectedradio,
-    };
-    http.Response response= await http.post(Uri.parse(Url),body: MyData);
-    var data = jsonEncode(response.body);
-
-  }
-  // Api to store image
-  Future <void>imagestore()async{
     if(_image==null)return;
     String imagebase64=base64Encode(_image!.readAsBytesSync());
     String imagename=_image!.path.split("/").last;
-    print(imagename);
-    var Url="";
-    var data={
+    Map MyData={
+      'location':locationController.text,
+      'type':_SelectedRadio,
       "imagename":imagename,
       "imagebase64":imagebase64,
     };
-    var response= await http.post(Uri.parse(Url),body: data);
+    http.Response response= await http.post(Uri.parse("http://mobile.test:400/api/centers"),body: MyData);
   }
 }

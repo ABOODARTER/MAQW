@@ -27,7 +27,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-#  shared_preferences:
   carousel_slider: ^4.1.1
   email_validator: ^2.0.1
   image_picker: ^0.8.5+3
@@ -40,7 +39,6 @@ dependencies:
   flutter:
 
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

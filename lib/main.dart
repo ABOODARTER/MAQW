@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maqw/screens/AllPhone.dart';
 import 'package:maqw/screens/Compartion.dart';
 import 'package:maqw/screens/Sale_Center_personalty.dart';
 import 'package:maqw/screens/enter%20phone.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
-      home:sale_center_personalty(),
+      home:sale_center(),
       routes: {
         'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),

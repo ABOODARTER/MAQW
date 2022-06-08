@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maqw/screens/salecenter.dart';
 import 'package:maqw/widget/maincomparison.dart';
 import 'package:maqw/widget/mainmap.dart';
 import 'package:maqw/widget/navigationbottom.dart';

@@ -16,14 +16,36 @@ class search extends StatefulWidget {
 }
 
 class searchState extends State<search> {
+  List <Phone>allphones=[];
   late List<Phone> phones;
-  String query = '';
+  String query = 'http://mobile.test:400/api/search_on_device_in_Seles_Center';
   Timer? debouncer;
-
+  Map dataphoneResponse = {};
+  Map bodyResponse = {};
   void initState() {
     super.initState();
     this.phones=allphones;
     init();
+    allphones = <Phone>[
+    Phone(
+    id: 1,
+    brand:  dataphoneResponse['name'].toString(),
+    name: dataphoneResponse['name'].toString(),
+    phoneimage: dataphoneResponse['picture'].toString(),
+    ),
+      Phone(
+        id: 2,
+        brand:  dataphoneResponse['name'].toString(),
+        name: dataphoneResponse['name'].toString(),
+        phoneimage: dataphoneResponse['picture'].toString(),
+      ),
+      Phone(
+        id: 3,
+        brand:  dataphoneResponse['name'].toString(),
+        name: dataphoneResponse['name'].toString(),
+        phoneimage: dataphoneResponse['picture'].toString(),
+      ),
+    ];
   }
   @override
   void dispose(){
@@ -45,30 +67,21 @@ class searchState extends State<search> {
     setState((){
       this.phones=phones;
       this.query=query;
-    });
+    }
+    );
   }
-
-
-  final allphones = <Phone>[
-    Phone(
-      id: 1,
-      brand: 'sumsang',
-      name: 'sumsang Not 9 pro',
-      phoneimage: 'assets/images/compartion/battery (1).png',
-    ),
-    Phone(
-      id: 2,
-      brand: 'Redmi',
-      name: 'Redmi Not 9 pro',
-      phoneimage: 'assets/images/compartion/battery (1).png',
-    ),
-    Phone(
-      id: 3,
-      brand: 'Apple',
-      name: 'Apple Not 9 pro',
-      phoneimage: 'assets/images/compartion/battery (1).png',
-    ),
-  ];
+  Future apicall() async {
+    http.Response response;
+    //here i put request url
+    response = await http
+        .get(Uri.parse("http://mobile.test:400/api/search_on_material_device"));
+    if (response.statusCode == 200) {
+      setState(() {
+        bodyResponse = json.decode(response.body);
+        dataphoneResponse = bodyResponse['body'];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +103,7 @@ class searchState extends State<search> {
           ),
         ],
       ),
+
     );
   }
 
@@ -104,12 +118,11 @@ class searchState extends State<search> {
 
  Widget buildSearch() =>searchWidget(
    text:query,
-   hitText:'Name or Brand ',
-       onChanged: searchPhone, hintText: '',
+   onChanged: searchPhone,
+    hintText: 'Enter Phone Name',
  );
   void searchPhone(String query) async=> debounce(() async {
     final phones=await PhonesApi.getPhones(query);
-
     if(!mounted)return;
     setState((){
       this.query=query;
@@ -130,9 +143,10 @@ class Phone {
       required this.name,
       required this.phoneimage});
 
-  factory Phone.fromJson(Map<String,dynamic>json)=>Phone(id: json['id'], brand: json['brand'], name: json['name'], phoneimage: json['phoneimage']);
+  factory Phone.fromJson(json)=>Phone(id: json['id'], brand: json['name'], name: json['name'], phoneimage: json['picture']);
 //    Map<String,dynamic>toJson()=>{
 //
 // }
 
 }
+

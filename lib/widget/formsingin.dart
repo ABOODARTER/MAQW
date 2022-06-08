@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:maqw/widget/styletextformfield.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 
 class FormSingIn extends StatefulWidget {
   const FormSingIn({Key? key}) : super(key: key);
@@ -15,24 +13,24 @@ class FormSingIn extends StatefulWidget {
 
 class _FormSingInState extends State<FormSingIn> {
   //form key
-  final forKeyin = GlobalKey<FormState>();
+  final forKeyIn = GlobalKey<FormState>();
 
   //editing controller
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   // variable to obscureText
-  bool passwordvisible = true;
+  bool passWordVisible = true;
 
   // Hide and show password
   Widget Vpass() {
     return IconButton(
       icon: Icon(
-        passwordvisible ? Icons.visibility_off : Icons.visibility,
+        passWordVisible ? Icons.visibility_off : Icons.visibility,
       ),
       onPressed: () {
         setState(() {
-          passwordvisible = !passwordvisible;
+          passWordVisible = !passWordVisible;
         });
       },
       color: bluee,
@@ -42,7 +40,7 @@ class _FormSingInState extends State<FormSingIn> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: forKeyin,
+      key: forKeyIn,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -86,14 +84,13 @@ class _FormSingInState extends State<FormSingIn> {
                         return "password required";
                       }
                     },
-                    obscuretext: passwordvisible,
+                    obscuretext: passWordVisible,
                     icon: Vpass(),
                     hintText: "Enter Password",
                     textInputType: TextInputType.visiblePassword),
                 const SizedBox(
                   height: 20,
                 ),
-                //create account
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('signup');
@@ -112,30 +109,21 @@ class _FormSingInState extends State<FormSingIn> {
                   height: 30,
                 ),
                 Container(
-                    decoration: ShapeDecoration(
-                      color: orangee,
-                      shape: const CircleBorder(),
-                    ),
-                    child: Builder(
-                      builder: (ctx) => IconButton(
-                          onPressed: () async {
-                            // final SharedPreferences _pre =
-                            //     await SharedPreferences.getInstance();
-                            // _pre.setString(
-                            //     "u", usernameController.text.toString());
-                            // _pre.setString(
-                            //     "p", passwordController.text.toString());
-                            // Text(
-                            //     "username:${_pre.get("u")} password:${_pre.get("p")}");
-                            if (forKeyin.currentState!.validate()) {
-                              singin();
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.keyboard_arrow_right_rounded,
-                            color: Colors.white,
-                          )),
-                    )),
+                  decoration: ShapeDecoration(
+                    color: orangee,
+                    shape: const CircleBorder(),
+                  ),
+                  child: IconButton(
+                      onPressed: () async {
+                        if (forKeyIn.currentState!.validate()) {
+                          singin();
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.keyboard_arrow_right_rounded,
+                        color: Colors.white,
+                      )),
+                ),
               ],
             ),
           ],
@@ -144,36 +132,44 @@ class _FormSingInState extends State<FormSingIn> {
     );
   }
 
-  Map user={};
-  String type="";
-  String urlu="";
+  Map user = {};
+  String type = "";
+  String urlU = "";
+  bool disabled = false;
+
   // Create function Api
   Future<void> singin() async {
     if (usernameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
-      http.Response response = await http.post(Uri.parse(""),
-          body: ({
-            'username': usernameController.text,
-            'password': passwordController.text,
-          }));
-      http.Response responseu=await http.get(Uri.parse(urlu));
-      if(responseu.statusCode==200){
+      http.Response responseCheck =
+          await http.post(Uri.parse("http://mobile.test:400/api/login"),
+              body: ({
+                'username': usernameController.text,
+                'password': passwordController.text,
+              }));
+      http.Response responseU = await http.get(Uri.parse(urlU));
+      if (responseU.statusCode == 200) {
         setState(() {
-          user=jsonDecode(responseu.body);
-          type=user['type'];
+          user = jsonDecode(responseU.body);
+          type = user['type'];
+          disabled = user['disabled'];
         });
       }
-      if (response.statusCode == 200 && type == "client") {
+      if (responseCheck.statusCode == 200 && type == "client") {
         Navigator.of(context).pushReplacementNamed('mainscreen');
-      } else if (response.statusCode == 200 && type == "sale center") {
-        // Navigator.of(context).pushReplacementNamed('screensalecenter');
-      } else if (response.statusCode == 200 && type == "maintenance center") {
-        // Navigator.of(context).pushReplacementNamed('screenmaintenancecenter');
-      } else if (response.statusCode == 200 && type == "sandmcenter") {
-        // Navigator.of(context).pushReplacementNamed('screensandmcenter');
+      } else if (responseCheck.statusCode == 200 &&
+          type == "sale center" &&
+          disabled == true) {
+        Navigator.of(context).pushReplacementNamed('salcenter');
+      } else if (responseCheck.statusCode == 200 &&
+          type == "maintenance center" &&
+          disabled == true) {
+        // Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
+      } else if (responseCheck.statusCode == 200 && type == "s_and_m_center") {
+        // Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
       } else {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Not Allowd")));
+            .showSnackBar(const SnackBar(content: Text("Not Allow")));
       }
     }
   }

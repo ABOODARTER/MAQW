@@ -8,8 +8,6 @@ import 'package:maqw/widget/iconStyle.dart';
 import '../screens/Compartion.dart';
 import '../screens/empty.dart';
 import '../screens/map.dart';
-
-
 class ScrollContinerIcon extends StatefulWidget {
   const ScrollContinerIcon({Key? key}) : super(key: key);
 
@@ -53,14 +51,6 @@ class _ScrollContinerIconState extends State<ScrollContinerIcon> {
                         builder: (context) => Empty())),
                 image: ImageIcon[2],
                 textbottn: "conversation"),
-            IconStyle(
-                onpress: ()=> Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Map())),
-                image: ImageIcon[3],
-                textbottn: "maintenance"),
-
           ],
         ),
       );

@@ -7,7 +7,6 @@ import 'package:maqw/widget/containericon.dart';
 import 'package:maqw/widget/dropbutton.dart';
 import '../main.dart';
 import '../widget/textform.dart';
-
 class EnterPhone extends StatefulWidget {
   const EnterPhone({Key? key}) : super(key: key);
 
@@ -17,11 +16,11 @@ class EnterPhone extends StatefulWidget {
 
 class _EnterPhoneState extends State<EnterPhone> {
   // key
-  final forKeyenterphone = GlobalKey<FormState>();
+  final forKeyEnterPhone = GlobalKey<FormState>();
 
   //editing controller
-  final TextEditingController colorphoneController = TextEditingController();
-  final TextEditingController pricephoneController = TextEditingController();
+  final TextEditingController colorPhoneController = TextEditingController();
+  final TextEditingController pricePhoneController = TextEditingController();
 
   File? _image;
 
@@ -34,7 +33,7 @@ class _EnterPhoneState extends State<EnterPhone> {
     });
   }
 
-// variable to radio
+ // variable to radio
   int _radio = 1;
 
   // api to select brand
@@ -45,7 +44,7 @@ class _EnterPhoneState extends State<EnterPhone> {
   List listBrandName = [];
 
   Future selectBrand() async {
-    http.Response responseB = await http.get(Uri.parse(urlB));
+    http.Response responseB = await http.get(Uri.parse("http://mobile.test:400/api/return_brand_device"));
     if (responseB.statusCode == 200) {
       setState(() {
         brands = jsonDecode(responseB.body);
@@ -114,10 +113,10 @@ class _EnterPhoneState extends State<EnterPhone> {
                   items: listBrandName?.map((item) {
                         return DropdownMenuItem(
                           child: Text(
-                            item['name'],
+                            item[0],
                             style: TextStyle(color: bluee),
                           ),
-                          value: item['id'].toString(),
+                          value: item[0].toString(),
                         );
                       })?.toList() ??
                       [],
@@ -165,7 +164,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                     });
                   }),
               Form(
-                key: forKeyenterphone,
+                key: forKeyEnterPhone,
                 child: Column(children: [
                   const SizedBox(
                     height: 30,
@@ -174,7 +173,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                     TextTop: "Color Phone",
                     TextHint: "Enter color phone",
                     TextInputAction1: TextInputAction.next,
-                    controller: colorphoneController,
+                    controller: colorPhoneController,
                     validator: (value) {
                       if (value.isEmpty) {
                         return "color phone required";
@@ -188,7 +187,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                     TextTop: "Price Phone",
                     TextHint: "Enter price phone",
                     TextInputAction1: TextInputAction.done,
-                    controller: pricephoneController,
+                    controller: pricePhoneController,
                     validator: (value) {
                       if (value.isEmpty) {
                         return "price phone required";
@@ -256,12 +255,12 @@ class _EnterPhoneState extends State<EnterPhone> {
               ),
               ContainerIconright(
                 onpress: () {
-                  if (forKeyenterphone.currentState!.validate()) {
+                  if (forKeyEnterPhone.currentState!.validate()) {
                     enterphone();
                     if (_radio == 1) {
                       Navigator.of(context).pushReplacementNamed('enterphone1');
                     } else if (_radio == 2) {
-                      // Navigator.of(context).pushReplacementNamed('screencenter');
+                       Navigator.of(context).pushReplacementNamed('salcenter');
                     }
                   }
                 },
@@ -366,8 +365,8 @@ class _EnterPhoneState extends State<EnterPhone> {
   Future<void> enterphone() async {
     String url = "";
     Map myData = {
-      'colorphone': colorphoneController.text,
-      'pricephone': pricephoneController.text,
+      'colorphone': colorPhoneController.text,
+      'pricephone': pricePhoneController.text,
       'type': _radio
     };
     http.Response response = await http.post(Uri.parse(url), body: myData);

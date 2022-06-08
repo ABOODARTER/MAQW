@@ -18,59 +18,48 @@ class _SignUpState extends State<SignUp> {
           child: Center(
             child: SingleChildScrollView(
               child: Stack(children: [
-
-                   Center(
-                    child: Image.asset(
-                      'assets/images/sign.jpg',
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      fit: BoxFit.contain,
-                    ),
+                Center(
+                  child: Image.asset(
+                    'assets/images/sign.jpg',
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    fit: BoxFit.contain,
                   ),
-
+                ),
                 SingleChildScrollView(
-                  child: Column(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 220,
+                  child: Column(children: [
+                    Container(
+                      margin: const EdgeInsets.only(
+                        top: 220,
+                      ),
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      decoration: BoxDecoration(
+                        color: bluee,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(15),
+                          topLeft: Radius.circular(15),
+                          bottomLeft: Radius.circular(70),
+                          bottomRight: Radius.circular(70),
+                        ),
+                      ),
+                      child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 140,
+                            top: 20,
                           ),
-                          width: 412,
-                          height: MediaQuery.of(context).size.height * 0.6,
-                          decoration: BoxDecoration(
-                            color: bluee,
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(15),
-                              topLeft: Radius.circular(15),
-                              bottomLeft: Radius.circular(70),
-                              bottomRight: Radius.circular(70),
-                            ),
+                          child: Text(
+                            'Please Sign Up',
+                            style: Theme.of(context).textTheme.headline2,
                           ),
-                          child: SingleChildScrollView(
-                            child: Column(
-                                children: [
-                                  // Padding to Text Sign up
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      right: 140,
-                                      top: 20,
-                                    ),
-                                    child: Text(
-                                      'Please Sign Up',
-                                      style: Theme.of(context).textTheme.headline2,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 40,
-                                  ),
-                                  const FormSignUp(),
-                                  const SizedBox(
-                                    height: 60,
-                                  ),
-
-                                ]),
-                          ),
-                        )
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        const FormSignUp(),
                       ]),
+                    ),
+                  ]),
                 ),
               ]),
             ),

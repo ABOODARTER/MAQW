@@ -12,7 +12,14 @@ class EnterPhone1 extends StatefulWidget {
   State<EnterPhone1> createState() => _EnterPhone1State();
 }
 
+
 class _EnterPhone1State extends State<EnterPhone1> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getList();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -235,140 +242,47 @@ class _EnterPhone1State extends State<EnterPhone1> {
    if(responseDevices.statusCode==200){
      setState(() {
        devices=convert.jsonDecode(responseDevices.body);
-       for(int i=0;i<=devices.length;i++){
-         device=devices[i];
-         if(device==device['disply_size']){
-           sizeList=device['disply_size'];
-         }
-         else if(device==device['body']){
-           bodyList=device['body'];
-         }
-         else if(device=device['os']){
-           osList=device['os'];
-         }
-         else if(device==device['disply_resolution']){
-           resolutionList=device['disply_reolution'];
-         }
-         else if(device==device['camera_pixsels']){
-          cameraList=device['camera_pixsels'] ;
-         }
-         else if(device=device['vidio_pixsels']){
-           vidioList=device['vidio_pixsels'];
-         }
-         else if(device==device['ram']){
-           ramList=device['ram'];
-         }
-       }
-     });
+       for(int i=0;i<=devices.length;i++) {
+         device = devices[i];
+         for(int j=0;i<=device.length;j++){
+         switch (device[j]) {
+           case('disply_size'):
+             {
+               sizeList = device['disply_size'];
+             }
+             break;
+           case('body'):
+             {
+               bodyList = device['body'];
+             }
+             break;
+           case('os'):
+             {
+               osList = device['os'];
+             }
+             break;
+           case('disply_reolution'):
+             {
+               resolutionList = device['disply_reolution'];
+             }
+             break;
+           case('camera_pixsels'):
+             {
+               cameraList = device['camera_pixsels'];
+             }
+             break;
+           case('vidio_pixsels'):
+             {
+               vidioList = device['vidio_pixsels'];
+             }
+             break;
+           case('ram'):
+             {
+               ramList = device['ram'];
+             }
+             break;
+         }  }}});
 
    }
   }
-
-  // // api to body phone
-  // List bodyList = [];
-  // String body = "";
-  //
-  // Future getBodyList() async {
-  //   String url = "";
-  //   await http.post(Uri.parse(url), headers: {
-  //     'Content_Type': 'application/x-www-form-urlencoded'
-  //   }, body: {
-  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
-  //   }).then((response) {
-  //     var data = convert.jsonDecode(response.body);
-  //     setState(() {
-  //       sizeList = data['bodies'];
-  //     });
-  //   });
-  // }
-  //
-  // // api to resolutionlist phone
-  // List resolutionList = [];
-  // String resolution = "";
-  //
-  // Future getResolutionList() async {
-  //   String url = "";
-  //   await http.post(Uri.parse(url), headers: {
-  //     'Content_Type': 'application/x-www-form-urlencoded'
-  //   }, body: {
-  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
-  //   }).then((response) {
-  //     var data = convert.jsonDecode(response.body);
-  //     setState(() {
-  //       sizeList = data['resolutions'];
-  //     });
-  //   });
-  // }
-  //
-  // // api to camera pickles phone
-  // List cameraList = [];
-  // String camera = "";
-  //
-  // Future getCameraList() async {
-  //   String url = "";
-  //   await http.post(Uri.parse(url), headers: {
-  //     'Content_Type': 'application/x-www-form-urlencoded'
-  //   }, body: {
-  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
-  //   }).then((response) {
-  //     var data = convert.jsonDecode(response.body);
-  //     setState(() {
-  //       cameraList = data['cameres'];
-  //     });
-  //   });
-  // }
-  //
-  // // api to ram phone
-  // List ramList = [];
-  // String ram = "";
-  //
-  // Future getRamList() async {
-  //   String url = "";
-  //   await http.post(Uri.parse(url), headers: {
-  //     'Content_Type': 'application/x-www-form-urlencoded'
-  //   }, body: {
-  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
-  //   }).then((response) {
-  //     var data = convert.jsonDecode(response.body);
-  //     setState(() {
-  //       cameraList = data['rams'];
-  //     });
-  //   });
-  // }
-  //
-  // // api to os phone
-  // List osList = [];
-  // String os = "";
-  //
-  // Future getOsList() async {
-  //   String url = "";
-  //   await http.post(Uri.parse(url), headers: {
-  //     'Content_Type': 'application/x-www-form-urlencoded'
-  //   }, body: {
-  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
-  //   }).then((response) {
-  //     var data = convert.jsonDecode(response.body);
-  //     setState(() {
-  //       cameraList = data['Os'];
-  //     });
-  //   });
-  // }
-  //
-  // // api to video pickles phone
-  // List videoList = [];
-  // String video = "";
-  //
-  // Future getVideoList() async {
-  //   String url = "";
-  //   await http.post(Uri.parse(url), headers: {
-  //     'Content_Type': 'application/x-www-form-urlencoded'
-  //   }, body: {
-  //     "api_key": '25d55ad283aa400af464c76d713c07ad',
-  //   }).then((response) {
-  //     var data = convert.jsonDecode(response.body);
-  //     setState(() {
-  //       cameraList = data['videos'];
-  //     });
-  //   });
-  // }
 }

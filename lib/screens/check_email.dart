@@ -11,13 +11,13 @@ class CheckEmail extends StatefulWidget {
 }
 
 class _CheckEmailState extends State<CheckEmail> {
-  final codecontroller = TextEditingController();
-  final forkeycheck = GlobalKey<FormState>();
+  final codeController = TextEditingController();
+  final forkeyCheck = GlobalKey<FormState>();
 
   @override
   void dispose() {
     // TODO: implement dispose
-   codecontroller.dispose();
+    codeController.dispose();
     super.dispose();
   }
 
@@ -32,39 +32,35 @@ class _CheckEmailState extends State<CheckEmail> {
                     children: [
                       Image.asset(
                         'assets/images/checkemail.png',
-                        height: MediaQuery
-                            .of(context)
-                            .size
-                            .height * 0.4,
+                        height: MediaQuery.of(context).size.height * 0.4,
                       ),
-                    const  Text(
-                        'Email Verificaiton',
+                      const Text(
+                        'Email Verification',
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 35,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    const  SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
-                     const Text(
+                      const Text(
                         "please enter the 4 digit",
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 20,
                         ),
                       ),
-                    const  SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
-                      //text form field
-                     Padding(
-                        padding:const  EdgeInsets.symmetric(vertical: 15),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                         child: Form(
-                          key: forkeycheck,
+                          key: forkeyCheck,
                           child: TextFormField(
-                            controller: codecontroller,
+                            controller: codeController,
                             textInputAction: TextInputAction.done,
                             keyboardType: TextInputType.text,
                             validator: (value) {
@@ -75,35 +71,30 @@ class _CheckEmailState extends State<CheckEmail> {
                             },
                             decoration: InputDecoration(
                               hintText: "Enter code",
-                              hintStyle: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headline1,
-
+                              hintStyle: Theme.of(context).textTheme.headline1,
                             ),
                           ),
                         ),
                       ),
-                    const  SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       TextButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(bluee),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(bluee),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
-                            )
+                            )),
                           ),
-                        ),
                           onPressed: () {
-                            if (forkeycheck.currentState!.validate()) {
-                          checkemail();
+                            if (forkeyCheck.currentState!.validate()) {
+                              checkEmail();
                               Navigator.of(context).pushNamed('verification');
                             }
                           },
-                          child:const Text(
-                            "send Verificaiton code",
+                          child: const Text(
+                            "send Verification code",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
@@ -112,25 +103,24 @@ class _CheckEmailState extends State<CheckEmail> {
                     ]))));
   }
 
-  Future<void> checkemail() async {
-    String Url="";
-    http.Response response = await http.post(Uri.parse(Url),
-
+  Future<void> checkEmail() async {
+    String urlCheckEmail = "";
+    http.Response response = await http.post(
+      Uri.parse(urlCheckEmail),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({
-       'code':codecontroller.text,
+        'code': codeController.text,
       }),
     );
 
     if (response.body == 'email already exists') {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const  SnackBar(content: Text('Email already exists')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Email already exists')));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const  SnackBar(content: Text('Verification code has been sent')));
+          const SnackBar(content: Text('Verification code has been sent')));
     }
   }
 }

@@ -25,22 +25,28 @@ class _MainMapState extends State<MainMap> {
     zoom: 14,
   );
 
+
   // marker to add show client user
   Set<Marker> currentlocation = {};
 
-// marker to show centers
-  Set<Marker> centers = {};
+ // marker to show saleCenters
+  Set<Marker> saleCenters = {};
+
+ // marker to show mCenters
+ Set<Marker> mCenters ={};
 
   // api to store location user
   Future<void> getlocationuser() async {
     String url = "";
-    var location = {
+    Map location = {
       'currentlatitude': currentlatitude,
       'currentlongitude': currentlongitude,
     };
     http.Response response = await http.post(Uri.parse(url), body: location);
     var currentLocationUser = jsonEncode(response.body);
+    
   }
+
 
 // variables to store current location
   String currentlatitude = "";
@@ -64,7 +70,7 @@ class _MainMapState extends State<MainMap> {
        for (int i = 0; i < allCenters.length; i++) {
          center=allCenters[i];
          dataCenter=center['type'];
-         if(dataCenter=="Sale Center"){
+         if(dataCenter=="Sales Center"){
            requiredCenterS=allCenters[i];
          }
          else if(dataCenter=="maintenance center"){
@@ -129,6 +135,12 @@ Future getPlaces()async{
             ]),
           )
         ]));
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    apiContainer();
   }
 
   @override
@@ -223,6 +235,20 @@ Future getPlaces()async{
                   size: 30,
                 ),
                 onPressed: () async {
+                  Position latitude1=place1["latitude"];
+                  Position longitude1 =place1["longitude"];
+                  googleMapController.animateCamera(
+                      CameraUpdate.newCameraPosition(CameraPosition(
+                          target: LatLng(latitude1.latitude, longitude1.longitude),
+                      )));
+                  mCenters.clear();
+                  mCenters.add(
+                    Marker(
+                      markerId: const MarkerId('Center one'),
+                      position: LatLng(latitude1.latitude, longitude1.longitude),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
                   await dataCenter=='maintenance center'?_buildContainer():null;
                 },
               ),
@@ -248,7 +274,7 @@ Future getPlaces()async{
             ),
           ),
         ]),
-        _buildContainer(),
+
       ]),
     );
   }

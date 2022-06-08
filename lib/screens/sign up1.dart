@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maqw/widget/formsignup1.dart';
 import 'package:maqw/main.dart';
+
 class SignUp1 extends StatefulWidget {
   const SignUp1({Key? key}) : super(key: key);
 
@@ -9,9 +10,6 @@ class SignUp1 extends StatefulWidget {
 }
 
 class _SignUp1State extends State<SignUp1> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +28,10 @@ class _SignUp1State extends State<SignUp1> {
                       fit: BoxFit.contain,
                     ),
                     Container(
-                      width: 412,
+                      width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.5,
                       margin: const EdgeInsets.only(
-                        bottom: 30,
+                        bottom: 10,
                       ),
                       decoration: BoxDecoration(
                         color: bluee,
@@ -44,27 +42,23 @@ class _SignUp1State extends State<SignUp1> {
                           bottomRight: Radius.circular(70),
                         ),
                       ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                right: 140,
-                                top: 20,
-                              ),
-                              child: Text(
-                                'Please Sign up',
-                                style: Theme.of(context).textTheme.headline2,
-                              ),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              right: 140,
+                              top: 20,
                             ),
-                          const  SizedBox(
-                              height: 30,
+                            child: Text(
+                              'Please Sign up',
+                              style: Theme.of(context).textTheme.headline2,
                             ),
-                            const FormSignUp1(),
-                            const SizedBox(height: 60,),
-                          
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          const FormSignUp1(),
+                        ],
                       ),
                     ),
                   ]),

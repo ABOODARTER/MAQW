@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maqw/screens/AllPhone.dart';
 import 'package:maqw/screens/Compartion.dart';
-import 'package:maqw/screens/ContactUs.dart';
-import 'package:maqw/screens/empty.dart';
+import 'package:maqw/screens/Sale_Center_personalty.dart';
 import 'package:maqw/screens/enter%20phone.dart';
 import 'package:maqw/screens/enterphone1.dart';
 import 'package:maqw/screens/mainscreen.dart';
@@ -20,8 +19,8 @@ void main() {
   runApp(const MyApp());
 }
 
-Color bluee = const Color(0xff007AFF);
-Color orangee = const Color(0xffF87700);
+final Color bluee = Color(0xff007AFF);
+final Color orangee = Color(0xffF87700);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -44,8 +43,8 @@ class MyApp extends StatelessWidget {
               fontSize: 25,
               letterSpacing: 2,
             ),
-            // style hint_text
-            headline1: TextStyle(
+            // style hinttext
+            headline1: const TextStyle(
               fontSize: 20,
               color: Colors.black45,
               fontWeight: FontWeight.w400,
@@ -59,7 +58,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
-      home: EnterPhone(),
+      home:sale_center(),
       routes: {
         'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),
@@ -68,15 +67,8 @@ class MyApp extends StatelessWidget {
         'verification': (context) => const Verification(),
         "centerdata": (context) => const CenterData(),
         'centerdata1': (context) => const CenterData1(),
-        'allphone': (context) => allPhone(),
-        'compartion': (context) => compartion(),
-        'empty': (context) => const Empty(),
-        'map': (context) => const MainMap(),
-        'contact_us': (context) => contact_Us(),
-        'mainscreen': (context) => const MainScreen(),
-        'enterphone': (context) => const EnterPhone(),
-        'enterphone1': (context) => const EnterPhone1(),
-        'salcenter': (context) => sale_center(),
+       // 'map2': (context) => const Map2(),
+        'map':(context)=>const Map(),
       },
     );
   }
@@ -85,6 +77,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage();
 
+
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -92,6 +86,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: const Center());
+    return Scaffold(
+        appBar: AppBar(
+        ),
+        body: const Center());
   }
 }

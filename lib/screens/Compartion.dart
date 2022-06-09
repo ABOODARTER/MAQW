@@ -19,25 +19,26 @@ class compartion extends StatefulWidget {
 class compartionState extends State<compartion> {
   String? stringResponse;
   List listResponse = [];
-  Map  mapResponse={};
-
+  Map  bodyResponse={};
+  Map dataphoneResponse={};
   Future apicall() async{
     http.Response response;
     //here i put request url
-    response=await http.get(Uri.parse(" "));
+    response=await http.get(Uri.parse("http://mobile.test:400/api/search_on_material_device "));
     if(response.statusCode==200){
        setState((){
-         mapResponse=json.decode(response.body);
-         listResponse=  mapResponse['devicedata'];
+         bodyResponse=json.decode(response.body);
+         dataphoneResponse=  bodyResponse['body'];
 
        });
     }
+    @override
+    void initState(){
+      apicall();
+      super.initState();
+    }
   }
-  @override
-  void initState(){
-    apicall();
-    super.initState();
-  }
+
   void selectScreen(BuildContext ctx, String s) {
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
       if (s == 'Compartion')
@@ -93,24 +94,6 @@ class compartionState extends State<compartion> {
                           MaterialPageRoute(
                               builder: (context) =>
                                   search()));
-                      // DraggableScrollableSheet(
-                      //     initialChildSize: 0.4,
-                      //     minChildSize: 0.1,
-                      //     maxChildSize: 0.8,
-                      //     builder: (context, controller) =>
-                      //         ClipRRect(
-                      //           borderRadius: BorderRadius.circular(12),
-                      //           child: Container(
-                      //             color: Colors.white70,
-                      //             child: ListView.builder(
-                      //                 controller: controller,
-                      //                 itemCount: allphone.length,
-                      //                 itemBuilder: (context, index) {
-                      //                   final phone =allphone[index];
-                      //                   return bulidPhone(phone);
-                      //                 }),
-                      //           ),
-                      //         ));
                     },
                     child: Text(
                       'Add Phone',
@@ -380,289 +363,285 @@ class compartionState extends State<compartion> {
                     width: 50,
                   ),
                   //All text from database
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 90,
-                      ),
-                      //database from left
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          //screen data
-                          Column(
-                            children: [
-                            listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['disply_size'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['disply_resolution'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              ],
-                          ),
-                          SizedBox(
-                            height: 110,
-                          ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                          width:1,
+                        ),
+                        //database from left
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            //screen data
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['display_size'].toString(),
+                              style:
+                              TextStyle(fontSize: 20, color: Greycolor),),
+                            SizedBox(height: 5,),
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['display_resolution'].toString(),
+                              style:
+                              TextStyle(fontSize: 20, color: Greycolor),),
+                            SizedBox(
+                              height: 90,
+                            ),
                             //prosser
-                            listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['chipset'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 110,
-                          ),
-                            //ram
-                            listResponse==null?Text('Data is loading'):Text(
-                              listResponse[0]['ram'].toString(),
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['chipset'].toString(),
                               style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //Gpu
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[0]['chipset'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //camera back
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['camera_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['vidio_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //camera selfi
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['camera_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['vidio_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //opretaing system
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[0]['os'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //battery
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['battary_size'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[0]['battary_type'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //storage capacity
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[0]['storage'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //other
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[0]['body'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //colors&body
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[0]['body'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          Text(
-                              '20000\$',
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 125,
-                      ),
-                      //database from right
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          //screen data
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['disply_size'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['disply_resolution'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 110,
-                          ),
-                          //prosser
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['chipset'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 110,
-                          ),
-                          //ram
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['ram'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //Gpu
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['chipset'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //camera back
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['camera_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['vidio_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //camera selfi
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['camera_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['vidio_pixsels'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //opretaing system
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['os'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //battery
-                          Column(
-                            children: [
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['battary_size'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                              SizedBox(height: 50,),
-                              listResponse==null?Text('Data is loading'):Text(
-                                listResponse[1]['battary_type'].toString(),
-                                style:
-                                TextStyle(fontSize: 20, color: Greycolor),),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //storage capacity
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['storage'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //other
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['body'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          //colors&body
-                          listResponse==null?Text('Data is loading'):Text(
-                            listResponse[1]['body'].toString(),
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                          SizedBox(
-                            height: 100,
-                          ),
-                          Text(
-                            '20000\$',
-                            style: TextStyle(fontSize: 20, color: Greycolor),
-                          ),
-                        ],
-                      ),
-                    ],
+                            ),
+                            SizedBox(
+                              height: 110,
+                            ),
+                            //ram
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['ram'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //Gpu
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['chipset'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 90,
+                            ),
+                            //camera back
+                            Column(
+                              children: [
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['camera_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                                SizedBox(height: 5,),
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['video_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 70,
+                            ),
+                            //camera selfi
+                            Column(
+                              children: [
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['camera_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                                SizedBox(height: 5,),
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['video_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 80,
+                            ),
+                            //opretaing system
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['os'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //battery
+                            Column(
+                              children: [
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['battery_size'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                                SizedBox(height: 5,),
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['battery_type'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 80,
+                            ),
+                            //storage capacity
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['storage'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //other
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['body'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //colors&body
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['body'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            Text(
+                              '2000\$',
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                          ],
+                        ),
+                       const SizedBox(
+                          width: 150,
+                        ),
+                        //database from right
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            //screen data
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['display_size'].toString(),
+                              style:
+                              TextStyle(fontSize: 20, color: Greycolor),),
+                            SizedBox(height: 5,),
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['display_resolution'].toString(),
+                              style:
+                              TextStyle(fontSize: 20, color: Greycolor),),
+                            SizedBox(
+                              height: 90,
+                            ),
+                            //prosser
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['chipset'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 110,
+                            ),
+                            //ram
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['ram'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //Gpu
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['chipset'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 90,
+                            ),
+                            //camera back
+                            Column(
+                              children: [
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['camera_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                                SizedBox(height: 5,),
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['video_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 70,
+                            ),
+                            //camera selfi
+                            Column(
+                              children: [
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['camera_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                                SizedBox(height: 5,),
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['video_pixels'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 80,
+                            ),
+                            //opretaing system
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['os'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //battery
+                            Column(
+                              children: [
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['battery_size'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                                SizedBox(height: 5,),
+                                dataphoneResponse==null?Text('Data is loading'):Text(
+                                  dataphoneResponse['battery_type'].toString(),
+                                  style:
+                                  TextStyle(fontSize: 20, color: Greycolor),),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 80,
+                            ),
+                            //storage capacity
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['storage'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //other
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['body'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            //colors&body
+                            dataphoneResponse==null?Text('Data is loading'):Text(
+                              dataphoneResponse['body'].toString(),
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                            SizedBox(
+                              height: 100,
+                            ),
+                            Text(
+                              '2000\$',
+                              style: TextStyle(fontSize: 20, color: Greycolor),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               )),

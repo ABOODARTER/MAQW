@@ -36,7 +36,7 @@ class allPhoneState extends State<allPhone> {
     http.Response response;
     //here i put request url
     response = await http
-        .get(Uri.parse("http://mobile.test:400/api/search_on_material_device"));
+        .get(Uri.parse("http://localhost:8000/api/search_on_material_device"));
     if (response.statusCode == 200) {
       setState(() {
         bodyResponse = json.decode(response.body);

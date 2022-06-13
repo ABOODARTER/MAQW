@@ -9,7 +9,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:maqw/widget/containermap.dart';
 
-
 class MainMap extends StatefulWidget {
   const MainMap({Key? key}) : super(key: key);
 
@@ -25,82 +24,56 @@ class _MainMapState extends State<MainMap> {
     zoom: 14,
   );
 
-
   // marker to add show client user
   Set<Marker> currentlocation = {};
 
- // marker to show saleCenters
+  // marker to show saleCenters
   Set<Marker> saleCenters = {};
 
- // marker to show mCenters
- Set<Marker> mCenters ={};
-
-  // api to store location user
-  Future<void> getlocationuser() async {
-    String url = "";
-    Map location = {
-      'currentlatitude': currentlatitude,
-      'currentlongitude': currentlongitude,
-    };
-    http.Response response = await http.post(Uri.parse(url), body: location);
-    var currentLocationUser = jsonEncode(response.body);
-    
-  }
-
+  // marker to show mCenters
+  Set<Marker> mCenters = {};
 
 // variables to store current location
   String currentlatitude = "";
   String currentlongitude = "";
 
 // variables to api _buildContainer
- List allCenters =[];
- Map center={};
- String dataCenter="";
-  Map requiredCenterS={};
-  Map requiredCenterM={};
+  List allCenters = [];
+  Map center = {};
+  String dataCenter = "";
+  Map requiredCenterS = {};
+  Map requiredCenterM = {};
 
-
-  // api to _buildContainer
-  Future apiContainer() async {
-    String urlC = "";
-    http.Response response = await http.get(Uri.parse(urlC));
+  // api to show places
+  Future<void> getlocationPlaces() async {
+    String url = "";
+    Map location = {
+      'currentlatitude': currentlatitude,
+      'currentlongitude': currentlongitude,
+    };
+    http.Response response = await http.post(
+        Uri.parse("http://localhost:8000/api/search_in_map"),
+        body: location);
+    http.Response responsePlaces =
+        await http.get(Uri.parse("http://localhost:8000/api/centers"));
     if (response.statusCode == 200) {
       setState(() {
-       allCenters = jsonDecode(response.body);
-       for (int i = 0; i < allCenters.length; i++) {
-         center=allCenters[i];
-         dataCenter=center['type'];
-         if(dataCenter=="Sales Center"){
-           requiredCenterS=allCenters[i];
-         }
-         else if(dataCenter=="maintenance center"){
-           requiredCenterM=allCenters[i];
-         }
-       }
+        allCenters = jsonDecode(response.body);
+        for (int i = 0; i < allCenters.length; i++) {
+          center = allCenters[i];
+          dataCenter = center['type'];
+          if (dataCenter == "Sales Center") {
+            requiredCenterS = allCenters[i];
+          } else if (dataCenter == "maintenance center") {
+            requiredCenterM = allCenters[i];
+          }
+        }
       });
     }
   }
-  // Api places
-String urlPlaces ="";
-List places3 =[];
-Map place1={};
-Map place2={};
-Map place3={};
-Future getPlaces()async{
-  http.Response responseP =await http.get(Uri.parse(urlPlaces));
-  if(responseP.statusCode==200){
-    setState(() {
-      places3=jsonDecode(responseP.body);
-      place1=places3[0];
-      place2=places3[1];
-      place3=places3[2];
-    });
 
-  }
-}
-
-// container to show details center
-  Widget _buildContainer() {
+// container to show details sale center
+  Widget _buildContainerSale() {
     return Align(
         alignment: Alignment.bottomLeft,
         child: Stack(children: [
@@ -109,38 +82,125 @@ Future getPlaces()async{
             height: 200,
             child: ListView(scrollDirection: Axis.horizontal, children: [
               ContainerMap(
-                  image:place1==null?Text("load"): place1['image'],
-                  namecenter:place1==null?Text("load") :place1['name'],
-                  timeopen:place1==null?Text("load"): place1['time_open'],
-                  timeclose:place1==null?Text("load"): place1['time_close'],
+                  image: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[0]['image'],
+                  namecenter: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[0]['name'],
+                  timeopen: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[0]['time_open'],
+                  timeclose: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[0]['time_close'],
                   onpress: () {}),
               const SizedBox(
                 width: 15,
               ),
               ContainerMap(
-                  image:place2==null?Text("load"): place2['image'],
-                  namecenter:place2==null?Text("load"): place2['name'] ,
-                  timeopen:place2==null?Text("load"): place2['time_open'],
-                  timeclose: place2==null?Text("load"): place2['time_close'],
+                  image: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[1]['image'],
+                  namecenter: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[1]['name'],
+                  timeopen: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[1]['time_open'],
+                  timeclose: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[1]['time_close'],
                   onpress: () {}),
               const SizedBox(
                 width: 15,
               ),
               ContainerMap(
-                  image:place3==null?Text("load"): place3['image'],
-                  namecenter:place3==null?Text("load"): place3['name'] ,
-                  timeopen:place3==null?Text("load"): place3['time_open'],
-                  timeclose: place3==null?Text("load"): place3['time_close'],
+                  image: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[2]['image'],
+                  namecenter: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[2]['name'],
+                  timeopen: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[2]['time_open'],
+                  timeclose: requiredCenterS == null
+                      ?const Text("load")
+                      : requiredCenterS[2]['time_close'],
                   onpress: () {}),
             ]),
           )
         ]));
   }
+
+ // container to show details  center
+  Widget _buildContainerM() {
+    return Align(
+        alignment: Alignment.bottomLeft,
+        child: Stack(children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+            height: 200,
+            child: ListView(scrollDirection: Axis.horizontal, children: [
+              ContainerMap(
+                  image: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[0]['image'],
+                  namecenter: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[0]['name'],
+                  timeopen: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[0]['time_open'],
+                  timeclose: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[0]['time_close'],
+                  onpress: () {}),
+              const SizedBox(
+                width: 15,
+              ),
+              ContainerMap(
+                  image: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[1]['image'],
+                  namecenter: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[1]['name'],
+                  timeopen: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[1]['time_open'],
+                  timeclose: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[1]['time_close'],
+                  onpress: () {}),
+              const SizedBox(
+                width: 15,
+              ),
+              ContainerMap(
+                  image: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[2]['image'],
+                  namecenter: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[2]['name'],
+                  timeopen: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[2]['time_open'],
+                  timeclose: requiredCenterM == null
+                      ?const Text("load")
+                      : requiredCenterM[2]['time_close'],
+                  onpress: () {}),
+            ]),
+          )
+        ]));
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    apiContainer();
+    getlocationPlaces();
   }
 
   @override
@@ -196,17 +256,13 @@ Future getPlaces()async{
               onPressed: () async {
                 Position position = await _determineposition();
                 setState(() {
-                  print('${position.latitude.toString()}');
-                  print('${position.longitude.toString()}');
                   currentlatitude = position.latitude.toString();
                   currentlongitude = position.longitude.toString();
-                  getlocationuser();
                   googleMapController.animateCamera(
                       CameraUpdate.newCameraPosition(CameraPosition(
                     target: LatLng(position.latitude, position.longitude),
                     zoom: 14,
                   )));
-
                   currentlocation.clear();
                   currentlocation.add(
                     Marker(
@@ -230,26 +286,43 @@ Future getPlaces()async{
               ),
               child: IconButton(
                 icon: const Icon(
-                CupertinoIcons.wrench_fill,
+                  Icons.business_center,
                   color: Colors.white,
                   size: 30,
                 ),
                 onPressed: () async {
-                  Position latitude1=place1["latitude"];
-                  Position longitude1 =place1["longitude"];
-                  googleMapController.animateCamera(
-                      CameraUpdate.newCameraPosition(CameraPosition(
-                          target: LatLng(latitude1.latitude, longitude1.longitude),
-                      )));
-                  mCenters.clear();
-                  mCenters.add(
+                  Position latitude1 = requiredCenterS[0]["latitude"];
+                  Position longitude1 = requiredCenterS[0]["longitude"];
+                  Position latitude2 = requiredCenterS[1]["latitude"];
+                  Position longitude2 = requiredCenterS[1]["longitude"];
+                  Position latitude3 = requiredCenterS[2]["latitude"];
+                  Position longitude3 = requiredCenterS[2]["longitude"];
+                  saleCenters.clear();
+                  saleCenters.add(
                     Marker(
                       markerId: const MarkerId('Center one'),
-                      position: LatLng(latitude1.latitude, longitude1.longitude),
+                      position:
+                          LatLng(latitude1.latitude, longitude1.longitude),
                       icon: BitmapDescriptor.defaultMarker,
                     ),
                   );
-                  await dataCenter=='maintenance center'?_buildContainer():null;
+                  saleCenters.add(
+                    Marker(
+                      markerId: const MarkerId('Center two'),
+                      position:
+                          LatLng(latitude2.latitude, longitude2.longitude),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
+                  saleCenters.add(
+                    Marker(
+                      markerId: const MarkerId('Center three'),
+                      position:
+                          LatLng(latitude3.latitude, longitude3.longitude),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
+                  _buildContainerSale();
                 },
               ),
             ),
@@ -263,12 +336,43 @@ Future getPlaces()async{
               ),
               child: IconButton(
                 icon: const Icon(
-                  Icons.business_center,
+                  CupertinoIcons.wrench_fill,
                   color: Colors.white,
                   size: 30,
                 ),
-                onPressed: ()async{
-                await dataCenter=='sale center'||dataCenter=='maintenance center'?_buildContainer():null;
+                onPressed: () async {
+                  Position latitude1 = requiredCenterM[0]["latitude"];
+                  Position longitude1 = requiredCenterM[0]["longitude"];
+                  Position latitude2 = requiredCenterM[1]["latitude"];
+                  Position longitude2 = requiredCenterM[1]["longitude"];
+                  Position latitude3 = requiredCenterM[2]["latitude"];
+                  Position longitude3 = requiredCenterM[2]["longitude"];
+                  mCenters.clear();
+                  saleCenters.add(
+                    Marker(
+                      markerId: const MarkerId('Center one'),
+                      position:
+                          LatLng(latitude1.latitude, longitude1.longitude),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
+                  mCenters.add(
+                    Marker(
+                      markerId: const MarkerId('Center two'),
+                      position:
+                          LatLng(latitude2.latitude, longitude2.longitude),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
+                  mCenters.add(
+                    Marker(
+                      markerId: const MarkerId('Center three'),
+                      position:
+                          LatLng(latitude3.latitude, longitude3.longitude),
+                      icon: BitmapDescriptor.defaultMarker,
+                    ),
+                  );
+                  _buildContainerM();
                 },
               ),
             ),
@@ -301,5 +405,4 @@ Future getPlaces()async{
     Position currentposition = await Geolocator.getCurrentPosition();
     return currentposition;
   }
-
 }

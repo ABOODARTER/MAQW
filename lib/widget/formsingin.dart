@@ -133,16 +133,16 @@ class _FormSingInState extends State<FormSingIn> {
   }
 
   Map user = {};
-  String type = "";
+  int type = 0;
   String urlU = "";
-  bool disabled = false;
+  int disabled = 0;
 
   // Create function Api
   Future<void> singin() async {
     if (usernameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
       http.Response responseCheck =
-          await http.post(Uri.parse("http://mobile.test:400/api/login"),
+          await http.post(Uri.parse("http://localhost:8000/api/login"),
               body: ({
                 'username': usernameController.text,
                 'password': passwordController.text,
@@ -155,28 +155,28 @@ class _FormSingInState extends State<FormSingIn> {
           disabled = user['disabled'];
         });
       }
-      if (responseCheck.statusCode == 200 && type == "client") {
+      if (responseCheck.statusCode == 200 && type == 5) {
         Navigator.of(context).pushReplacementNamed('mainscreen');
       } else if (responseCheck.statusCode == 200 &&
-          type == "sale center" &&
-          disabled == false) {
+          type == 3 &&
+          disabled == 0) {
         Navigator.of(context).pushReplacementNamed("centerdata");
       }
       else if (responseCheck.statusCode == 200 &&
-          type == "sale center" &&
-          disabled == true) {
+          type == 3 &&
+          disabled == 1) {
         Navigator.of(context).pushReplacementNamed('salcenter');
       } else if (responseCheck.statusCode == 200 &&
-          type == "maintenance center" &&
-          disabled == true) {
+          type == 2 &&
+          disabled ==1) {
         // Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
       }else if (responseCheck.statusCode == 200 &&
-          type == "maintenance center" &&
-          disabled == false) {
+          type == 2 &&
+          disabled == 0) {
          Navigator.of(context).pushReplacementNamed("centerdata");
-      } else if (responseCheck.statusCode == 200 && type == "s_and_m_center"&&disabled==true) {
+      } else if (responseCheck.statusCode == 200 && type == 4&&disabled==1) {
         // Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
-      }else if (responseCheck.statusCode == 200 && type == "s_and_m_center"&&disabled==false) {
+      }else if (responseCheck.statusCode == 200 && type == 4&&disabled==0) {
         Navigator.of(context).pushReplacementNamed("centerdata");
       } else {
         ScaffoldMessenger.of(context)

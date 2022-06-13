@@ -46,10 +46,10 @@ class _CenterDataState1 extends State<CenterData1> {
             child: Column(
               children: [
                 Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 40),
                     child: ImageProfile()),
                 const SizedBox(
-                  height: 30,
+                  height: 80,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
@@ -77,86 +77,7 @@ class _CenterDataState1 extends State<CenterData1> {
                 ),
                 ),
                 const SizedBox(
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 260,
-                    bottom: 5,
-                  ),
-                  child: Text(
-                    "Type",
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                SingleChildScrollView(
-                  child: Row(
-                    children: [
-                      Radio(
-                        toggleable:true ,
-                        activeColor: bluee,
-                        value: 1,
-                        groupValue: _SelectedRadio,
-                        onChanged: ( value) {
-                          setState(() {
-                            _SelectedRadio = value as int;
-                              print("$value");
-
-                          });
-                        },
-                      ),
-                      Text(
-                        "sales and maintenance center",
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      activeColor: bluee,
-                      value:2,
-                      groupValue: _SelectedRadio,
-                      onChanged: (value) {
-                        setState(() {
-                          _SelectedRadio = value as int;
-                          print("$value");
-                        });
-                      },
-                    ),
-                    Text(
-                      "maintenance center",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      toggleable: true,
-                      activeColor: bluee,
-                      value: 3,
-                      groupValue: _SelectedRadio,
-                      onChanged: (value) {
-                        setState(() {
-                          _SelectedRadio = value as int;
-                          print("$value");
-                        });
-                      },
-                    ),
-                    Text(
-                      "sale center",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ],
-                ),
-
-                const SizedBox(
-                  height: 70,
+                  height: 200,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
@@ -184,16 +105,7 @@ class _CenterDataState1 extends State<CenterData1> {
                           onPressed: () {
                             if (forKeyCenter1.currentState!.validate()) {
                               centerData();
-                              // sale center=>enter phone || maintenance center=> main screen
-                              if(_SelectedRadio==1){
-                                  Navigator.of(context).pushReplacementNamed('enterphone');
-                              }
-                              else if(_SelectedRadio==2){
-                                //  Navigator.of(context).pushReplacementNamed('screen maintenance');
-                              }
-                              else if(_SelectedRadio==3){
-                                  Navigator.of(context).pushReplacementNamed('enterphone');
-                              }
+                             Navigator.of(context).pushReplacementNamed('enterphone');
 
                             }
                           },

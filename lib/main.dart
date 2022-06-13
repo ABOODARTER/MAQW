@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maqw/screens/AllPhone.dart';
+import 'package:maqw/screens/AllPhone_In_Brand.dart';
 import 'package:maqw/screens/Compartion.dart';
 import 'package:maqw/screens/ContactUs.dart';
+import 'package:maqw/screens/Sale_Center_personalty.dart';
 import 'package:maqw/screens/empty.dart';
 import 'package:maqw/screens/enter%20phone.dart';
 import 'package:maqw/screens/enterphone1.dart';
@@ -59,7 +61,7 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
-      home: EnterPhone(),
+      home: MainScreen(),
       routes: {
         'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),

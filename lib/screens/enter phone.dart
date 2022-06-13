@@ -44,7 +44,7 @@ class _EnterPhoneState extends State<EnterPhone> {
   List listBrandName = [];
 
   Future selectBrand() async {
-    http.Response responseB = await http.get(Uri.parse("http://mobile.test:400/api/return_brand_device"));
+    http.Response responseB = await http.get(Uri.parse("http://localhost:8000/api/return_brand_device"));
     if (responseB.statusCode == 200) {
       setState(() {
         brands = jsonDecode(responseB.body);
@@ -65,7 +65,7 @@ class _EnterPhoneState extends State<EnterPhone> {
   String valueName = "";
 
   Future selectName() async {
-    http.Response responseN = await http.get(Uri.parse("http://mobile.test:400/api/search_on_material_device"));
+    http.Response responseN = await http.get(Uri.parse("http://localhost:8000/api/search_on_material_device"));
     if (responseN.statusCode == 200) {
       setState(() {
         devices = jsonDecode(responseN.body);
@@ -77,7 +77,13 @@ class _EnterPhoneState extends State<EnterPhone> {
       });
     }
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectBrand();
+    selectName();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -367,9 +373,8 @@ class _EnterPhoneState extends State<EnterPhone> {
     Map myData = {
       'colorphone': colorPhoneController.text,
       'pricephone': pricePhoneController.text,
-      'type': _radio
+      'type': _radio,
     };
     http.Response response = await http.post(Uri.parse( "http://mobile.test:400/api/Info"), body: myData);
-    var data = jsonEncode(response.body);
   }
 }

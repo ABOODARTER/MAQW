@@ -110,7 +110,8 @@ class _FormSignUpState extends State<FormSignUp> {
                         ),
                         child: IconButton(
                             onPressed: () {
-                              Navigator.of(context).pushReplacementNamed('signin');
+                              Navigator.of(context)
+                                  .pushReplacementNamed('signin');
                             },
                             icon: const Icon(
                               Icons.keyboard_arrow_left_rounded,
@@ -140,7 +141,6 @@ class _FormSignUpState extends State<FormSignUp> {
                 )
               ]),
             ],
-
           ),
         ));
   }
@@ -153,7 +153,6 @@ class _FormSignUpState extends State<FormSignUp> {
       'email': emailController.text,
       'name': nameController.text,
     };
-    http.Response response = await http.post(Uri.parse(Url), body: MyData);
-    var data = jsonEncode(response.body);
+    http.Response response = await http.post(Uri.parse("http://localhost:8000/api/register"), body: MyData);
   }
 }

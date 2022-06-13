@@ -1,13 +1,9 @@
 import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:maqw/screens/AllPhone.dart';
-import 'package:maqw/screens/sign%20up1.dart';
 import 'package:maqw/widget/iconStyle.dart';
-
 import '../screens/Compartion.dart';
 import '../screens/empty.dart';
-import '../screens/map.dart';
 class ScrollContinerIcon extends StatefulWidget {
   const ScrollContinerIcon({Key? key}) : super(key: key);
 

@@ -110,7 +110,7 @@ class _EnterPhoneState extends State<EnterPhone> {
               DropButton(
                   value: valueBrand,
                   hint: "Select brand phone",
-                  items: listBrandName?.map((item) {
+                  items: listBrandName.map((item) {
                         return DropdownMenuItem(
                           child: Text(
                             item[0],
@@ -118,8 +118,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                           ),
                           value: item[0].toString(),
                         );
-                      })?.toList() ??
-                      [],
+                      }).toList() ,
                   onchange: (value) {
                     setState(() {
                       valueBrand = value;
@@ -146,7 +145,7 @@ class _EnterPhoneState extends State<EnterPhone> {
               DropButton(
                   value: "1",
                   hint: "Select name phone",
-                  items: listNamePhone?.map((item) {
+                  items: listNamePhone.map((item) {
                         return DropdownMenuItem(
                           child: Text(
                             item[0],
@@ -154,8 +153,7 @@ class _EnterPhoneState extends State<EnterPhone> {
                           ),
                           value: item[0].toString(),
                         );
-                      })?.toList() ??
-                      [],
+                      }).toList() ,
                   onchange: (value) {
                     setState(() {
                       valueBrand = value;

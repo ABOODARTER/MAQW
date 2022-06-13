@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:maqw/widget/styletextformfield.dart';
@@ -115,8 +116,12 @@ class _FormSingInState extends State<FormSingIn> {
                   ),
                   child: IconButton(
                       onPressed: () async {
-                        if (forKeyIn.currentState!.validate()) {
-                          singin();
+                        try {
+                          if (forKeyIn.currentState!.validate()) {
+                            singin();
+                          }
+                        } on Exception catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error")));
                         }
                       },
                       icon: const Icon(
@@ -133,52 +138,63 @@ class _FormSingInState extends State<FormSingIn> {
   }
 
   Map user = {};
-  String type = "";
+  String roles = "";
   String urlU = "";
-  bool disabled = false;
+  String access_token ="";
 
   // Create function Api
   Future<void> singin() async {
     if (usernameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
-      http.Response responseCheck =
-          await http.post(Uri.parse("http://mobile.test:400/api/login"),
+
+      http.Response response =
+          await http.post(Uri.parse("http://10.2.0.2:52192/api/login"),
+              headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer 13e2c5921a25d10095ff69c500de8bd2585fe34987b6186d3e392da6c1b7e1b1'
+              },
               body: ({
-                'username': usernameController.text,
+                'user_name': usernameController.text,
                 'password': passwordController.text,
               }));
-      http.Response responseU = await http.get(Uri.parse(urlU));
-      if (responseU.statusCode == 200) {
-        setState(() {
-          user = jsonDecode(responseU.body);
-          type = user['type'];
-          disabled = user['disabled'];
-        });
-      }
-      if (responseCheck.statusCode == 200 && type == "client") {
+      // http.Response responseU = await http.get(Uri.parse(urlU));
+
+      Map responseCheck = jsonDecode(response.body);
+      print(responseCheck);
+      // if (response.statusCode == 200) {
+      //   setState(() {
+      //     // user = jsonDecode(responseCheck.body);
+      //     roles = user['role'];
+      //     access_token = user['access_token'];
+      //   });
+      // }
+      if (response.statusCode == 200 && responseCheck['role'] == "5") {
         Navigator.of(context).pushReplacementNamed('mainscreen');
-      } else if (responseCheck.statusCode == 200 &&
-          type == "sale center" &&
-          disabled == false) {
-        Navigator.of(context).pushReplacementNamed("centerdata");
       }
-      else if (responseCheck.statusCode == 200 &&
-          type == "sale center" &&
-          disabled == true) {
-        Navigator.of(context).pushReplacementNamed('salcenter');
-      } else if (responseCheck.statusCode == 200 &&
-          type == "maintenance center" &&
-          disabled == true) {
-        // Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
-      }else if (responseCheck.statusCode == 200 &&
-          type == "maintenance center" &&
-          disabled == false) {
-         Navigator.of(context).pushReplacementNamed("centerdata");
-      } else if (responseCheck.statusCode == 200 && type == "s_and_m_center"&&disabled==true) {
-        // Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
-      }else if (responseCheck.statusCode == 200 && type == "s_and_m_center"&&disabled==false) {
-        Navigator.of(context).pushReplacementNamed("centerdata");
-      } else {
+      // else if (responseCheck.statusCode == 200 &&
+      //     roles == "2" &&
+      //     responseCheck['access_token) {
+      //   Navigator.of(context).pushReplacementNamed("centerdata");
+      // }
+      else if (response.statusCode == 200 && responseCheck['role'].toString() == "3" &&
+          responseCheck['access_token'].toString().isNotEmpty) {
+        Navigator.of(context).pushReplacementNamed('saleCenter');
+      } else if (response.statusCode == 200 && responseCheck['role'] == "2" &&
+          responseCheck['access_token'].toString().isNotEmpty) {
+        Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
+      }
+      // else if (responseCheck.statusCode == 200 &&
+      //     roles == "maintenance center" &&
+      //     access_token == false) {
+      //    Navigator.of(context).pushReplacementNamed("centerdata");
+      // }
+      else if (response.statusCode == 200 && responseCheck['role'] == "4"&&responseCheck['access_token'].toString().isNotEmpty) {
+        Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
+      }
+      // else if (responseCheck.statusCode == 200 && roles == "s_and_m_center"&&access_token==false) {
+      //   Navigator.of(context).pushReplacementNamed("centerdata");
+      // }
+      else {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Not Allow")));
       }

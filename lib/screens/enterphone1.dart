@@ -48,7 +48,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                       print("${size}");
                     });
                   },
-                  items: sizeList?.map((item) {
+                  items: sizeList.map((item) {
                         return DropdownMenuItem(
                           child: Text(
                             item[0],
@@ -56,8 +56,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                           ),
                           value: item[0].toString(),
                         );
-                      })?.toList() ??
-                      [],
+                      }).toList() ,
                 ),
                 const SizedBox(
                   height: 40,
@@ -65,7 +64,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value: body,
                   hint: "Select body phone",
-                  items: bodyList?.map((item) {
+                  items: bodyList.map((item) {
                         return DropdownMenuItem(
                           child: Text(
                             item[0],
@@ -73,8 +72,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                           ),
                           value: item[0].toString(),
                         );
-                      })?.toList() ??
-                      [],
+                      }).toList() ,
                   onchange: (newvalue) {
                     setState(() {
                       body = newvalue;
@@ -89,7 +87,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value: resolution,
                   hint: "Select resolution phone",
-                  items: resolutionList?.map((item) {
+                  items: resolutionList.map((item) {
                     return DropdownMenuItem(
                       child: Text(
                         item[0],
@@ -97,8 +95,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                       ),
                       value: item[0].toString(),
                     );
-                  })?.toList() ??
-                      [],
+                  }).toList() ,
                   onchange: (newvalue) {
                     setState(() {
                       resolution = newvalue;
@@ -113,7 +110,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value:camera,
                   hint: "Select camera phone",
-                  items: cameraList?.map((item) {
+                  items: cameraList.map((item) {
                     return DropdownMenuItem(
                       child: Text(
                         item[0],
@@ -121,8 +118,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                       ),
                       value: item[0].toString(),
                     );
-                  })?.toList() ??
-                      [],
+                  }).toList() ,
                   onchange: (newvalue) {
                     setState(() {
                       resolution = newvalue;
@@ -137,7 +133,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value:camera,
                   hint: "Select ram phone",
-                  items: ramList?.map((item) {
+                  items: ramList.map((item) {
                     return DropdownMenuItem(
                       child: Text(
                         item[0],
@@ -145,8 +141,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                       ),
                       value: item[0].toString(),
                     );
-                  })?.toList() ??
-                      [],
+                  }).toList() ,
                   onchange: (newvalue) {
                     setState(() {
                       ram = newvalue;
@@ -161,7 +156,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value:os,
                   hint: "Select os phone",
-                  items: osList?.map((item) {
+                  items: osList.map((item) {
                     return DropdownMenuItem(
                       child: Text(
                         item[0],
@@ -169,8 +164,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                       ),
                       value: item[0].toString(),
                     );
-                  })?.toList() ??
-                      [],
+                  }).toList() ,
                   onchange: (newvalue) {
                     setState(() {
                       os = newvalue;
@@ -185,7 +179,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                 DropButton(
                   value:os,
                   hint: "Select video phone",
-                  items: vidioList?.map((item) {
+                  items: vidioList.map((item) {
                     return DropdownMenuItem(
                       child: Text(
                         item[0],
@@ -193,8 +187,7 @@ class _EnterPhone1State extends State<EnterPhone1> {
                       ),
                       value: item[0].toString(),
                     );
-                  })?.toList() ??
-                      [],
+                  }).toList(),
                   onchange: (newvalue) {
                     setState(() {
                       vidio = newvalue;

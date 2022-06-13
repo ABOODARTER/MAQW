@@ -163,8 +163,10 @@ Future getPlaces()async{
             googleMapController = controle;
           },
           markers: currentlocation,
+
         ),
-        Column(children: [
+        Column(
+            children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(

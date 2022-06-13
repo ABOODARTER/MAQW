@@ -27,7 +27,7 @@ class searchState extends State<search> {
     this.phones=allphones;
     init();
     allphones = <Phone>[
-    Phone(
+      Phone(
     id: 1,
     brand:  dataphoneResponse['name'].toString(),
     name: dataphoneResponse['name'].toString(),
@@ -74,7 +74,7 @@ class searchState extends State<search> {
     http.Response response;
     //here i put request url
     response = await http
-        .get(Uri.parse("http://mobile.test:400/api/search_on_material_device"));
+        .get(Uri.parse("http://10.2.0.2:52192/api/search_on_material_device"));
     if (response.statusCode == 200) {
       setState(() {
         bodyResponse = json.decode(response.body);

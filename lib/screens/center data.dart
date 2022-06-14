@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
-
 class CenterData extends StatefulWidget {
   const CenterData({Key? key}) : super(key: key);
 

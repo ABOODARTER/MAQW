@@ -27,14 +27,14 @@ class _ContainerMapState extends State<ContainerMap> {
   Widget build(BuildContext context) {
     return Container(
       width: 130,
-      decoration:const BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(15),
               bottomRight: Radius.circular(15))),
       child: Column(
         children: [
-        const  SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ClipRRect(
@@ -44,7 +44,7 @@ class _ContainerMapState extends State<ContainerMap> {
               width: 80,
             ),
           ),
-         const SizedBox(
+          const SizedBox(
             height: 7,
           ),
           Text(
@@ -52,26 +52,26 @@ class _ContainerMapState extends State<ContainerMap> {
             style: TextStyle(
                 fontSize: 17, color: bluee, fontWeight: FontWeight.w400),
           ),
-        const  SizedBox(
+          const SizedBox(
             height: 7,
           ),
           Padding(
-            padding:const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               children: [
                 Text(
                   widget.timeopen,
-                  style:const TextStyle(
-                  fontSize: 10,
+                  style: const TextStyle(
+                    fontSize: 10,
                     color: Colors.grey,
                   ),
                 ),
-              const  SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Text(
                   widget.timeclose,
-                  style:const TextStyle(
+                  style: const TextStyle(
                     fontSize: 10,
                     color: Colors.grey,
                   ),
@@ -79,7 +79,7 @@ class _ContainerMapState extends State<ContainerMap> {
               ],
             ),
           ),
-        const  SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
@@ -90,7 +90,7 @@ class _ContainerMapState extends State<ContainerMap> {
               shape: const CircleBorder(),
             ),
             child: IconButton(
-              icon:const Icon(
+              icon: const Icon(
                 Icons.keyboard_arrow_right_rounded,
                 color: Colors.white,
               ),

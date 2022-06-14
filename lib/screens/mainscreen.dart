@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maqw/screens/salecenter.dart';
 import 'package:maqw/widget/maincomparison.dart';
 import 'package:maqw/widget/mainmap.dart';
+import 'package:maqw/widget/mainphones.dart';
 import 'package:maqw/widget/navigationbottom.dart';
 import 'package:maqw/widget/scrollContinerIcon.dart';
 
@@ -29,6 +30,8 @@ class _MainScreenState extends State<MainScreen> {
             child: Column(
               children:const[
                 ScrollContinerIcon(),
+                MainPhones(),
+                SizedBox(height: 30,),
                 SizedBox(height: 30,),
                 MainComparison(),
                 SizedBox(height: 30,),

@@ -138,7 +138,7 @@ class _FormSignUp1State extends State<FormSignUp1> {
       'phone': phoneController.text,
       'password': passwordController.text,
     };
-    http.Response response = await http.post(Uri.parse(Url), body: myData);
-    var data = jsonEncode(response.body);
+    http.Response response = await http.post(Uri.parse("http://localhost:8000/api/register"), body: myData);
+
   }
 }

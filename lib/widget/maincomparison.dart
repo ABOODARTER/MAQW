@@ -120,7 +120,6 @@ class _MainComparisonState extends State<MainComparison> {
     if (response.statusCode == 200) {
       setState(() {
         devices = jsonDecode(response.body);
-       // dataDevice=devices[''];
       });
     }
   }

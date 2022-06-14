@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../main.dart';
-
 class MainMap extends StatefulWidget {
   const MainMap({Key? key}) : super(key: key);
-
   @override
   State<MainMap> createState() => _MainMapState();
 }

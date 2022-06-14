@@ -14,11 +14,8 @@ import 'package:maqw/screens/check_email.dart';
 import 'package:maqw/screens/center data.dart';
 import 'package:maqw/screens/center data1.dart';
 import 'package:maqw/screens/verification.dart';
-import 'package:http/http.dart' as http;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+void main() {
   runApp(const MyApp());
 }
 
@@ -46,8 +43,8 @@ class MyApp extends StatelessWidget {
               fontSize: 25,
               letterSpacing: 2,
             ),
-            // style hinttext
-            headline1: const TextStyle(
+            // style hint_text
+            headline1: TextStyle(
               fontSize: 20,
               color: Colors.black45,
               fontWeight: FontWeight.w400,
@@ -61,19 +58,24 @@ class MyApp extends StatelessWidget {
               letterSpacing: 2,
             )),
       ),
+      home: MainScreen(),
       routes: {
-        '/': (context) => const SignIn(),
-        "mainScreen":(context) => const MainScreen(),
-        // هاد الصفحة الرئيسة لحساب المركز
-        'saleCenter':(context) =>  sale_center(),
+        'signin': (context) => const SignIn(),
         'signup': (context) => const SignUp(),
         'signup1': (context) => const SignUp1(),
         'checkemail': (context) => const CheckEmail(),
         'verification': (context) => const Verification(),
         "centerdata": (context) => const CenterData(),
         'centerdata1': (context) => const CenterData1(),
-        // 'map2': (context) => const Map2(),
-        "map": (context) => const map.MainMap(),
+        'allphone': (context) => allPhone(),
+        'compartion': (context) => compartion(),
+        'empty': (context) => const Empty(),
+        'map': (context) => const MainMap(),
+        'contact_us': (context) => contact_Us(),
+        'mainscreen': (context) => const MainScreen(),
+        'enterphone': (context) => const EnterPhone(),
+        'enterphone1': (context) => const EnterPhone1(),
+        'salcenter': (context) => sale_center(),
       },
     );
   }

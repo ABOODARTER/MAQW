@@ -179,45 +179,6 @@ class _FormSignUpState extends State<FormSignUp> {
                     const SizedBox(
                       width: 70,
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: [
-                    //     Container(
-                    //         decoration: ShapeDecoration(
-                    //           color: orangee,
-                    //           shape: const CircleBorder(),
-                    //         ),
-                    //         child: IconButton(
-                    //             onPressed: () {
-                    //               Navigator.of(context).pushReplacementNamed('signin');
-                    //             },
-                    //             icon: const Icon(
-                    //               Icons.keyboard_arrow_left_rounded,
-                    //               color: Colors.white,
-                    //             ))),
-                    //     const SizedBox(
-                    //       width: 70,
-                    //     ),
-                    //     Container(
-                    //         decoration: ShapeDecoration(
-                    //           color: orangee,
-                    //           shape: const CircleBorder(),
-                    //         ),
-                    //         child: IconButton(
-                    //             onPressed: () {
-                    //               if (forkeyup.currentState!.validate()) {
-                    //                 signup();
-                    //                 Navigator.of(context)
-                    //                     .pushReplacementNamed('signup1');
-                    //               }
-                    //             },
-                    //             icon: const Icon(
-                    //               Icons.keyboard_arrow_right_rounded,
-                    //               color: Colors.white,
-                    //             ))),
-                    //   ],
-                    // )
                   ]),
             ),
           ),
@@ -229,7 +190,7 @@ class _FormSignUpState extends State<FormSignUp> {
     setState((){
       loading = true;
     });
-    String Url = "http://10.2.0.2:43026/api/register";
+    String Url = "http://http://127.0.0.1:23409/api/register";
     var headers = {'Accept': 'application/json'};
     print(emailController.text);
     Map MyData = {
@@ -248,10 +209,10 @@ class _FormSignUpState extends State<FormSignUp> {
       setState((){
         loading = false;
       });
-      Navigator.of(context).pushReplacementNamed('mainScreen');
+      Navigator.of(context).pushReplacementNamed('mainscreen');
     } else {
       setState((){
-        loading = false;
+        loading = true;
       });
       if(responseMap['message'].toString().isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(

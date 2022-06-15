@@ -82,7 +82,6 @@ class MyApp extends StatelessWidget {
         routes: {
           'signin': (context) => const SignIn(),
           'signup': (context) => const SignUp(),
-          'signup1': (context) => const SignUp1(),
           'checkemail': (context) => const CheckEmail(),
           'verification': (context) => const Verification(),
           "centerdata": (context) => const CenterData(),

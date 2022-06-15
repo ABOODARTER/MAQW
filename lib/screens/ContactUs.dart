@@ -400,6 +400,6 @@ class contactUsState extends State<contact_Us> {
       'message': messageController.text,
     };
     http.Response response = await http.post(Uri.parse(Url), body: MyData);
-    var data = jsonEncode(response.body);
+
   }
 }

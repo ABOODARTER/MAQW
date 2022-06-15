@@ -348,12 +348,12 @@ class compartionState extends State<compartion> {
                     ),
                     //All image for text data
                     Column(
-                      children: [
+                      children: const [
                         SizedBox(
                           height: 90,
                         ),
                         Text(
-                          'Screen',
+                          'name',
                           style: TextStyle(fontSize: 20, color: Colors.black),
                         ),
                         SizedBox(
@@ -455,7 +455,7 @@ class compartionState extends State<compartion> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     //All text from database
@@ -473,7 +473,7 @@ class compartionState extends State<compartion> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 //screen data
@@ -482,10 +482,10 @@ class compartionState extends State<compartion> {
                                     ? Text('Data is loading')
                                     : Text(
                                         phone1['name'].toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 phone1['display_resolution'] == null ||
@@ -495,10 +495,10 @@ class compartionState extends State<compartion> {
                                     ? Text('Data is loading')
                                     : Text(
                                         phone1['display_resolution'].toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 90,
                                 ),
                                 //prosser
@@ -507,10 +507,10 @@ class compartionState extends State<compartion> {
                                     ? Text('Data is loading')
                                     : Text(
                                         phone1['chipset'].toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 110,
                                 ),
                                 //ram
@@ -519,10 +519,10 @@ class compartionState extends State<compartion> {
                                     ? Text('Data is loading')
                                     : Text(
                                         phone1['ram'].toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 100,
                                 ),
                                 //Gpu
@@ -531,10 +531,10 @@ class compartionState extends State<compartion> {
                                     ? Text('Data is loading')
                                     : Text(
                                         phone1['chipset'].toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20, color: Colors.black),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 90,
                                 ),
                                 //camera back
@@ -547,11 +547,11 @@ class compartionState extends State<compartion> {
                                         ? Text('Data is loading')
                                         : Text(
                                             phone1['camera_pixels'].toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black),
                                           ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     phone1['video_pixels'] == null ||
@@ -561,13 +561,13 @@ class compartionState extends State<compartion> {
                                         ? Text('Data is loading')
                                         : Text(
                                             phone1['video_pixels'].toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black),
                                           ),
                                   ],
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 70,
                                 ),
                                 //camera selfi
@@ -580,11 +580,11 @@ class compartionState extends State<compartion> {
                                         ? Text('Data is loading')
                                         : Text(
                                             phone1['camera_pixels'].toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black),
                                           ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 5,
                                     ),
                                     phone1['video_pixels'] == null ||
@@ -594,7 +594,7 @@ class compartionState extends State<compartion> {
                                         ? Text('Data is loading')
                                         : Text(
                                             phone1['video_pixels'].toString(),
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.black),
                                           ),

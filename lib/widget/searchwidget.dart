@@ -8,127 +8,135 @@ import 'dart:convert';
 
 import 'package:maqw/widget/searchwidget1.dart';
 
+import '../screens/Compartion.dart';
+
 class search extends StatefulWidget {
-  const search({Key? key}) : super(key: key);
+  final double getFrom;
+  final String oldId;
+
+  const search({Key? key, this.getFrom = 0,this.oldId='0'}) : super(key: key);
 
   @override
   State<search> createState() => searchState();
 }
 
 class searchState extends State<search> {
-  List <Phone>allphones=[];
+
+  List<Phone> allphones = [];
   late List<Phone> phones;
-  String query = 'http://mobile.test:400/api/search_on_device_in_Seles_Center';
+  String query = 'http://10.2.0.2:48608/api/search_name_device_comper';
   Timer? debouncer;
   Map dataphoneResponse = {};
   Map bodyResponse = {};
-  void initState() {
-    super.initState();
-    this.phones=allphones;
-    init();
-    allphones = <Phone>[
-      Phone(
-    id: 1,
-    brand:  dataphoneResponse['name'].toString(),
-    name: dataphoneResponse['name'].toString(),
-    phoneimage: dataphoneResponse['picture'].toString(),
-    ),
-      Phone(
-        id: 2,
-        brand:  dataphoneResponse['name'].toString(),
-        name: dataphoneResponse['name'].toString(),
-        phoneimage: dataphoneResponse['picture'].toString(),
-      ),
-      Phone(
-        id: 3,
-        brand:  dataphoneResponse['name'].toString(),
-        name: dataphoneResponse['name'].toString(),
-        phoneimage: dataphoneResponse['picture'].toString(),
-      ),
-    ];
-  }
-  @override
-  void dispose(){
-    debouncer?.cancel();
-    super.dispose();
-  }
 
-  void debounce(
-    VoidCallback callback, {
-      Duration duration=const Duration(milliseconds: 1000),
-}){
-    if(debouncer!=null){
-   debouncer!.cancel();
-    }
-    debouncer=Timer(duration, callback);
-  }
-  Future init() async{
-    final phones=await PhonesApi.getPhones(query);
-    setState((){
-      this.phones=phones;
-      this.query=query;
-    }
-    );
-  }
-  Future apicall() async {
-    http.Response response;
-    //here i put request url
-    response = await http
-        .get(Uri.parse("http://10.2.0.2:52192/api/search_on_material_device"));
-    if (response.statusCode == 200) {
-      setState(() {
-        bodyResponse = json.decode(response.body);
-        dataphoneResponse = bodyResponse['body'];
-      });
-    }
-  }
+//
+  TextEditingController searchController = TextEditingController();
+  List result = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('search'),
+        title: const Text('Search'),
         centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
-          buildSearch(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                icon: const Icon(Icons.search, color: Colors.black),
+                suffixIcon: GestureDetector(
+                  child: const Icon(
+                    Icons.close,
+                    color: Colors.black,
+                  ),
+                  onTap: () {
+                    searchController.clear();
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                ),
+                hintText: 'search',
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)),
+              ),
+              controller: searchController,
+              onFieldSubmitted: (value) async {
+                Map<String, String>? header = {
+                  'Accept': 'application/json',
+                  'Authorization': 'Bearer GSo8LL92AmqcdkhB3JwjGxdD9D7G6yQJ96BVQKWm'
+                };
+                http.Response respone = await http.post(Uri.parse(
+                    "http://10.2.0.2:48608/api/search_name_device_comper"),
+                    headers: header, body: {'name': searchController.text});
+                setState(() {
+                  result = jsonDecode(respone.body);
+                });
+              },
+            ),
+          ),
           Expanded(
             child: ListView.builder(
-                itemCount: phones.length,
+                itemCount: result.length,
                 itemBuilder: (context, index) {
-                  final phone = phones[index];
-                  return buildPhone(phone);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) =>
+                            widget.getFrom == 1
+                                ? compartion(phoneid1:result[index]['id'].toString(),phoneid2: widget.oldId,):compartion(phoneid2:result[index]['id'].toString() ,phoneid1:  widget.oldId,))
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(result[index]['name'], style: const TextStyle(
+                              fontSize: 18
+                          ),),
+                        ],
+                      ),
+                    ),
+                  );
                 }),
           ),
         ],
       ),
-
     );
   }
 
-  Widget buildPhone(Phone phone)=>ListTile(
-    leading:Image.asset(phone.phoneimage,fit:BoxFit.cover,
-    width: 50,
-    height: 50,),
-    title:Text(phone.name),
-    subtitle: Text(phone.brand),
-  );
+  Widget buildPhone(Phone phone) =>
+      ListTile(
+        leading: Image.asset(
+          phone.phoneimage,
+          fit: BoxFit.cover,
+          width: 50,
+          height: 50,
+        ),
+        title: Text(phone.name),
+        subtitle: Text(phone.brand),
+      );
 
-
- Widget buildSearch() =>searchWidget(
-   text:query,
-   onChanged: searchPhone,
-    hintText: 'Enter Phone Name',
- );
-  void searchPhone(String query) async=> debounce(() async {
-    final phones=await PhonesApi.getPhones(query);
-    if(!mounted)return;
-    setState((){
-      this.query=query;
-      this.phones=phones;
-    });
-  });
+  Widget buildSearch() =>
+      searchWidget(
+        text: query,
+        onChanged: (v) {},
+        hintText: 'Enter Phone Name',
+      );
+// void searchPhone(String query) async=> debounce(() async {
+//   final phones=await PhonesApi.getPhones(query);
+//   if(!mounted)return;
+//   setState((){
+//     this.query=query;
+//     this.phones=phones;
+//   });
+// });
 }
 
 class Phone {
@@ -137,16 +145,19 @@ class Phone {
   final String brand;
   final String phoneimage;
 
-  const Phone(
-      {required this.id,
-      required this.brand,
-      required this.name,
-      required this.phoneimage});
+  const Phone({required this.id,
+    required this.brand,
+    required this.name,
+    required this.phoneimage});
 
-  factory Phone.fromJson(json)=>Phone(id: json['id'], brand: json['name'], name: json['name'], phoneimage: json['picture']);
+  factory Phone.fromJson(json) =>
+      Phone(
+          id: json['id'],
+          brand: json['name'],
+          name: json['name'],
+          phoneimage: json['picture']);
 //    Map<String,dynamic>toJson()=>{
 //
 // }
 
 }
-

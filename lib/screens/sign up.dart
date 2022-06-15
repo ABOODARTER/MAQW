@@ -32,7 +32,7 @@ class _SignUpState extends State<SignUp> {
                         top: 220,
                       ),
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 0.6,
+                      height: MediaQuery.of(context).size.height * 0.7,
                       decoration: BoxDecoration(
                         color: bluee,
                         borderRadius: const BorderRadius.only(

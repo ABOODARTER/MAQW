@@ -25,6 +25,7 @@ class contactUsState extends State<contact_Us> {
   final TextEditingController userController = TextEditingController();
   final TextEditingController messageController = TextEditingController();
   bool isValid = false;
+  bool loading = false;
 
   void selectScreen(BuildContext ctx, String s) {
     Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
@@ -281,24 +282,61 @@ class contactUsState extends State<contact_Us> {
             SizedBox(
               height: 20,
             ),
-            Center(
-              child: RaisedButton(
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                color: Bluecolor,
-                onPressed: () {
-                  if (forkeyup.currentState!.validate()) {
-                    // allPhone();
-                    Navigator.of(context).pushReplacementNamed('signin');
-                  }
-                },
-                child: Text(
-                  'Send',
-                  style: TextStyle(fontSize: 20, color: w),
-                ),
-              ),
+
+           loading?Padding(
+             padding: const EdgeInsets.symmetric( horizontal:120.0),
+
+             child: const SizedBox(width:40,height: 40,child: CircularProgressIndicator()),
+           ): Padding(
+              padding: const EdgeInsets.symmetric( horizontal:80.0),
+              child: ElevatedButton(onPressed: ()async{
+                setState((){
+                  loading=true;
+                });
+                Map<String,String>? headers ={
+                  'Accept': 'application/json',
+                  'Authorization': 'Bearer GSo8LL92AmqcdkhB3JwjGxdD9D7G6yQJ96BVQKWm'
+                };
+                http.Response response =await http.post(Uri.parse('http://10.2.0.2:48608/api/send-mail'),headers:headers,
+                body:{
+                  "name": userController.text,
+                  "email": emailController.text,
+                  "subject": messageController.text
+                });
+                print(response.body);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
+                  jsonDecode(response.body)['Message'] ?? ""
+                )));
+                setState((){
+                  loading=false;
+                });
+              }, child: Text("Send"),
+               style: ElevatedButton.styleFrom(
+                 shape: RoundedRectangleBorder(
+                   borderRadius: BorderRadius.circular(15)
+                 )
+               ),),
             )
+            // InkWell(
+            //   child: Center(
+            //     child: RaisedButton(
+            //       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+            //       shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(10.0)),
+            //       color: Bluecolor,
+            //       onPressed: () {
+            //         if (forkeyup.currentState!.validate()) {
+            //           // allPhone();
+            //           Navigator.of(context).pushReplacementNamed('signin');
+            //         }
+            //       },
+            //       child: Text(
+            //         'Send',
+            //         style: TextStyle(fontSize: 20, color: w),
+            //       ),
+            //     ),
+            //   ),
+            // )
           ],
         )),
       ),

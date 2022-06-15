@@ -17,6 +17,10 @@ import 'Sale_Center_personalty.dart';
 import 'salecenter.dart';
 
 class allPhone extends StatefulWidget {
+  final String phone_id;
+
+  const allPhone({Key? key,  this.phone_id='0'}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return allPhoneState();
@@ -32,153 +36,48 @@ class allPhoneState extends State<allPhone> {
   Map dataphoneResponse = {};
   final controller = TextEditingController();
 
-  Future apicall() async {
+  //
+  List allPhone = [];
+  List searchList = [];
+  bool loading = false;
+
+  Future Api_call() async {
+    setState((){
+      loading = true;
+    });
     http.Response response;
     //here i put request url
     response = await http
-        .get(Uri.parse("http://localhost:8000/api/search_on_material_device"));
+        .post(Uri.parse("http://10.2.0.2:48608/api/return_device_incostom_brand"),headers:{
+      'Accept': 'application/json',
+      'Authorization': 'Bearer RXmKRnnKPdCIwZhwWoRrHDpGxbOgnbGJoRXqQrsq'
+    },body: {
+          'id':widget.phone_id
+    });
     if (response.statusCode == 200) {
       setState(() {
-        bodyResponse = json.decode(response.body);
-        dataphoneResponse = bodyResponse['body'];
+        allPhone = json.decode(response.body)['device'];
+        searchList = allPhone;
+        loading = false;
       });
     }
+
   }
 
   @override
   void initState() {
-    apicall();
+
     super.initState();
-    dataphoneResponse['picture'].toString();
-    dataphoneResponse['name'].toString();
-    listphonessamsungResponse = [
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Sumsang',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Sumsang',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Sumsang',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Sumsang',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Sumsang',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Sumsang',
-      ),
-    ];
-    listphonesredmiResponse=[
-    CardItem(
-      assetImage: dataphoneResponse['picture'].toString(),
-      title: dataphoneResponse['name'].toString(),
-      subtitle: 'Redmi',
-    ),
-    CardItem(
-    assetImage: dataphoneResponse['picture'].toString(),
-    title: dataphoneResponse['name'].toString(),
-    subtitle: 'Redmi',
-    ),
-    CardItem(
-    assetImage: dataphoneResponse['picture'].toString(),
-    title: dataphoneResponse['name'].toString(),
-    subtitle: 'Redmi',
-    ),
-    CardItem(
-    assetImage: dataphoneResponse['picture'].toString(),
-    title: dataphoneResponse['name'].toString(),
-    subtitle: 'Redmi',
-    ),
-    CardItem(
-    assetImage: dataphoneResponse['picture'].toString(),
-    title: dataphoneResponse['name'].toString(),
-    subtitle: 'Redmi',
-    ),
-    CardItem(
-    assetImage: dataphoneResponse['picture'].toString(),
-    title: dataphoneResponse['name'].toString(),
-    subtitle: 'Redmi',
-    ),
-    ];
-    listphoneshuaweiResponse=[
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Huawei',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Huawei',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Huawei',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Huawei',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Huawei',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Huawei',
-      ),
-    ];
-    listphonesiphoneResponse= [
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Iphone',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Iphone',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Iphone',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Iphone',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Iphone',
-      ),
-      CardItem(
-        assetImage: dataphoneResponse['picture'].toString(),
-        title: dataphoneResponse['name'].toString(),
-        subtitle: 'Iphone',
-      ),
-    ];
+    Api_call();
+    // dataphoneResponse['picture'].toString();
+    // dataphoneResponse['name'].toString();
+    // listphonessamsungResponse = [
+    //   CardItem(
+    //     assetImage: dataphoneResponse['picture'].toString(),
+    //     title: dataphoneResponse['name'].toString(),
+    //     subtitle: 'Iphone',
+    //   ),
+    // ];
   }
 
   Widget Viewphone({
@@ -230,11 +129,11 @@ class allPhoneState extends State<allPhone> {
             ),
             Text(
               item.title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 13, fontWeight: FontWeight.bold, color: Bluecolor),
             ),
             RaisedButton(
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               color: Bluecolor,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
               onPressed: () => Navigator.push(
@@ -256,16 +155,16 @@ class allPhoneState extends State<allPhone> {
 
   //to move between screen
   void selectScreen(BuildContext ctx, String s) {
-    Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-      if (s == "ContatUs")
-        return contact_Us();
-      else if (s == 'Compartion')
-        return compartion();
-      else if (s == "allphone")
-        return allPhone();
-      else
-        return MyHomePage();
-    }));
+    // Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
+    //   if (s == "ContatUs")
+    //     return contact_Us();
+    //   else if (s == 'Compartion')
+    //     return compartion();
+    //   else if (s == "allphone")
+    //     return allPhone(phone_id: '1',);
+    //   else
+    //     return MyHomePage();
+    // }));
   }
 
   @override
@@ -278,297 +177,370 @@ class allPhoneState extends State<allPhone> {
           style: TextStyle(color: w),
         ),
       ),
-      body: ListView(
-        scrollDirection: Axis.vertical,
+      body: loading? const Center(child: CircularProgressIndicator(),):
+      Column(
         children: [
-          Container(
-            padding: EdgeInsets.only(top: 15, left: 10, right: 10),
-            color: w,
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                height: 15,
-              ),
-
-              //for headpage = Allphone & icon
-              Row(
-                children: [
-                  Icon(
-                    Icons.phone_android_rounded,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'All phones',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  )
+      Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Greycolor),
+                borderRadius: BorderRadius.circular(15.0),
+                color: Greycolor,
+                boxShadow: const [
+                  BoxShadow(
+                      color: verygrey, blurRadius: 4.0, offset: Offset(0, 3)),
+                  BoxShadow(color: Greycolor, offset: Offset(-2, 0)),
+                  BoxShadow(color: Greycolor, offset: Offset(1, 0)),
+                  BoxShadow(color: Greycolor, offset: Offset(0, -0.5)),
                 ],
               ),
-              SizedBox(
-                height: 30,
-              ),
 
-              // for search box
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Greycolor),
-                  borderRadius: BorderRadius.circular(15.0),
-                  color: Greycolor,
-                  boxShadow: [
-                    BoxShadow(
-                        color: verygrey, blurRadius: 4.0, offset: Offset(0, 3)),
-                    BoxShadow(color: Greycolor, offset: Offset(-2, 0)),
-                    BoxShadow(color: Greycolor, offset: Offset(1, 0)),
-                    BoxShadow(color: Greycolor, offset: Offset(0, -0.5)),
+                 child: TextFormField(
+                   onChanged: (value){
+                     if(value.isNotEmpty){
+                       setState(() {
+                         searchList = allPhone.where((element) => element['name'].toString().contains(value)).toList();
+                       });
+                     }else {
+                       setState(() {
+                         searchList = allPhone;
+                       });
+                     }
+                   },
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                      prefixIcon: GestureDetector(
+                          child: Icon(Icons.search,),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        search()));
+                          }
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Greycolor),
+                          borderRadius: BorderRadius.circular(15.0)),
+                    ),
+                    keyboardType: TextInputType.text,
+                  ),
+            ),
+          Expanded(
+            child: SizedBox(
+              // height: MediaQuery.of(context).size.height*0.7,
+              child: GridView.builder(
+                itemCount: searchList.length,
+                scrollDirection: Axis.vertical,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2
+                ),
+                itemBuilder: (context,index)=>Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      width:140,height: 140,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(
+                            searchList[index]['picture'],
+                          )
+                        )
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Container(
+                       child: Text(searchList[index]['name']),),
+                    )
                   ],
                 ),
-
-                   child: TextFormField(
-                      textInputAction: TextInputAction.next,
-                      decoration: InputDecoration(
-                        prefixIcon: GestureDetector(
-                            child: Icon(Icons.search,),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          search()));
-                            }
-                        ),
-                        suffixIcon:
-                        GestureDetector(
-                          child: Icon(Icons.close,),
-                          onTap: (){
-                            controller.clear();
-                            FocusScope.of(context).requestFocus(FocusNode());
-                          },
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Greycolor),
-                            borderRadius: BorderRadius.circular(15.0)),
-                      ),
-                      keyboardType: TextInputType.text,
-                    ),
+                // children: [
+                //   Container(
+                //     padding: EdgeInsets.only(top: 15, left: 10, right: 10),
+                //     color: w,
+                //     child:
+                //         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                //       const SizedBox(
+                //         height: 15,
+                //       ),
+                //
+                //       //for headpage = Allphone & icon
+                //       Row(
+                //         children: const [
+                //           Icon(
+                //             Icons.phone_android_rounded,
+                //             size: 20,
+                //           ),
+                //           SizedBox(
+                //             width: 5,
+                //           ),
+                //           Text(
+                //             'All phones',
+                //             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                //           )
+                //         ],
+                //       ),
+                //      const SizedBox(
+                //         height: 30,
+                //       ),
+                //
+                //       // for search box
+                //       Container(
+                //         decoration: BoxDecoration(
+                //           border: Border.all(color: Greycolor),
+                //           borderRadius: BorderRadius.circular(15.0),
+                //           color: Greycolor,
+                //           boxShadow: const [
+                //             BoxShadow(
+                //                 color: verygrey, blurRadius: 4.0, offset: Offset(0, 3)),
+                //             BoxShadow(color: Greycolor, offset: Offset(-2, 0)),
+                //             BoxShadow(color: Greycolor, offset: Offset(1, 0)),
+                //             BoxShadow(color: Greycolor, offset: Offset(0, -0.5)),
+                //           ],
+                //         ),
+                //
+                //            child: TextFormField(
+                //               textInputAction: TextInputAction.next,
+                //               decoration: InputDecoration(
+                //                 prefixIcon: GestureDetector(
+                //                     child: Icon(Icons.search,),
+                //                     onTap: () {
+                //                       Navigator.push(
+                //                           context,
+                //                           MaterialPageRoute(
+                //                               builder: (context) =>
+                //                                   search()));
+                //                     }
+                //                 ),
+                //                 enabledBorder: OutlineInputBorder(
+                //                     borderSide: BorderSide(color: Greycolor),
+                //                     borderRadius: BorderRadius.circular(15.0)),
+                //               ),
+                //               keyboardType: TextInputType.text,
+                //             ),
+                //       ),
+                //       const SizedBox(
+                //         height: 30,
+                //       ),
+                //
+                //       // for head brand & i click in this to push to another screen has all phone in the same brand
+                //       InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => allPhone_in_brand(
+                //                       item: listphonessamsungResponse[0],
+                //                     )),
+                //           );
+                //         },
+                //         child:const Text(
+                //           'Sumsang',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //      const SizedBox(
+                //         height: 20,
+                //       ),
+                //
+                //       //scrolling between cards for view phone
+                //       Container(
+                //         height: 250,
+                //         child: ListView.separated(
+                //           scrollDirection: Axis.horizontal,
+                //           padding: EdgeInsets.all(16),
+                //           itemCount: 6,
+                //           separatorBuilder: (context, _) =>const SizedBox(
+                //             width: 12,
+                //           ),
+                //           itemBuilder: (context, index) =>
+                //               Viewphone(item: listphonessamsungResponse[index]),
+                //         ),
+                //       ),
+                //      const SizedBox(
+                //         height: 30,
+                //       ),
+                //
+                //       // for head brand & i click in this to push to another screen has all phone in the same brand
+                //       InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => allPhone_in_brand(
+                //                       item: listphonesredmiResponse[2],
+                //                     )),
+                //           );
+                //         },
+                //         child:const Text(
+                //           'Redmi',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //      const SizedBox(
+                //         height: 20,
+                //       ),
+                //
+                //       //scrolling between cards for view phone
+                //       Container(
+                //         height: 250,
+                //         child: ListView.separated(
+                //           scrollDirection: Axis.horizontal,
+                //           padding: EdgeInsets.all(16),
+                //           itemCount: 6,
+                //           separatorBuilder: (context, _) => SizedBox(
+                //             width: 12,
+                //           ),
+                //           itemBuilder: (context, index) =>
+                //               Viewphone(item:listphonesredmiResponse[index]),
+                //         ),
+                //       ),
+                //      const SizedBox(
+                //         height: 30,
+                //       ),
+                //
+                //       // for head brand & i click in this to push to another screen has all phone in the same brand
+                //       InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => allPhone_in_brand(
+                //                       item: listphoneshuaweiResponse[0],
+                //                     )),
+                //           );
+                //         },
+                //         child:const Text(
+                //           'Huawei',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //      const SizedBox(
+                //         height: 20,
+                //       ),
+                //
+                //       //scrolling between cards for view phone
+                //       Container(
+                //         height: 250,
+                //         child: ListView.separated(
+                //           scrollDirection: Axis.horizontal,
+                //           padding: EdgeInsets.all(16),
+                //           itemCount: 6,
+                //           separatorBuilder: (context, _) =>const SizedBox(
+                //             width: 12,
+                //           ),
+                //           itemBuilder: (context, index) =>
+                //               Viewphone(item: listphoneshuaweiResponse[index]),
+                //         ),
+                //       ),
+                //      const SizedBox(
+                //         height: 30,
+                //       ),
+                //
+                //       // for head brand & i click in this to push to another screen has all phone in the same brand
+                //       InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => allPhone_in_brand(
+                //                       item: listphonesiphoneResponse[0],
+                //                     )),
+                //           );
+                //         },
+                //         child:const Text(
+                //           'Apple',
+                //           style: TextStyle(
+                //             fontSize: 20,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //     const  SizedBox(
+                //         height: 20,
+                //       ),
+                //
+                //       //scrolling between cards for view phone
+                //       Container(
+                //         height: 250,
+                //         child: ListView.separated(
+                //           scrollDirection: Axis.horizontal,
+                //           padding: EdgeInsets.all(16),
+                //           itemCount: 6,
+                //           separatorBuilder: (context, _) =>const SizedBox(
+                //             width: 12,
+                //           ),
+                //           itemBuilder: (context, index) =>
+                //               Viewphone(item: listphoneshuaweiResponse[index]),
+                //         ),
+                //       ),
+                //     ]),
+                //   ),
+                // ],
               ),
-              SizedBox(
-                height: 30,
-              ),
-
-              // for head brand & i click in this to push to another screen has all phone in the same brand
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => allPhone_in_brand(
-                              item: listphonessamsungResponse[0],
-                            )),
-                  );
-                },
-                child: Text(
-                  'Sumsang',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              //scrolling between cards for view phone
-              Container(
-                height: 250,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.all(16),
-                  itemCount: 6,
-                  separatorBuilder: (context, _) => SizedBox(
-                    width: 12,
-                  ),
-                  itemBuilder: (context, index) =>
-                      Viewphone(item: listphonessamsungResponse[index]),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-
-              // for head brand & i click in this to push to another screen has all phone in the same brand
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => allPhone_in_brand(
-                              item: listphonesredmiResponse[2],
-                            )),
-                  );
-                },
-                child: Text(
-                  'Redmi',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              //scrolling between cards for view phone
-              Container(
-                height: 250,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.all(16),
-                  itemCount: 6,
-                  separatorBuilder: (context, _) => SizedBox(
-                    width: 12,
-                  ),
-                  itemBuilder: (context, index) =>
-                      Viewphone(item:listphonesredmiResponse[index]),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-
-              // for head brand & i click in this to push to another screen has all phone in the same brand
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => allPhone_in_brand(
-                              item: listphoneshuaweiResponse[0],
-                            )),
-                  );
-                },
-                child: Text(
-                  'Huawei',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              //scrolling between cards for view phone
-              Container(
-                height: 250,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.all(16),
-                  itemCount: 6,
-                  separatorBuilder: (context, _) => SizedBox(
-                    width: 12,
-                  ),
-                  itemBuilder: (context, index) =>
-                      Viewphone(item: listphoneshuaweiResponse[index]),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-
-              // for head brand & i click in this to push to another screen has all phone in the same brand
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => allPhone_in_brand(
-                              item: listphonesiphoneResponse[0],
-                            )),
-                  );
-                },
-                child: Text(
-                  'Apple',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-
-              //scrolling between cards for view phone
-              Container(
-                height: 250,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.all(16),
-                  itemCount: 6,
-                  separatorBuilder: (context, _) => SizedBox(
-                    width: 12,
-                  ),
-                  itemBuilder: (context, index) =>
-                      Viewphone(item: listphoneshuaweiResponse[index]),
-                ),
-              ),
-            ]),
+            ),
           ),
         ],
       ),
 
       //list in appbar
       drawerScrimColor: Colors.black.withOpacity(0.4),
-      drawer: Drawer(
-          child: ListView(
-        children: [
-          ListTile(
-            title: Text(
-              'MAQW MOBIL ^_^',
-              style: TextStyle(fontSize: 40, color: Bluecolor),
-            ),
-          ),
-          ListTile(
-            title: Text(
-              "Home",
-              style: TextStyle(fontSize: 25, color: Bluecolor),
-            ),
-            trailing: Icon(Icons.home),
-            onTap: () => selectScreen(context, "home"),
-          ),
-          ListTile(
-            title: Text(
-              "All Phone",
-              style: TextStyle(fontSize: 25, color: Bluecolor),
-            ),
-            trailing: Icon(Icons.phone_android_rounded),
-            onTap: () => selectScreen(context, "allphone"),
-          ),
-          ListTile(
-            title: Text(
-              "Compartion",
-              style: TextStyle(fontSize: 25, color: Bluecolor),
-            ),
-            trailing: Icon(Icons.phonelink_setup),
-            onTap: () => selectScreen(context, "Compartion"),
-          ),
-          ListTile(
-            title: Text(
-              "Contact Us",
-              style: TextStyle(fontSize: 25, color: Bluecolor),
-            ),
-            trailing: Icon(Icons.email_outlined),
-            onTap: () => selectScreen(context, "ContatUs"),
-          ),
-        ],
-      ) // contact_Us(),
-          ),
-      bottomNavigationBar: NavigationB(),
+      // drawer: Drawer(
+      //     child: ListView(
+      //   children: [
+      //    const ListTile(
+      //       title: Text(
+      //         'MAQW MOBIL ^_^',
+      //         style: TextStyle(fontSize: 40, color: Bluecolor),
+      //       ),
+      //     ),
+      //     ListTile(
+      //       title:const Text(
+      //         "Home",
+      //         style: TextStyle(fontSize: 25, color: Bluecolor),
+      //       ),
+      //       trailing:const Icon(Icons.home),
+      //       onTap: () => selectScreen(context, "home"),
+      //     ),
+      //     ListTile(
+      //       title:const Text(
+      //         "All Phone",
+      //         style: TextStyle(fontSize: 25, color: Bluecolor),
+      //       ),
+      //       trailing:const Icon(Icons.phone_android_rounded),
+      //       onTap: () => selectScreen(context, "allphone"),
+      //     ),
+      //     ListTile(
+      //       title:const Text(
+      //         "Compartion",
+      //         style: TextStyle(fontSize: 25, color: Bluecolor),
+      //       ),
+      //       trailing:const Icon(Icons.phonelink_setup),
+      //       onTap: () => selectScreen(context, "Compartion"),
+      //     ),
+      //     ListTile(
+      //       title:const Text(
+      //         "Contact Us",
+      //         style: TextStyle(fontSize: 25, color: Bluecolor),
+      //       ),
+      //       trailing:const Icon(Icons.email_outlined),
+      //       onTap: () => selectScreen(context, "ContatUs"),
+      //     ),
+      //   ],
+      // ) // contact_Us(),
+      //     ),
+      // bottomNavigationBar:const NavigationB(),
     );
   }
 }

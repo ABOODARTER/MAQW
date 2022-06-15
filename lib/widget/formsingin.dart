@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maqw/main.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +23,8 @@ class _FormSingInState extends State<FormSingIn> {
 
   // variable to obscureText
   bool passWordVisible = true;
+  bool loader = false;
+
 
   // Hide and show password
   Widget Vpass() {
@@ -34,8 +37,49 @@ class _FormSingInState extends State<FormSingIn> {
           passWordVisible = !passWordVisible;
         });
       },
-      color: bluee,
     );
+  }
+
+  tryAutoLogin()async{
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+    String? respone = await storage.read(key: 'token');
+    if(respone!= null){
+      Map token = jsonDecode(respone);
+      if(token['access_token']!=null && token['access_token'].toString().isNotEmpty)
+        {
+        if (token['access_token'].toString() =="5" ) {
+          Navigator.of(context).pushReplacementNamed('mainscreen');
+        }
+        // else if (responseCheck.statusCode == 200 &&
+        //     roles == "2" &&
+        //     responseCheck['access_token) {
+        //   Navigator.of(context).pushReplacementNamed("centerdata");
+        // }
+        else if (token['access_token'].toString() == "3") {
+          Navigator.of(context).pushReplacementNamed('saleCenter');
+        }
+        //  else if (response.statusCode == 200 && responseCheck['role'] == "2" &&
+        //     responseCheck['access_token'].toString().isNotEmpty) {
+        //   Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
+        // }
+        // else if (responseCheck.statusCode == 200 &&
+        //     roles == "maintenance center" &&
+        //     access_token == false) {
+        //    Navigator.of(context).pushReplacementNamed("centerdata");
+        // }
+        else if (token['access_token'].toString() =="4") {
+          Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
+        }}
+        }
+      // else if (responseCheck.statusCode == 200 && roles == "s_and_m_center"&&access_token==false) {
+      //   Navigator.of(context).pushReplacementNamed("centerdata");
+      // }
+    }
+
+  @override
+  initState(){
+    super.initState();
+    tryAutoLogin();
   }
 
   @override
@@ -49,88 +93,99 @@ class _FormSingInState extends State<FormSingIn> {
         child: Stack(
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                StyleTextFormField(
-                    controller: usernameController,
-                    textInputAction: TextInputAction.next,
-                    formFieldValidator: (value) {
-                      if (value!.isNotEmpty && value.length > 4) {
-                        return null;
-                      } else if (value.length < 4 && value.isNotEmpty) {
-                        return "your username is that short";
-                      } else if (value.isEmpty) {
-                        return "username required";
-                      }
-                      return null;
-                    },
-                    icon: const Icon(
-                      Icons.person,
-                      size: 25,
-                    ),
-                    hintText: "Enter Username",
-                    textInputType: TextInputType.name),
-                const SizedBox(
-                  height: 20,
-                ),
-                StyleTextFormField(
-                    controller: passwordController,
-                    textInputAction: TextInputAction.done,
-                    formFieldValidator: (value) {
-                      if (value!.isNotEmpty && value.length > 6) {
-                        return null;
-                      } else if (value.length < 6 && value.isNotEmpty) {
-                        return "your password must be lager than characters";
-                      } else {
-                        return "password required";
-                      }
-                    },
-                    obscuretext: passWordVisible,
-                    icon: Vpass(),
-                    hintText: "Enter Password",
-                    textInputType: TextInputType.visiblePassword),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('signup');
-                  },
-                  child: const Text(
-                    "Create Account ? ",
-                    style: TextStyle(
-                      fontSize: 21,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 1,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Container(
-                  decoration: ShapeDecoration(
-                    color: orangee,
-                    shape: const CircleBorder(),
-                  ),
-                  child: IconButton(
-                      onPressed: () async {
-                        try {
-                          if (forKeyIn.currentState!.validate()) {
-                            singin();
-                          }
-                        } on Exception catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error")));
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StyleTextFormField(
+                      controller: usernameController,
+                      textInputAction: TextInputAction.next,
+                      formFieldValidator: (value) {
+                        if (value!.isNotEmpty && value.length > 4) {
+                          return null;
+                        } else if (value.length < 4 && value.isNotEmpty) {
+                          return "your username is that short";
+                        } else if (value.isEmpty) {
+                          return "username required";
                         }
+                        return null;
                       },
                       icon: const Icon(
-                        Icons.keyboard_arrow_right_rounded,
+                        Icons.person,
+                        size: 25,
+                      ),
+                      hintText: "Enter Username",
+                      textInputType: TextInputType.name),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  StyleTextFormField(
+                      controller: passwordController,
+                      textInputAction: TextInputAction.done,
+                      formFieldValidator: (value) {
+                        if (value!.isNotEmpty && value.length > 6) {
+                          return null;
+                        } else if (value.length < 6 && value.isNotEmpty) {
+                          return "your password must be lager than characters";
+                        } else {
+                          return "password required";
+                        }
+                      },
+                      obscuretext: passWordVisible,
+                      icon: Vpass(),
+                      hintText: "Enter Password",
+                      textInputType: TextInputType.visiblePassword),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('signup');
+                    },
+                    child: const Text(
+                      "Create Account ? ",
+                      style: TextStyle(
+                        fontSize: 21,
                         color: Colors.white,
-                      )),
-                ),
-              ],
-            ),
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                 loader? const CircularProgressIndicator(
+                   color: Colors.white,
+                 ):Container(
+                    decoration: ShapeDecoration(
+                      color: orangee,
+                      shape: const CircleBorder(),
+                    ),
+                    child: IconButton(
+                        onPressed: () async {
+                          try {
+                            setState((){
+                              loader = true;
+                            });
+                            if (forKeyIn.currentState!.validate()) {
+                              await singin();
+                            }
+                            setState((){
+                              loader = false;
+                            });
+                          } on Exception catch (e) {
+                            setState((){
+                              loader = false;
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error")));
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_right_rounded,
+                          color: Colors.white,
+                        )),
+                  ),
+                ],
+              ),
           ],
         ),
       ),
@@ -144,11 +199,13 @@ class _FormSingInState extends State<FormSingIn> {
 
   // Create function Api
   Future<void> singin() async {
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+
     if (usernameController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
 
       http.Response response =
-          await http.post(Uri.parse("http://10.2.0.2:52192/api/login"),
+          await http.post(Uri.parse("http://10.2.0.2:48608/api/login"),
               headers: {
                 'Accept': 'application/json',
                 'Authorization': 'Bearer 13e2c5921a25d10095ff69c500de8bd2585fe34987b6186d3e392da6c1b7e1b1'
@@ -168,7 +225,8 @@ class _FormSingInState extends State<FormSingIn> {
       //     access_token = user['access_token'];
       //   });
       // }
-      if (response.statusCode == 200 && responseCheck['role'] == "5") {
+      if (response.statusCode == 200 && responseCheck['role'].toString() =="5" ) {
+        storage.write(key: "token", value: jsonEncode(responseCheck));
         Navigator.of(context).pushReplacementNamed('mainscreen');
       }
       // else if (responseCheck.statusCode == 200 &&
@@ -178,17 +236,20 @@ class _FormSingInState extends State<FormSingIn> {
       // }
       else if (response.statusCode == 200 && responseCheck['role'].toString() == "3" &&
           responseCheck['access_token'].toString().isNotEmpty) {
+        storage.write(key: "token", value: jsonEncode(responseCheck));
         Navigator.of(context).pushReplacementNamed('saleCenter');
-      } else if (response.statusCode == 200 && responseCheck['role'] == "2" &&
-          responseCheck['access_token'].toString().isNotEmpty) {
-        Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
       }
+      //  else if (response.statusCode == 200 && responseCheck['role'] == "2" &&
+      //     responseCheck['access_token'].toString().isNotEmpty) {
+      //   Navigator.of(context).pushReplacementNamed('screen_maintenance_center');
+      // }
       // else if (responseCheck.statusCode == 200 &&
       //     roles == "maintenance center" &&
       //     access_token == false) {
       //    Navigator.of(context).pushReplacementNamed("centerdata");
       // }
-      else if (response.statusCode == 200 && responseCheck['role'] == "4"&&responseCheck['access_token'].toString().isNotEmpty) {
+      else if (response.statusCode == 200 && responseCheck['role'].toString() == "4"&&responseCheck['access_token'].toString().isNotEmpty) {
+        storage.write(key: "token", value: jsonEncode(responseCheck));
         Navigator.of(context).pushReplacementNamed('screen_s_and_m_center');
       }
       // else if (responseCheck.statusCode == 200 && roles == "s_and_m_center"&&access_token==false) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:maqw/provider.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
 
@@ -11,30 +13,27 @@ class NavigationB extends StatefulWidget {
 }
 
 class _NavigationBState extends State<NavigationB> {
-  int _index = 0;
+
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: GNav(
-        selectedIndex: _index,
+        selectedIndex: Provider.of<NBProvider>(context).index,
         gap: 8,
         color: Colors.grey,
         activeColor: Colors.white,
         tabBackgroundColor: bluee,
         padding: const EdgeInsets.all(16),
-        duration: Duration(milliseconds: 400),
+        duration:const Duration(milliseconds: 400),
         curve: Curves.easeOutExpo,
         haptic: true,
         tabBorderRadius: 25,
         onTabChange: (index) {
-          if (mounted) {
-            setState(() {
-              _index = index;
-              print("${_index}");
-            });
-          }
+          Provider.of<NBProvider>(context,listen: false).changeIndex(index);
+
+
         },
         tabs: [
           GButton(
@@ -56,8 +55,8 @@ class _NavigationBState extends State<NavigationB> {
                 await Navigator.of(context).pushNamed('compartion'),
           ),
           GButton(
-              icon: Icons.settings,
-              text: "Settings",
+              icon: Icons.support_agent_outlined,
+              text: "contact_us",
               onPressed: () async =>
                   await Navigator.of(context).pushNamed('contact_us')),
         ],

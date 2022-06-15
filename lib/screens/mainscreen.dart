@@ -16,6 +16,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   PageController controller = PageController();
 
+  // @override
+  // initState(){
+  //   super.initState();
+  //
+  //
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children:const[
-                ScrollContinerIcon(),
+                //ScrollContinerIcon(),
                 MainPhones(),
                 SizedBox(height: 30,),
                 SizedBox(height: 30,),

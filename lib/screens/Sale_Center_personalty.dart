@@ -34,7 +34,7 @@ class _salecenter extends State<sale_center_personalty> {
   Future apicall() async{
     http.Response response;
     //here i put request url
-    response=await http.get(Uri.parse("http://mobile.test:400/api/centers"));
+    response=await http.get(Uri.parse("http://10.2.0.2:24437//api/centers"));
     if(response.statusCode==200){
       setState((){
         bodyResponse=json.decode(response.body);

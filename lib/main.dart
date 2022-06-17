@@ -78,7 +78,7 @@ class MyApp extends StatelessWidget {
                 letterSpacing: 2,
               )),
         ),
-        home: SignIn(),
+        home: EnterPhone1(),
         routes: {
           'signin': (context) => const SignIn(),
           'signup': (context) => const SignUp(),

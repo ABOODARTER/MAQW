@@ -66,7 +66,7 @@ class compartionState extends State<compartion> {
     };
     http.Response response;
     //here i put request url
-    response = await http.post(Uri.parse("http://10.2.0.2:48608/api/compare"),
+    response = await http.post(Uri.parse("http://10.2.0.2:24437/api/compare"),
         headers: headers, body: {"device1": phoneName});
 
     return jsonDecode(response.body);
@@ -177,23 +177,7 @@ class compartionState extends State<compartion> {
           ),
         ),
       ),
-      // InkWell(
-      //   onTap: (){
-      //     print(getFrom);
-      //     if(getFrom == 1){
-      //       setState((){
-      //         phone1={};
-      //       });
-      //     }
-      //     if(getFrom == 2){
-      //       setState((){
-      //         phone2 = {};
-      //       });
-      //     }
-      //   },
-      //   child:
-      //   Ink.image(image: AssetImage('assets/images/compartion/close.png'),width: 50,height: 150,),
-      // ),
+
     ]);
   }
 

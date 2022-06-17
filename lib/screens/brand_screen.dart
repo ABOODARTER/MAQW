@@ -28,7 +28,7 @@ class _BrandScreenState extends State<BrandScreen> {
       'Accept': 'application/json',
       'Authorization': 'Bearer RXmKRnnKPdCIwZhwWoRrHDpGxbOgnbGJoRXqQrsq'
     };
-    http.Response response = await http.get(Uri.parse("http://10.2.0.2:48608/api/return_brand"),headers: headers,);
+    http.Response response = await http.get(Uri.parse("http://10.2.0.2:24437/api/return_brand"),headers: headers,);
     brands = jsonDecode(response.body)['brand'];
     print(brands);
     setState((){

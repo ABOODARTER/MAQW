@@ -48,7 +48,7 @@ class allPhoneState extends State<allPhone> {
     http.Response response;
     //here i put request url
     response = await http
-        .post(Uri.parse("http://10.2.0.2:48608/api/return_device_incostom_brand"),headers:{
+        .post(Uri.parse("http://10.2.0.2:24437/api/return_device_incostom_brand"),headers:{
       'Accept': 'application/json',
       'Authorization': 'Bearer RXmKRnnKPdCIwZhwWoRrHDpGxbOgnbGJoRXqQrsq'
     },body: {
@@ -153,19 +153,8 @@ class allPhoneState extends State<allPhone> {
   //list for cards view phone
 
 
-  //to move between screen
-  void selectScreen(BuildContext ctx, String s) {
-    // Navigator.of(ctx).pushReplacement(MaterialPageRoute(builder: (_) {
-    //   if (s == "ContatUs")
-    //     return contact_Us();
-    //   else if (s == 'Compartion')
-    //     return compartion();
-    //   else if (s == "allphone")
-    //     return allPhone(phone_id: '1',);
-    //   else
-    //     return MyHomePage();
-    // }));
-  }
+
+
 
   @override
   Widget build(BuildContext context) {

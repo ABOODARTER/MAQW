@@ -190,7 +190,7 @@ class _FormSignUpState extends State<FormSignUp> {
     setState((){
       loading = true;
     });
-    String Url = "http://http://127.0.0.1:23409/api/register";
+    String Url = "http://10.2.0.2:24437//api/register";
     var headers = {'Accept': 'application/json'};
     print(emailController.text);
     Map MyData = {

@@ -55,7 +55,7 @@ class _MainMapState extends State<MainMap> {
         Uri.parse("http://localhost:8000/api/search_in_map"),
         body: location);
     http.Response responsePlaces =
-        await http.get(Uri.parse("http://localhost:8000/api/centers"));
+        await http.get(Uri.parse("http://10.2.0.2:24437/api/centers"));
     if (response.statusCode == 200) {
       setState(() {
         allCenters = jsonDecode(response.body);

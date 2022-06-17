@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:maqw/widget/searchwidget.dart';
 class PhonesApi {
   static Future<List<Phone>> getPhones(String query) async {
-    final url = Uri.parse('http://mobile.test:400/api/search_on_material_device');
+    final url = Uri.parse('http://10.2.0.2:24437/api/search_on_material_device');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List phones = json.decode(response.body);
